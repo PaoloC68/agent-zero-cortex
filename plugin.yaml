@@ -1,0 +1,8 @@
+name: agent-zero-cortex
+title: Cortex Memory Backend
+description: Side-by-side Cortex memory backend for Agent Zero
+version: 0.1.0
+settings_sections:
+  - agent
+per_project_config: true
+per_agent_config: true

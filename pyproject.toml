@@ -1,0 +1,24 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agent-zero-cortex"
+version = "0.1.0"
+description = "Agent Zero plugin for Cortex memory backend"
+requires-python = ">=3.11"
+dependencies = [
+    "httpx>=0.28.0",
+    "pydantic>=2.9.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+    "pyyaml>=6.0.0",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
