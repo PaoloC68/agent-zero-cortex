@@ -1,0 +1,2 @@
+If no AZ project is set, the extension logs a warning about project-less behavior and proceeds with a default topic slug. Recall will still work but memories won't be associated with a specific project — cross-project fence rerank will treat all memories equally.
+| `cortex_init: project-less session` in logs | AZ session has no project set | Expected behavior — memories are stored without project association; recall still works |
