@@ -3,8 +3,8 @@ from __future__ import annotations
 from typing import Any, NamedTuple
 
 # Hardcoded constants (NOT configurable)
-EXTRACTION_TIMEOUT_SEC = 5
-POSTING_TIMEOUT_SEC = 10
+EXTRACTION_TIMEOUT_SEC = 30
+POSTING_TIMEOUT_SEC = 60
 HTTP_TIMEOUT_SEC = 10
 RECALL_CANDIDATE_MULTIPLIER = 5
 RECALL_CANDIDATE_FLOOR = 30
