@@ -1,0 +1,7 @@
+cortex_url: "http://192.168.1.12:8001"
+cortex_api_key: ""
+cortex_enabled: true
+cortex_recall_limit: 5
+cortex_recall_threshold: 0.02
+cortex_recall_legacy_rank: false
+cortex_prompt_dir: ""

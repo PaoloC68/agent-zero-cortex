@@ -12,6 +12,7 @@ def pytest_configure(config):
     helpers_mod = ModuleType("helpers")
     helpers_ext_mod = ModuleType("helpers.extension")
     helpers_proj_mod = ModuleType("helpers.projects")
+    helpers_plugins_mod = ModuleType("helpers.plugins")
     helpers_dj_mod = ModuleType("helpers.dirty_json")
     
     # Define Extension class stub
@@ -37,9 +38,13 @@ def pytest_configure(config):
             return context.get_data("project")
         return getattr(context, "current_project", None)
     
+    def get_plugin_config(plugin_id, agent=None):
+        return {}
+
     # Attach to modules
     helpers_ext_mod.Extension = Extension
     helpers_proj_mod.get_context_project_name = get_context_project_name
+    helpers_plugins_mod.get_plugin_config = get_plugin_config
     
     # Re-export dirtyjson.loads from the real dirtyjson package
     try:
@@ -55,4 +60,5 @@ def pytest_configure(config):
     sys.modules["helpers"] = helpers_mod
     sys.modules["helpers.extension"] = helpers_ext_mod
     sys.modules["helpers.projects"] = helpers_proj_mod
+    sys.modules["helpers.plugins"] = helpers_plugins_mod
     sys.modules["helpers.dirty_json"] = helpers_dj_mod

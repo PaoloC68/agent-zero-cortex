@@ -4,13 +4,14 @@ import functools
 import logging
 import time
 
-import cortex_plugin.config as config
+import cortex_plugin.config as cortex_config
 import cortex_plugin.extraction as extraction
 import cortex_plugin.http as http
 import cortex_plugin.prompts as prompts
 from cortex_plugin.slugs import project_resolve
 from helpers import projects as proj_helpers
 from helpers.extension import Extension
+from helpers.plugins import get_plugin_config
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +20,8 @@ class CortexMemorize(Extension):
 
     async def execute(self, loop_data=None, **kwargs):
         try:
-            cfg = config.load_config()
+            cfg_dict = get_plugin_config("agent-zero-cortex", agent=self.agent) or {}
+            cfg = cortex_config.load_config(cfg_dict)
             if not cfg.enabled or not cfg.api_key:
                 return
 
@@ -54,7 +56,7 @@ class CortexMemorize(Extension):
                 self.agent.call_utility_model,
                 frag_prompt,
                 sol_prompt,
-                timeout_sec=config.EXTRACTION_TIMEOUT_SEC,
+                timeout_sec=cortex_config.EXTRACTION_TIMEOUT_SEC,
             )
 
             http_post = functools.partial(
@@ -68,7 +70,7 @@ class CortexMemorize(Extension):
                 fragments,
                 solutions,
                 http_post,
-                posting_timeout_sec=config.POSTING_TIMEOUT_SEC,
+                posting_timeout_sec=cortex_config.POSTING_TIMEOUT_SEC,
             )
             ms = int((time.monotonic() - t0) * 1000)
 

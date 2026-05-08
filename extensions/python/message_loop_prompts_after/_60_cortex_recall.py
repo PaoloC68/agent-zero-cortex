@@ -5,7 +5,8 @@ import time
 
 from helpers.extension import Extension
 from helpers import projects as proj_helpers
-from cortex_plugin import config, http, slugs, recall as recall_lib
+from helpers.plugins import get_plugin_config
+from cortex_plugin import config as cortex_config, http, slugs, recall as recall_lib
 
 logger = logging.getLogger(__name__)
 
@@ -13,7 +14,8 @@ logger = logging.getLogger(__name__)
 class CortexRecall(Extension):
 
     async def execute(self, loop_data=None, **kwargs):
-        cfg = config.load_config()
+        cfg_dict = get_plugin_config("agent-zero-cortex", agent=self.agent) or {}
+        cfg = cortex_config.load_config(cfg_dict)
         if not cfg.enabled or not cfg.api_key:
             return
 

@@ -1,0 +1,109 @@
+<html>
+<head>
+    <title>Cortex Memory Backend</title>
+</head>
+
+<body>
+    <div x-data>
+        <template x-if="config">
+            <div>
+                <div class="section-title">Cortex Memory Backend</div>
+
+                <div class="field">
+                    <div class="field-label">
+                        <div class="field-title">Enabled</div>
+                        <div class="field-description">
+                            Master switch. Disable to pause all memory operations without removing the plugin.
+                        </div>
+                    </div>
+                    <div class="field-control">
+                        <label class="toggle">
+                            <input type="checkbox" x-model="config.cortex_enabled" />
+                            <span class="toggler"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-label">
+                        <div class="field-title">Cortex URL</div>
+                        <div class="field-description">
+                            Base URL of the Cortex API server.
+                        </div>
+                    </div>
+                    <div class="field-control">
+                        <input type="text" x-model="config.cortex_url" />
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-label">
+                        <div class="field-title">API Key</div>
+                        <div class="field-description">
+                            Bearer token for Cortex API authentication. Stored in plugin config.
+                        </div>
+                    </div>
+                    <div class="field-control">
+                        <input type="password" x-model="config.cortex_api_key" />
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-label">
+                        <div class="field-title">Recall limit</div>
+                        <div class="field-description">
+                            Max memories returned per recall query.
+                        </div>
+                    </div>
+                    <div class="field-control">
+                        <input type="number" min="1" max="20" x-model.number="config.cortex_recall_limit" />
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-label">
+                        <div class="field-title">Recall threshold</div>
+                        <div class="field-description">
+                            Minimum score to include a memory. Run the calibration script after Cortex upgrades.
+                        </div>
+                    </div>
+                    <div class="field-control">
+                        <input type="range" min="0" max="1" step="0.01"
+                            x-model.number="config.cortex_recall_threshold" />
+                        <span class="range-value"
+                            x-text="config.cortex_recall_threshold"></span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-label">
+                        <div class="field-title">Legacy rank</div>
+                        <div class="field-description">
+                            Force legacy RRF ranking. Emergency rollback for post-v1.1 recall quality issues.
+                        </div>
+                    </div>
+                    <div class="field-control">
+                        <label class="toggle">
+                            <input type="checkbox" x-model="config.cortex_recall_legacy_rank" />
+                            <span class="toggler"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="field-label">
+                        <div class="field-title">Prompt directory</div>
+                        <div class="field-description">
+                            Path to custom extraction prompt files. Leave empty to use vendored prompts.
+                        </div>
+                    </div>
+                    <div class="field-control">
+                        <input type="text" x-model="config.cortex_prompt_dir" placeholder="(vendored defaults)" />
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</body>
+
+</html>

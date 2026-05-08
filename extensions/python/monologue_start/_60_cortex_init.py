@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import logging
 
-from cortex_plugin import config, http, slugs
+from cortex_plugin import config as cortex_config, http, slugs
 from helpers.extension import Extension
 from helpers import projects as proj_helpers
+from helpers.plugins import get_plugin_config
 
 logger = logging.getLogger(__name__)
 
@@ -13,7 +14,8 @@ class CortexInit(Extension):
 
     async def execute(self, **kwargs):
         try:
-            cfg = config.load_config()
+            cfg_dict = get_plugin_config("agent-zero-cortex", agent=self.agent) or {}
+            cfg = cortex_config.load_config(cfg_dict)
             if not cfg.enabled or not cfg.api_key:
                 return
 
