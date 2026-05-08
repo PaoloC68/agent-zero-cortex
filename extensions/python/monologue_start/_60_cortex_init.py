@@ -1,82 +1,56 @@
-"""Cortex monologue_start extension — creates a Cortex session and caches the ID."""
 from __future__ import annotations
-import asyncio
-import re
-import os
+
 import logging
 
+from cortex_plugin import config, http, slugs
 from helpers.extension import Extension
+from helpers import projects as proj_helpers
 
 logger = logging.getLogger(__name__)
-
-_SLUG_RE = re.compile(r"[^a-z0-9_-]")
-
-
-def _sanitize_slug(name: str) -> str:
-    return _SLUG_RE.sub("_", name.lower())[:64]
 
 
 class CortexInit(Extension):
 
-    def execute(self, **kwargs):
-        """Fire at monologue start: create Cortex session, cache ID in agent context."""
-        return self._run()
-
-    async def _run(self):
-        import httpx
-
+    async def execute(self, **kwargs):
         try:
-            cortex_url = os.environ.get("CORTEX_URL", "http://192.168.1.12:8001")
-            cortex_api_key = os.environ.get("CORTEX_API_KEY", "")
-            cortex_enabled = os.environ.get("CORTEX_ENABLED", "true").lower() == "true"
-
-            if not cortex_enabled or not cortex_api_key:
+            cfg = config.load_config()
+            if not cfg.enabled or not cfg.api_key:
                 return
 
-            agent = self.agent
-            if agent is None:
-                return
+            ctx = self.agent.context
 
-            az_session_id = str(getattr(getattr(agent, "context", None), "id", "unknown"))
-
-            project_name = None
             try:
-                ctx = getattr(agent, "context", None)
-                if ctx:
-                    project_name = getattr(ctx, "current_project", None)
-                    if project_name is None:
-                        try:
-                            from helpers import projects as proj_helpers
-                            project_name = proj_helpers.get_context_project_name(ctx)
-                        except Exception:
-                            pass
+                project_name = proj_helpers.get_context_project_name(ctx)
             except Exception:
-                pass
+                project_name = getattr(ctx, "current_project", None)
 
-            sanitized_slug = _sanitize_slug(project_name) if project_name else "_unknown"
+            slug, original = slugs.project_resolve(project_name)
 
-            async with httpx.AsyncClient(timeout=10.0) as client:
-                resp = await client.post(
-                    f"{cortex_url}/v1/sessions",
-                    json={
-                        "external_session_id": az_session_id,
-                        "source": "az",
-                        "initial_topic_slug": sanitized_slug,
-                    },
-                    headers={"Authorization": f"Bearer {cortex_api_key}"},
+            data = await http.cortex_post(
+                cfg.url,
+                "/v1/sessions",
+                {
+                    "external_session_id": ctx.id,
+                    "source": "az",
+                    "initial_topic_slug": slug,
+                },
+                cfg.api_key,
+            )
+
+            session_id = data.get("id")
+            ctx.set_data("cortex_session_id", session_id)
+            ctx.set_data("cortex_project_slug", slug)
+            ctx.set_data("cortex_project_name", original)
+
+            if slug:
+                await http.cortex_post(
+                    cfg.url,
+                    f"/v1/sessions/{session_id}/topic",
+                    {"topic": slug, "lock": True, "create_if_missing": True},
+                    cfg.api_key,
                 )
-                resp.raise_for_status()
-                data = resp.json()
-                cortex_session_id = data.get("id")
 
-            ctx = getattr(agent, "context", None)
-            if ctx and cortex_session_id:
-                if hasattr(ctx, "set_data"):
-                    ctx.set_data("cortex_session_id", cortex_session_id)
-                else:
-                    setattr(ctx, "_cortex_session_id", cortex_session_id)
-
-            logger.info(f"cortex_init: session created {cortex_session_id} for project {sanitized_slug}")
+            logger.info(f"cortex.init: session={session_id} project={slug}")
 
         except Exception as e:
-            logger.warning(f"cortex_init: failed (non-fatal): {e}")
+            logger.warning(f"cortex.init: failed (non-fatal): {e}")

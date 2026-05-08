@@ -1,0 +1,321 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.10, pytest-9.0.3, pluggy-1.6.0 -- /Users/paolo/Documents/Projects/agent-zero-cortex/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/paolo/Documents/Projects/agent-zero-cortex
+configfile: pyproject.toml
+plugins: asyncio-1.3.0, anyio-4.13.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 11 items
+
+tests/wrapper/test_init_wrapper.py::test_calls_load_config FAILED        [  9%]
+tests/wrapper/test_init_wrapper.py::test_project_lookup_via_helper FAILED [ 18%]
+tests/wrapper/test_init_wrapper.py::test_project_fallback_when_helper_raises FAILED [ 27%]
+tests/wrapper/test_init_wrapper.py::test_disabled_config_no_http PASSED  [ 36%]
+tests/wrapper/test_init_wrapper.py::test_no_api_key_no_http PASSED       [ 45%]
+tests/wrapper/test_init_wrapper.py::test_session_post_body FAILED        [ 54%]
+tests/wrapper/test_init_wrapper.py::test_sets_context_data FAILED        [ 63%]
+tests/wrapper/test_init_wrapper.py::test_topic_lock_for_project FAILED   [ 72%]
+tests/wrapper/test_init_wrapper.py::test_no_topic_lock_projectless FAILED [ 81%]
+tests/wrapper/test_init_wrapper.py::test_http_exception_no_escape FAILED [ 90%]
+tests/wrapper/test_init_wrapper.py::test_logs_info_on_success FAILED     [100%]
+
+=================================== FAILURES ===================================
+____________________________ test_calls_load_config ____________________________
+
+mock_cfg = <MagicMock name='load_config' id='4480438528'>
+mock_proj = <MagicMock name='get_context_project_name' id='4480445584'>
+mock_resolve = <MagicMock name='project_resolve' id='4480449280'>
+mock_post = <AsyncMock name='cortex_post' id='4480748384'>
+
+    @patch("cortex_plugin.http.cortex_post", new_callable=AsyncMock)
+    @patch("cortex_plugin.slugs.project_resolve", return_value=("homelab", "homelab"))
+    @patch("helpers.projects.get_context_project_name", return_value="homelab")
+    @patch("cortex_plugin.config.load_config")
+    def test_calls_load_config(mock_cfg, mock_proj, mock_resolve, mock_post):
+        mock_cfg.return_value = _make_cfg()
+        mock_post.return_value = SESSION_RESP
+        _run(_make_ext().execute())
+>       mock_cfg.assert_called_once()
+
+tests/wrapper/test_init_wrapper.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='load_config' id='4480438528'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'load_config' to have been called once. Called 0 times.
+
+/usr/local/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py:928: AssertionError
+________________________ test_project_lookup_via_helper ________________________
+
+mock_cfg = <MagicMock name='load_config' id='4488286896'>
+mock_proj = <MagicMock name='get_context_project_name' id='4488288192'>
+mock_resolve = <MagicMock name='project_resolve' id='4488292320'>
+mock_post = <AsyncMock name='cortex_post' id='4488296352'>
+
+    @patch("cortex_plugin.http.cortex_post", new_callable=AsyncMock)
+    @patch("cortex_plugin.slugs.project_resolve", return_value=("homelab", "homelab"))
+    @patch("helpers.projects.get_context_project_name", return_value="homelab")
+    @patch("cortex_plugin.config.load_config")
+    def test_project_lookup_via_helper(mock_cfg, mock_proj, mock_resolve, mock_post):
+        mock_cfg.return_value = _make_cfg()
+        mock_post.return_value = SESSION_RESP
+        agent = _make_agent(project_name="homelab")
+        _run(_make_ext(agent).execute())
+>       mock_proj.assert_called_once_with(agent.context)
+
+tests/wrapper/test_init_wrapper.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='get_context_project_name' id='4488288192'>
+args = (<MagicMock name='mock.context' id='4489159904'>,), kwargs = {}
+msg = "Expected 'get_context_project_name' to be called once. Called 0 times."
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'get_context_project_name' to be called once. Called 0 times.
+
+/usr/local/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py:960: AssertionError
+___________________ test_project_fallback_when_helper_raises ___________________
+
+mock_cfg = <MagicMock name='load_config' id='4489125168'>
+mock_proj = <MagicMock name='get_context_project_name' id='4489123776'>
+mock_resolve = <MagicMock name='project_resolve' id='4489127904'>
+mock_post = <AsyncMock name='cortex_post' id='4489132032'>
+
+    @patch("cortex_plugin.http.cortex_post", new_callable=AsyncMock)
+    @patch("cortex_plugin.slugs.project_resolve")
+    @patch("helpers.projects.get_context_project_name", side_effect=RuntimeError("boom"))
+    @patch("cortex_plugin.config.load_config")
+    def test_project_fallback_when_helper_raises(mock_cfg, mock_proj, mock_resolve, mock_post):
+        mock_cfg.return_value = _make_cfg()
+        mock_resolve.return_value = ("fallback_proj", "fallback-proj")
+        mock_post.return_value = SESSION_RESP
+        agent = _make_agent(project_name="fallback-proj")
+        _run(_make_ext(agent).execute())
+        # Falls back to ctx.current_project = "fallback-proj"
+>       mock_resolve.assert_called_once_with("fallback-proj")
+
+tests/wrapper/test_init_wrapper.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='project_resolve' id='4489127904'>
+args = ('fallback-proj',), kwargs = {}
+msg = "Expected 'project_resolve' to be called once. Called 0 times."
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'project_resolve' to be called once. Called 0 times.
+
+/usr/local/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py:960: AssertionError
+____________________________ test_session_post_body ____________________________
+
+mock_cfg = <MagicMock name='load_config' id='4488288768'>
+mock_proj = <MagicMock name='get_context_project_name' id='4488297408'>
+mock_resolve = <MagicMock name='project_resolve' id='4488287184'>
+mock_post = <AsyncMock name='cortex_post' id='4481906304'>
+
+    @patch("cortex_plugin.http.cortex_post", new_callable=AsyncMock)
+    @patch("cortex_plugin.slugs.project_resolve", return_value=("homelab", "homelab"))
+    @patch("helpers.projects.get_context_project_name", return_value="homelab")
+    @patch("cortex_plugin.config.load_config")
+    def test_session_post_body(mock_cfg, mock_proj, mock_resolve, mock_post):
+        mock_cfg.return_value = _make_cfg(url="http://cortex.local")
+        mock_post.return_value = SESSION_RESP
+        agent = _make_agent(project_name="homelab")
+        _run(_make_ext(agent).execute())
+    
+        # At least one call is for /v1/sessions
+        session_calls = [
+            c for c in mock_post.call_args_list
+            if c[0][1] == "/v1/sessions"
+        ]
+>       assert session_calls, "Expected cortex_post call for /v1/sessions"
+E       AssertionError: Expected cortex_post call for /v1/sessions
+E       assert []
+
+tests/wrapper/test_init_wrapper.py:140: AssertionError
+____________________________ test_sets_context_data ____________________________
+
+mock_cfg = <MagicMock name='load_config' id='4488274976'>
+mock_proj = <MagicMock name='get_context_project_name' id='4488271232'>
+mock_resolve = <MagicMock name='project_resolve' id='4488728112'>
+mock_post = <AsyncMock name='cortex_post' id='4488732384'>
+
+    @patch("cortex_plugin.http.cortex_post", new_callable=AsyncMock)
+    @patch("cortex_plugin.slugs.project_resolve", return_value=("homelab", "homelab"))
+    @patch("helpers.projects.get_context_project_name", return_value="homelab")
+    @patch("cortex_plugin.config.load_config")
+    def test_sets_context_data(mock_cfg, mock_proj, mock_resolve, mock_post):
+        mock_cfg.return_value = _make_cfg()
+        mock_post.return_value = SESSION_RESP
+        agent = _make_agent(project_name="homelab")
+        _run(_make_ext(agent).execute())
+    
+>       agent.context.set_data.assert_any_call("cortex_session_id", "cortex-session-xyz")
+
+tests/wrapper/test_init_wrapper.py:164: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='mock.context.set_data' id='4488556336'>
+args = ('cortex_session_id', 'cortex-session-xyz'), kwargs = {}
+expected = call('cortex_session_id', 'cortex-session-xyz'), cause = None
+actual = []
+expected_string = "set_data('cortex_session_id', 'cortex-session-xyz')"
+
+    def assert_any_call(self, /, *args, **kwargs):
+        """assert the mock has been called with the specified arguments.
+    
+        The assert passes if the mock has *ever* been called, unlike
+        `assert_called_with` and `assert_called_once_with` that only pass if
+        the call is the most recent one."""
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        cause = expected if isinstance(expected, Exception) else None
+        actual = [self._call_matcher(c) for c in self.call_args_list]
+        if cause or expected not in _AnyComparer(actual):
+            expected_string = self._format_mock_call_signature(args, kwargs)
+>           raise AssertionError(
+                '%s call not found' % expected_string
+            ) from cause
+E           AssertionError: set_data('cortex_session_id', 'cortex-session-xyz') call not found
+
+/usr/local/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py:1020: AssertionError
+_________________________ test_topic_lock_for_project __________________________
+
+mock_cfg = <MagicMock name='load_config' id='4488485136'>
+mock_proj = <MagicMock name='get_context_project_name' id='4488483696'>
+mock_resolve = <MagicMock name='project_resolve' id='4488487728'>
+mock_post = <AsyncMock name='cortex_post' id='4488491760'>
+
+    @patch("cortex_plugin.http.cortex_post", new_callable=AsyncMock)
+    @patch("cortex_plugin.slugs.project_resolve", return_value=("homelab", "homelab"))
+    @patch("helpers.projects.get_context_project_name", return_value="homelab")
+    @patch("cortex_plugin.config.load_config")
+    def test_topic_lock_for_project(mock_cfg, mock_proj, mock_resolve, mock_post):
+        mock_cfg.return_value = _make_cfg()
+        mock_post.side_effect = [{"id": "cortex-session-xyz"}, {}]
+        agent = _make_agent(project_name="homelab")
+        _run(_make_ext(agent).execute())
+    
+>       assert mock_post.call_count == 2, (
+            f"Expected 2 cortex_post calls (session + topic lock), got {mock_post.call_count}"
+        )
+E       AssertionError: Expected 2 cortex_post calls (session + topic lock), got 0
+E       assert 0 == 2
+E        +  where 0 = <AsyncMock name='cortex_post' id='4488491760'>.call_count
+
+tests/wrapper/test_init_wrapper.py:183: AssertionError
+________________________ test_no_topic_lock_projectless ________________________
+
+mock_cfg = <MagicMock name='load_config' id='4488657616'>
+mock_proj = <MagicMock name='get_context_project_name' id='4488647392'>
+mock_resolve = <MagicMock name='project_resolve' id='4488651472'>
+mock_post = <AsyncMock name='cortex_post' id='4488655456'>
+
+    @patch("cortex_plugin.http.cortex_post", new_callable=AsyncMock)
+    @patch("cortex_plugin.slugs.project_resolve", return_value=(None, None))
+    @patch("helpers.projects.get_context_project_name", return_value=None)
+    @patch("cortex_plugin.config.load_config")
+    def test_no_topic_lock_projectless(mock_cfg, mock_proj, mock_resolve, mock_post):
+        mock_cfg.return_value = _make_cfg()
+        mock_post.return_value = SESSION_RESP
+        agent = _make_agent(project_name=None)
+        _run(_make_ext(agent).execute())
+    
+>       assert mock_post.call_count == 1, (
+            f"Expected only 1 cortex_post call (no topic lock), got {mock_post.call_count}"
+        )
+E       AssertionError: Expected only 1 cortex_post call (no topic lock), got 0
+E       assert 0 == 1
+E        +  where 0 = <AsyncMock name='cortex_post' id='4488655456'>.call_count
+
+tests/wrapper/test_init_wrapper.py:205: AssertionError
+________________________ test_http_exception_no_escape _________________________
+
+mock_cfg = <MagicMock name='load_config' id='4489134976'>
+mock_proj = <MagicMock name='get_context_project_name' id='4489138816'>
+mock_resolve = <MagicMock name='project_resolve' id='4489142944'>
+mock_post = <AsyncMock name='cortex_post' id='4489147072'>
+caplog = <_pytest.logging.LogCaptureFixture object at 0x10b92c440>
+
+    @patch("cortex_plugin.http.cortex_post", new_callable=AsyncMock)
+    @patch("cortex_plugin.slugs.project_resolve", return_value=("homelab", "homelab"))
+    @patch("helpers.projects.get_context_project_name", return_value="homelab")
+    @patch("cortex_plugin.config.load_config")
+    def test_http_exception_no_escape(mock_cfg, mock_proj, mock_resolve, mock_post, caplog):
+        mock_cfg.return_value = _make_cfg()
+        mock_post.side_effect = Exception("network error")
+        with caplog.at_level(logging.WARNING):
+            _run(_make_ext().execute())  # must not raise
+        warns = [r for r in caplog.records if r.levelno == logging.WARNING]
+>       assert warns, "Should log a warning on HTTP exception"
+E       AssertionError: Should log a warning on HTTP exception
+E       assert []
+
+tests/wrapper/test_init_wrapper.py:225: AssertionError
+__________________________ test_logs_info_on_success ___________________________
+
+mock_cfg = <MagicMock name='load_config' id='4488696400'>
+mock_proj = <MagicMock name='get_context_project_name' id='4488703360'>
+mock_resolve = <MagicMock name='project_resolve' id='4488704272'>
+mock_post = <AsyncMock name='cortex_post' id='4488699664'>
+caplog = <_pytest.logging.LogCaptureFixture object at 0x10b8c10d0>
+
+    @patch("cortex_plugin.http.cortex_post", new_callable=AsyncMock)
+    @patch("cortex_plugin.slugs.project_resolve", return_value=("homelab", "homelab"))
+    @patch("helpers.projects.get_context_project_name", return_value="homelab")
+    @patch("cortex_plugin.config.load_config")
+    def test_logs_info_on_success(mock_cfg, mock_proj, mock_resolve, mock_post, caplog):
+        mock_cfg.return_value = _make_cfg()
+        mock_post.return_value = SESSION_RESP
+        with caplog.at_level(logging.INFO):
+            _run(_make_ext().execute())
+    
+        info_msgs = [r.message for r in caplog.records if r.levelno == logging.INFO]
+>       assert any("session=cortex-session-xyz" in m for m in info_msgs), (
+            f"Expected INFO log with session=cortex-session-xyz, got: {info_msgs}"
+        )
+E       AssertionError: Expected INFO log with session=cortex-session-xyz, got: []
+E       assert False
+E        +  where False = any(<generator object test_logs_info_on_success.<locals>.<genexpr> at 0x10b8465a0>)
+
+tests/wrapper/test_init_wrapper.py:243: AssertionError
+=============================== warnings summary ===============================
+tests/wrapper/test_init_wrapper.py::test_calls_load_config
+  /Users/paolo/Documents/Projects/agent-zero-cortex/tests/wrapper/test_init_wrapper.py:37: DeprecationWarning: There is no current event loop
+    return asyncio.get_event_loop().run_until_complete(coro)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/wrapper/test_init_wrapper.py::test_calls_load_config - Assertion...
+FAILED tests/wrapper/test_init_wrapper.py::test_project_lookup_via_helper - A...
+FAILED tests/wrapper/test_init_wrapper.py::test_project_fallback_when_helper_raises
+FAILED tests/wrapper/test_init_wrapper.py::test_session_post_body - Assertion...
+FAILED tests/wrapper/test_init_wrapper.py::test_sets_context_data - Assertion...
+FAILED tests/wrapper/test_init_wrapper.py::test_topic_lock_for_project - Asse...
+FAILED tests/wrapper/test_init_wrapper.py::test_no_topic_lock_projectless - A...
+FAILED tests/wrapper/test_init_wrapper.py::test_http_exception_no_escape - As...
+FAILED tests/wrapper/test_init_wrapper.py::test_logs_info_on_success - Assert...
+==================== 9 failed, 2 passed, 1 warning in 0.51s ====================
