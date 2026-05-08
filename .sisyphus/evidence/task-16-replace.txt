@@ -1,0 +1,18 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.10, pytest-9.0.3, pluggy-1.6.0 -- /Users/paolo/Documents/Projects/agent-zero-cortex/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/paolo/Documents/Projects/agent-zero-cortex
+configfile: pyproject.toml
+plugins: asyncio-1.3.0, anyio-4.13.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 1 item
+
+tests/wrapper/test_recall_wrapper.py::test_replaces_extras PASSED        [100%]
+
+=============================== warnings summary ===============================
+tests/wrapper/test_recall_wrapper.py::test_replaces_extras
+  /Users/paolo/Documents/Projects/agent-zero-cortex/tests/wrapper/test_recall_wrapper.py:46: DeprecationWarning: There is no current event loop
+    return asyncio.get_event_loop().run_until_complete(coro)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+========================= 1 passed, 1 warning in 0.08s =========================

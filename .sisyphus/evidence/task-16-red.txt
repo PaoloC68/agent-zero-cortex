@@ -1,0 +1,235 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.10, pytest-9.0.3, pluggy-1.6.0 -- /Users/paolo/Documents/Projects/agent-zero-cortex/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/paolo/Documents/Projects/agent-zero-cortex
+configfile: pyproject.toml
+plugins: asyncio-1.3.0, anyio-4.13.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 11 items
+
+tests/wrapper/test_recall_wrapper.py::test_disabled_skips PASSED         [  9%]
+tests/wrapper/test_recall_wrapper.py::test_no_api_key_skips PASSED       [ 18%]
+tests/wrapper/test_recall_wrapper.py::test_missing_session_id_skips PASSED [ 27%]
+tests/wrapper/test_recall_wrapper.py::test_short_query_skips PASSED      [ 36%]
+tests/wrapper/test_recall_wrapper.py::test_query_extraction_truncated FAILED [ 45%]
+tests/wrapper/test_recall_wrapper.py::test_project_lookup_called FAILED  [ 54%]
+tests/wrapper/test_recall_wrapper.py::test_recall_called_with_config FAILED [ 63%]
+tests/wrapper/test_recall_wrapper.py::test_legacy_rank_toggle FAILED     [ 72%]
+tests/wrapper/test_recall_wrapper.py::test_replaces_extras FAILED        [ 81%]
+tests/wrapper/test_recall_wrapper.py::test_failure_no_clobber FAILED     [ 90%]
+tests/wrapper/test_recall_wrapper.py::test_empty_clears_stale FAILED     [100%]
+
+=================================== FAILURES ===================================
+_______________________ test_query_extraction_truncated ________________________
+
+mock_cfg = <MagicMock name='load_config' id='4390604000'>
+mock_proj = <MagicMock name='get_context_project_name' id='4390607744'>
+mock_recall = <AsyncMock name='recall_and_format' id='4390611536'>
+
+    @patch("cortex_plugin.recall.recall_and_format", new_callable=AsyncMock)
+    @patch("helpers.projects.get_context_project_name", return_value=None)
+    @patch("cortex_plugin.config.load_config")
+    def test_query_extraction_truncated(mock_cfg, mock_proj, mock_recall):
+        mock_cfg.return_value = _make_cfg()
+        mock_recall.return_value = ""
+        long_content = "x" * 600
+        ext = _make_ext()
+        loop_data = _make_loop_data(content=long_content)
+        _run(ext.execute(loop_data=loop_data))
+>       mock_recall.assert_called_once()
+
+tests/wrapper/test_recall_wrapper.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <AsyncMock name='recall_and_format' id='4390611536'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'recall_and_format' to have been called once. Called 0 times.
+
+/usr/local/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py:928: AssertionError
+__________________________ test_project_lookup_called __________________________
+
+mock_cfg = <MagicMock name='load_config' id='4390574784'>
+mock_proj = <MagicMock name='get_context_project_name' id='4390572096'>
+mock_recall = <AsyncMock name='recall_and_format' id='4390568208'>
+
+    @patch("cortex_plugin.recall.recall_and_format", new_callable=AsyncMock)
+    @patch("helpers.projects.get_context_project_name", return_value="My Project!")
+    @patch("cortex_plugin.config.load_config")
+    def test_project_lookup_called(mock_cfg, mock_proj, mock_recall):
+        mock_cfg.return_value = _make_cfg()
+        mock_recall.return_value = ""
+        agent = _make_agent()
+        ext = _make_ext(agent)
+        loop_data = _make_loop_data()
+        _run(ext.execute(loop_data=loop_data))
+>       mock_proj.assert_called_once_with(agent.context)
+
+tests/wrapper/test_recall_wrapper.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='get_context_project_name' id='4390572096'>
+args = (<MagicMock name='mock.context' id='4390548832'>,), kwargs = {}
+msg = "Expected 'get_context_project_name' to be called once. Called 0 times."
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'get_context_project_name' to be called once. Called 0 times.
+
+/usr/local/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py:960: AssertionError
+________________________ test_recall_called_with_config ________________________
+
+mock_cfg = <MagicMock name='load_config' id='4390496560'>
+mock_proj = <MagicMock name='get_context_project_name' id='4390493872'>
+mock_recall = <AsyncMock name='recall_and_format' id='4390467536'>
+
+    @patch("cortex_plugin.recall.recall_and_format", new_callable=AsyncMock)
+    @patch("helpers.projects.get_context_project_name", return_value=None)
+    @patch("cortex_plugin.config.load_config")
+    def test_recall_called_with_config(mock_cfg, mock_proj, mock_recall):
+        mock_cfg.return_value = _make_cfg(
+            recall_threshold=0.15,
+            recall_legacy_rank=False,
+            recall_limit=3,
+        )
+        mock_recall.return_value = ""
+        ext = _make_ext()
+        loop_data = _make_loop_data()
+        _run(ext.execute(loop_data=loop_data))
+>       mock_recall.assert_called_once()
+
+tests/wrapper/test_recall_wrapper.py:145: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <AsyncMock name='recall_and_format' id='4390467536'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'recall_and_format' to have been called once. Called 0 times.
+
+/usr/local/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py:928: AssertionError
+___________________________ test_legacy_rank_toggle ____________________________
+
+mock_cfg = <MagicMock name='load_config' id='4390419200'>
+mock_proj = <MagicMock name='get_context_project_name' id='4390347136'>
+mock_recall = <AsyncMock name='recall_and_format' id='4390349488'>
+
+    @patch("cortex_plugin.recall.recall_and_format", new_callable=AsyncMock)
+    @patch("helpers.projects.get_context_project_name", return_value=None)
+    @patch("cortex_plugin.config.load_config")
+    def test_legacy_rank_toggle(mock_cfg, mock_proj, mock_recall):
+        mock_cfg.return_value = _make_cfg(recall_legacy_rank=True)
+        mock_recall.return_value = ""
+        ext = _make_ext()
+        _run(ext.execute(loop_data=_make_loop_data()))
+>       _, kwargs = mock_recall.call_args
+        ^^^^^^^^^
+E       TypeError: cannot unpack non-iterable NoneType object
+
+tests/wrapper/test_recall_wrapper.py:160: TypeError
+_____________________________ test_replaces_extras _____________________________
+
+mock_cfg = <MagicMock name='load_config' id='4391077792'>
+mock_proj = <MagicMock name='get_context_project_name' id='4391081584'>
+mock_recall = <AsyncMock name='recall_and_format' id='4391085376'>
+
+    @patch("cortex_plugin.recall.recall_and_format", new_callable=AsyncMock)
+    @patch("helpers.projects.get_context_project_name", return_value=None)
+    @patch("cortex_plugin.config.load_config")
+    def test_replaces_extras(mock_cfg, mock_proj, mock_recall):
+        mock_cfg.return_value = _make_cfg()
+        mock_recall.return_value = "## Memories\n\nNEW"
+        ext = _make_ext()
+        loop_data = _make_loop_data(memories="OLD_FAISS_CONTENT")
+        _run(ext.execute(loop_data=loop_data))
+>       assert loop_data.extras_persistent["memories"] == "## Memories\n\nNEW"
+E       AssertionError: assert 'OLD_FAISS_CONTENT' == '## Memories\n\nNEW'
+E         
+E         + OLD_FAISS_CONTENT
+E         - ## Memories
+E         - 
+E         - NEW
+
+tests/wrapper/test_recall_wrapper.py:173: AssertionError
+___________________________ test_failure_no_clobber ____________________________
+
+mock_cfg = <MagicMock name='load_config' id='4390852352'>
+mock_proj = <MagicMock name='get_context_project_name' id='4390856048'>
+mock_recall = <AsyncMock name='recall_and_format' id='4390859840'>
+caplog = <_pytest.logging.LogCaptureFixture object at 0x105b71730>
+
+    @patch("cortex_plugin.recall.recall_and_format", new_callable=AsyncMock)
+    @patch("helpers.projects.get_context_project_name", return_value=None)
+    @patch("cortex_plugin.config.load_config")
+    def test_failure_no_clobber(mock_cfg, mock_proj, mock_recall, caplog):
+        mock_cfg.return_value = _make_cfg()
+        req = httpx.Request("POST", "http://cortex.local/v1/recall")
+        mock_recall.side_effect = httpx.RequestError("timed out", request=req)
+        ext = _make_ext()
+        loop_data = _make_loop_data(memories="PREVIOUS_VALUE")
+        with caplog.at_level(logging.WARNING):
+            _run(ext.execute(loop_data=loop_data))
+        assert loop_data.extras_persistent["memories"] == "PREVIOUS_VALUE"
+>       assert any(r.levelno == logging.WARNING for r in caplog.records)
+E       assert False
+E        +  where False = any(<generator object test_failure_no_clobber.<locals>.<genexpr> at 0x105272740>)
+
+tests/wrapper/test_recall_wrapper.py:189: AssertionError
+___________________________ test_empty_clears_stale ____________________________
+
+mock_cfg = <MagicMock name='load_config' id='4390816896'>
+mock_proj = <MagicMock name='get_context_project_name' id='4390829616'>
+mock_recall = <AsyncMock name='recall_and_format' id='4391077456'>
+
+    @patch("cortex_plugin.recall.recall_and_format", new_callable=AsyncMock)
+    @patch("helpers.projects.get_context_project_name", return_value=None)
+    @patch("cortex_plugin.config.load_config")
+    def test_empty_clears_stale(mock_cfg, mock_proj, mock_recall):
+        mock_cfg.return_value = _make_cfg()
+        mock_recall.return_value = ""
+        ext = _make_ext()
+        loop_data = _make_loop_data(memories="STALE_FAISS")
+        _run(ext.execute(loop_data=loop_data))
+>       assert loop_data.extras_persistent["memories"] == ""
+E       AssertionError: assert 'STALE_FAISS' == ''
+E         
+E         + STALE_FAISS
+
+tests/wrapper/test_recall_wrapper.py:201: AssertionError
+=============================== warnings summary ===============================
+tests/wrapper/test_recall_wrapper.py::test_disabled_skips
+  /Users/paolo/Documents/Projects/agent-zero-cortex/tests/wrapper/test_recall_wrapper.py:46: DeprecationWarning: There is no current event loop
+    return asyncio.get_event_loop().run_until_complete(coro)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/wrapper/test_recall_wrapper.py::test_query_extraction_truncated
+FAILED tests/wrapper/test_recall_wrapper.py::test_project_lookup_called - Ass...
+FAILED tests/wrapper/test_recall_wrapper.py::test_recall_called_with_config
+FAILED tests/wrapper/test_recall_wrapper.py::test_legacy_rank_toggle - TypeEr...
+FAILED tests/wrapper/test_recall_wrapper.py::test_replaces_extras - Assertion...
+FAILED tests/wrapper/test_recall_wrapper.py::test_failure_no_clobber - assert...
+FAILED tests/wrapper/test_recall_wrapper.py::test_empty_clears_stale - Assert...
+==================== 7 failed, 4 passed, 1 warning in 1.47s ====================
