@@ -56,7 +56,8 @@ def _load_prompt(filename: str) -> str:
             content = override_path.read_text(encoding="utf-8")
         except (FileNotFoundError, IsADirectoryError, PermissionError, OSError) as e:
             logger.warning(
-                f"Failed to read override prompt {override_dir}/{filename}: {e}. Falling back to vendored prompt."
+                "Failed to read override prompt %s/%s: %s. Falling back to vendored prompt.",
+                override_dir, filename, e
             )
     
     if content is None:

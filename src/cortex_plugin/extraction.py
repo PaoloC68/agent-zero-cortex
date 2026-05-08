@@ -73,7 +73,7 @@ async def _call_with_retry(
             raw = await utility_call(history, prompt)
             return parser(raw)
         except ExtractionParseError as exc:
-            if attempt == 1:
+            if attempt == RETRY_ATTEMPTS - 1:
                 logger.warning("extraction: %s failed after retry: %s", label, exc)
                 return []
         except Exception as exc:

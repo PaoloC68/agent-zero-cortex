@@ -38,8 +38,8 @@ class CortexRecall(Extension):
         project_name = None
         try:
             project_name = proj_helpers.get_context_project_name(ctx)
-        except Exception:
-            pass
+        except Exception as exc:
+            logger.debug("cortex.recall: get_context_project_name failed, using fallback: %s", exc)
         current_project_slug, _ = slugs.project_resolve(project_name)
 
         extras = getattr(loop_data, "extras_persistent", None)
