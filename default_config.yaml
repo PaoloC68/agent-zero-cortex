@@ -1,7 +1,0 @@
-cortex_url: "http://192.168.1.12:8001"
-cortex_api_key_env: "CORTEX_API_KEY"
-cortex_enabled: true
-cortex_recall_limit: 5
-cortex_recall_threshold: 0.7
-cortex_merge_strategy: "append"
-faiss_assertion_check: true
