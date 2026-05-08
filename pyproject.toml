@@ -22,3 +22,8 @@ dev = [
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
+markers = ["integration: real-Cortex tests, run with -m integration"]
+addopts = "-m 'not integration'"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cortex_plugin"]
