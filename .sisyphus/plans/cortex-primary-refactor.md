@@ -2234,15 +2234,15 @@ EOF"
 > **Do NOT auto-proceed after verification. Wait for user's explicit approval before marking work complete.**
 > **Never mark F1-F4 as checked before getting user's okay.** Rejection or user feedback → fix → re-run → present again → wait for okay.
 
-- [ ] F1. **Plan Compliance Audit** — `oracle`
+- [x] F1. **Plan Compliance Audit** — `oracle`
   Read this plan end-to-end. For each "Must Have": verify implementation exists (Read each file path; run each Definition-of-Done command). For each "Must NOT Have": grep codebase for forbidden patterns — reject with file:line if found. Specifically check: no `client.py`, no `default_config.yaml`, no `_50_cortex_*.py`, no metadata field in any POST body, no `tenacity`/`backoff` imports, no Pydantic for internal data, **all 7 env vars present** (`CORTEX_URL`, `CORTEX_API_KEY`, `CORTEX_ENABLED`, `CORTEX_RECALL_LIMIT`, `CORTEX_RECALL_THRESHOLD`, `CORTEX_RECALL_LEGACY_RANK`, `CORTEX_PROMPT_DIR` — no extras), `_60_` prefix on all three extensions, vendored prompts exist with commit-SHA reference, **`scripts/calibrate-recall-threshold.sh` exists and runs end-to-end (T15.5)**, **`tests/integration/test_forward_compat.py` exists with ≥4 tests (T19.5)**, **MIGRATION.md contains Cortex Version Compatibility section** with 4-row version matrix. Compare deliverables against plan word-by-word.
   Output: `Must Have [N/N] | Must NOT Have [N/N] | Tasks [24/24] | VERDICT: APPROVE/REJECT`
 
-- [ ] F2. **Code Quality Review** — `unspecified-high`
+- [x] F2. **Code Quality Review** — `unspecified-high`
   Run `python -m pytest tests/unit/ tests/wrapper/ -v` and confirm exit 0. Run `python -m pytest tests/integration/ -v -m integration` against live Cortex (use `CORTEX_URL=http://192.168.1.12:8001` and `CORTEX_API_KEY` from env) and confirm exit 0. Review all changed files in `src/cortex_plugin/`, `extensions/python/`, `tests/` for: `as Any`/`# type: ignore`, empty `except: pass`, `print()` calls, commented-out code, unused imports, dead branches. Check AI slop: excessive comments explaining what code obviously does, premature abstractions (any class with only `__init__` + one method), generic names (data/result/item/temp/handle/process), redundant docstrings repeating the function signature. Check pure-function library: ZERO `helpers.*` or `agent.*` imports.
   Output: `Build [PASS/FAIL] | Unit [N/N] | Wrapper [N/N] | Integration [N/N] | Files [N clean/N issues] | VERDICT`
 
-- [ ] F3. **Real Manual QA + Live Deployment** — `unspecified-high` (with `dev-browser` skill)
+- [x] F3. **Real Manual QA + Live Deployment** — `unspecified-high` (with `dev-browser` skill)
 
   **Phase 1 — Evidence audit (idempotent, non-destructive)**: Do NOT re-run task QA scenarios (most are non-idempotent: `git tag`, `git rm`, `git mv`, prompt copy operations succeed only once). Instead, for each of T1–T22, READ the captured evidence files from `.sisyphus/evidence/task-{N}-*` and verify each task's expected outputs match the file contents. Re-run ONLY safe/read-only commands per task: pytest invocations (idempotent), `! grep -E ...` purity checks (idempotent), `test -f` / `test ! -f` existence checks (idempotent). Compile a per-task pass/fail table to `.sisyphus/evidence/final-qa/audit.md`. If any task's evidence is missing or contradicts the task spec, mark it FAIL and surface to user.
 
@@ -2289,7 +2289,7 @@ EOF"
   - Phase 2 step 4's `pip install` invocation is the critical hot-spot: AZ container must have access to the editable install. If the container's site-packages is volume-mounted differently than expected, the executor must investigate the actual install location (read AZ's Dockerfile + docker-compose.yml on LXC 500) and adjust the install command. Document the actual approach taken in `.sisyphus/evidence/final-qa/live/deploy.txt`.
   - On failure of Phase 2 imports: Phase 3 MUST NOT proceed. Surface the issue, possibly halt and require user input.
 
-- [ ] F4. **Scope Fidelity Check** — `deep`
+- [x] F4. **Scope Fidelity Check** — `deep`
   For each task (T1–T22 + T15.5 + T19.5 = 24 tasks): read "What to do", read actual diff (`git diff pre-cortex-primary-v1..HEAD -- <file>`). Verify 1:1 — everything in spec was built (no missing), nothing beyond spec was built (no creep). Specifically check the "Must NOT Have" guardrails: grep for tenacity, backoff, structured logging libraries, Pydantic models in `src/`, new env var names beyond the 7 documented, parallel POST loops in `extraction.py`/wrapper code, area filtering in recall, metadata field in POST bodies. Detect cross-task contamination: Task N touching Task M's files (e.g., did T11 modify `slugs.py` which belongs to T6?). Flag unaccounted changes in any file not listed in any task's "Files" section. Verify T15.5 and T19.5 are NOT skipped (forward-compat tasks).
   Output: `Tasks [24/24 compliant] | Guardrails enforced [Y/N] | Contamination [CLEAN/N issues] | Unaccounted [CLEAN/N files] | Forward-compat tasks [PRESENT/MISSING] | VERDICT`
 

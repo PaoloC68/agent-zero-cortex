@@ -1,0 +1,5 @@
+[38;2;255;255;255m> Remember that the F3 verification marker is XYZQ-F3-VERIFY-2026-20260508[0m
+[3m[38;2;179;255;217m3 verification marker**: `XYZQ-F3-VERIFY-2026-20260508`\n"
+- **F3 verification marker**: `XYZQ-F3-VERIFY-2026-20260508`
+3 - **F3 verification marker**: `XYZQ-F3-VERIFY-2026-20260508`
+=== END CORTEX LOGS ===

@@ -122,9 +122,10 @@
       "task_key": "final-wave:f1",
       "task_label": "F1",
       "task_title": "**Plan Compliance Audit** — `oracle`",
-      "session_id": "ses_1f726956cffeu7kk7y27YRTYv4",
-      "agent": "oracle",
-      "updated_at": "2026-05-08T18:32:31.425Z"
+      "session_id": "ses_1f6fb1fa6ffe5rpBb0KFIBIuxs",
+      "agent": "Sisyphus-Junior",
+      "category": "deep",
+      "updated_at": "2026-05-08T19:18:28.984Z"
     }
   }
 }

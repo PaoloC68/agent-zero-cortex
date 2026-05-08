@@ -42,3 +42,24 @@
 - Unit + wrapper test suite passed: 150 passed in 0.43s.
 
 - Must-NOT guardrail violation: pytest fixture usage found despite `NO pytest fixtures` guardrail: `tests/unit/test_prompts.py` uses `tmp_path`; integration tests define `@pytest.fixture` cleanup finalizers in `test_recall_quality.py`, `test_forward_compat.py`, and `test_memorize_roundtrip.py`.
+
+## F3 QA Issues (2026-05-08)
+
+### 1. AppArmor blocks Docker container restart in LXC 500
+- Docker 29.3.1 in unprivileged LXC cannot read `/sys/kernel/security/apparmor/profiles`
+- Fix: bind-mount fake file over `/sys/module/apparmor/parameters/enabled` to make Docker `IsEnabled()` return false
+- Persisted via: `/etc/systemd/system/mask-apparmor-for-docker.service` (enabled, runs before docker.service)
+
+### 2. docker exec returns EXIT:126 in LXC (AppArmor namespace restriction)
+- `docker exec` requires process namespace access; AppArmor restricts in unprivileged LXC
+- Fix: write `cortex_plugin.pth` directly into overlay2 diff layer site-packages
+
+### 3. cortex.init / cortex.memorize log lines suppressed in docker logs
+- AZ `models.py` calls `turn_off_logging()` → sets ALL loggers to ERROR level
+- INFO-level cortex log lines never appear; verification must use Cortex recall API
+
+### 4. Cortex API v1 is append-only — no DELETE/forget endpoint
+- Test marker `XYZQ-F3-VERIFY-2026-20260508` remains in Cortex (0 forgotten)
+
+### 5. Stale extraction artefacts in /tmp/agent-zero-cortex/ on LXC
+- `tar xzf` leaves old files; `rm -f` stale files needed after each deployment
