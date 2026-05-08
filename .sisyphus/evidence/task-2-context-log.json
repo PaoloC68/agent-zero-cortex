@@ -1,0 +1,57 @@
+[
+  {
+    "no": 0,
+    "id": "487cc014-e55d-486b-9de8-f8658cb319da",
+    "type": "response",
+    "heading": "",
+    "content": "**Ready.** You have specialist subordinates available:\n\n| Command | Agent | Model | Use for |\n|---|---|---|---|\n| *delegate to deep-thinker* | Deep Thinker | GLM-5 + reasoning | Analytical problems, debugging, planning |\n| *delegate to ultra-deep-thinker* | Ultra Deep Thinker | Claude Opus 4.6 | Hardest problems, cost no concern |\n| *delegate to contrarian-thinker* | Contrarian Thinker | GPT-5.3 Codex | Devil's advocate, find holes |\n| *delegate to free-thinker* | Free Thinker | Dolphin (uncensored) | Unfiltered perspective, no guardrails |\n| *delegate to vision-analyst* | Vision Analyst | Qwen3-VL-235B | Image/diagram analysis |\n\nFor adversarial analysis: *\"Ask deep-thinker, ultra-deep-thinker, and contrarian-thinker to each independently analyze [your question]\"*",
+    "kvps": {
+      "finished": true
+    },
+    "timestamp": 1778260225.267803,
+    "agentno": 0
+  },
+  {
+    "no": 1,
+    "id": null,
+    "type": "user",
+    "heading": "",
+    "content": "Reply with only the word: CORTEX_SPIKE_TEST_DONE",
+    "kvps": {
+      "attachments": []
+    },
+    "timestamp": 1778260251.5621784,
+    "agentno": 0
+  },
+  {
+    "no": 2,
+    "id": "f3eac5e1-f2b6-4ee7-9276-2256297b0f04",
+    "type": "agent",
+    "heading": "A0: CORTEX_SPIKE_TEST_DONE",
+    "content": "{\n    \"thoughts\": [\"User wants me to reply with only that word.\"],\n    \"headline\": \"CORTEX_SPIKE_TEST_DONE\",\n    \"tool_name\": \"response\",\n    \"tool_args\": {\n        \"text\": \"CORTEX_SPIKE_TEST_DONE\"\n    }\n}",
+    "kvps": {
+      "thoughts": [
+        "User wants me to reply with only that word."
+      ],
+      "headline": "CORTEX_SPIKE_TEST_DONE",
+      "tool_name": "response",
+      "tool_args": {
+        "text": "CORTEX_SPIKE_TEST_DONE"
+      }
+    },
+    "timestamp": 1778260251.8744934,
+    "agentno": 0
+  },
+  {
+    "no": 3,
+    "id": "f3eac5e1-f2b6-4ee7-9276-2256297b0f04",
+    "type": "response",
+    "heading": "icon://chat A0: Responding",
+    "content": "CORTEX_SPIKE_TEST_DONE",
+    "kvps": {
+      "finished": true
+    },
+    "timestamp": 1778260254.622476,
+    "agentno": 0
+  }
+]

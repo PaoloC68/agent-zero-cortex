@@ -1,0 +1,37 @@
+AZ Docker Log — Since Test Start (2026-05-08T17:10:00 UTC)
+============================================================
+Captured: 2026-05-08T17:11:00 UTC
+
+[User message]
+> Reply with only the word: CORTEX_SPIKE_TEST_DONE
+
+[PathSpec deprecation warnings — harmless]
+
+[Guard] Injection pattern detected: ignore previous instructions
+
+[PathSpec deprecation warnings — harmless]
+
+Response:
+{
+    "thoughts": ["User wants me to reply with only that word."],
+    "headline": "CORTEX_SPIKE_TEST_DONE",
+    "tool_name": "response",
+    "tool_args": {
+        "text": "CORTEX_SPIKE_TEST_DONE"
+    }
+}
+
+=== UI Log Items for context wc6dUeIL (from /api/poll) ===
+
+Item 0: TYPE=response  (ready message / initial system greeting)
+Item 1: TYPE=user      CONTENT="Reply with only the word: CORTEX_SPIKE_TEST_DONE"
+Item 2: TYPE=agent     HEADING="A0: CORTEX_SPIKE_TEST_DONE"
+Item 3: TYPE=response  HEADING="icon://chat A0: Responding" CONTENT="CORTEX_SPIKE_TEST_DONE"
+
+=== ABSENT (expected if disabled) ===
+  - TYPE=util  HEADING="Searching memories..."       [_50_recall_memories.py]
+  - TYPE=util  HEADING="Memorizing new information..." [_50_memorize_fragments.py]
+
+=== Filesystem Evidence ===
+/opt/agent-zero/data/usr/projects/_test_cortex_primary/.a0proj/memory/
+  (empty — no FAISS index created)
