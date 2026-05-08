@@ -1,0 +1,254 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.10, pytest-9.0.3, pluggy-1.6.0 -- /Users/paolo/Documents/Projects/agent-zero-cortex/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/paolo/Documents/Projects/agent-zero-cortex
+configfile: pyproject.toml
+plugins: asyncio-1.3.0, anyio-4.13.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 23 items
+
+tests/unit/test_recall.py::test_should_skip_empty_query FAILED           [  4%]
+tests/unit/test_recall.py::test_should_skip_whitespace_only FAILED       [  8%]
+tests/unit/test_recall.py::test_should_skip_two_chars FAILED             [ 13%]
+tests/unit/test_recall.py::test_should_not_skip_exactly_min_chars FAILED [ 17%]
+tests/unit/test_recall.py::test_should_not_skip_long_query FAILED        [ 21%]
+tests/unit/test_recall.py::test_compute_candidate_count_small_limit_uses_floor FAILED [ 26%]
+tests/unit/test_recall.py::test_compute_candidate_count_large_limit_uses_multiplier FAILED [ 30%]
+tests/unit/test_recall.py::test_compute_candidate_count_mid_limit FAILED [ 34%]
+tests/unit/test_recall.py::test_fence_rerank_same_project_first FAILED   [ 39%]
+tests/unit/test_recall.py::test_fence_rerank_no_project FAILED           [ 43%]
+tests/unit/test_recall.py::test_fence_dominates_score FAILED             [ 47%]
+tests/unit/test_recall.py::test_fence_rerank_rrf_scores FAILED           [ 52%]
+tests/unit/test_recall.py::test_fence_rerank_composite_scores FAILED     [ 56%]
+tests/unit/test_recall.py::test_fence_rerank_empty_same_project FAILED   [ 60%]
+tests/unit/test_recall.py::test_fence_rerank_empty_cross_project FAILED  [ 65%]
+tests/unit/test_recall.py::test_format_block_exact FAILED                [ 69%]
+tests/unit/test_recall.py::test_format_block_empty_list FAILED           [ 73%]
+tests/unit/test_recall.py::test_format_block_skips_empty_content FAILED  [ 78%]
+tests/unit/test_recall.py::test_recall_and_format_skip_short_query FAILED [ 82%]
+tests/unit/test_recall.py::test_recall_and_format_orchestrates_full_flow FAILED [ 86%]
+tests/unit/test_recall.py::test_recall_and_format_legacy_rank_true FAILED [ 91%]
+tests/unit/test_recall.py::test_recall_and_format_legacy_rank_false FAILED [ 95%]
+tests/unit/test_recall.py::test_recall_and_format_cortex_error FAILED    [100%]
+
+=================================== FAILURES ===================================
+_________________________ test_should_skip_empty_query _________________________
+
+    def test_should_skip_empty_query():
+        """Empty string is below RECALL_QUERY_MIN_CHARS → skip."""
+>       from cortex_plugin.recall import should_skip_query
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:18: ModuleNotFoundError
+_______________________ test_should_skip_whitespace_only _______________________
+
+    def test_should_skip_whitespace_only():
+        """Whitespace-only string strips to zero chars → skip."""
+>       from cortex_plugin.recall import should_skip_query
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:25: ModuleNotFoundError
+__________________________ test_should_skip_two_chars __________________________
+
+    def test_should_skip_two_chars():
+        """Two-character query (stripped) is below threshold → skip."""
+>       from cortex_plugin.recall import should_skip_query
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:32: ModuleNotFoundError
+____________________ test_should_not_skip_exactly_min_chars ____________________
+
+    def test_should_not_skip_exactly_min_chars():
+        """Exactly RECALL_QUERY_MIN_CHARS (3) → do NOT skip."""
+>       from cortex_plugin.recall import should_skip_query
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:39: ModuleNotFoundError
+_______________________ test_should_not_skip_long_query ________________________
+
+    def test_should_not_skip_long_query():
+        """Normal query → do NOT skip."""
+>       from cortex_plugin.recall import should_skip_query
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:46: ModuleNotFoundError
+_____________ test_compute_candidate_count_small_limit_uses_floor ______________
+
+    def test_compute_candidate_count_small_limit_uses_floor():
+        """limit=5 → 5*5=25, but floor=30 → returns 30."""
+>       from cortex_plugin.recall import compute_candidate_count
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:58: ModuleNotFoundError
+___________ test_compute_candidate_count_large_limit_uses_multiplier ___________
+
+    def test_compute_candidate_count_large_limit_uses_multiplier():
+        """limit=10 → 10*5=50 > floor=30 → returns 50."""
+>       from cortex_plugin.recall import compute_candidate_count
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:65: ModuleNotFoundError
+____________________ test_compute_candidate_count_mid_limit ____________________
+
+    def test_compute_candidate_count_mid_limit():
+        """limit=7 → 7*5=35 > floor=30 → returns 35."""
+>       from cortex_plugin.recall import compute_candidate_count
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:72: ModuleNotFoundError
+_____________________ test_fence_rerank_same_project_first _____________________
+
+    def test_fence_rerank_same_project_first():
+        """3 same-project + 5 cross-project, limit=5 → 3 same first, then top-2 cross."""
+>       from cortex_plugin.recall import fence_rerank
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:88: ModuleNotFoundError
+_________________________ test_fence_rerank_no_project _________________________
+
+    def test_fence_rerank_no_project():
+        """current_project=None → return top recall_limit in raw score order (no partition)."""
+>       from cortex_plugin.recall import fence_rerank
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:117: ModuleNotFoundError
+__________________________ test_fence_dominates_score __________________________
+
+    def test_fence_dominates_score():
+        """Adversarial: same-project score 0.03 BEATS cross-project score 0.10.
+    
+        Fence wins regardless of score difference.
+        """
+>       from cortex_plugin.recall import fence_rerank
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:138: ModuleNotFoundError
+_________________________ test_fence_rerank_rrf_scores _________________________
+
+    def test_fence_rerank_rrf_scores():
+        """Works correctly with RRF-style scores in 0.01–0.05 range."""
+>       from cortex_plugin.recall import fence_rerank
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:153: ModuleNotFoundError
+______________________ test_fence_rerank_composite_scores ______________________
+
+    def test_fence_rerank_composite_scores():
+        """Works correctly with composite-style scores in 0.10–0.95 range."""
+>       from cortex_plugin.recall import fence_rerank
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:173: ModuleNotFoundError
+_____________________ test_fence_rerank_empty_same_project _____________________
+
+    def test_fence_rerank_empty_same_project():
+        """No same-project results → return top recall_limit cross-project in score order."""
+>       from cortex_plugin.recall import fence_rerank
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:189: ModuleNotFoundError
+____________________ test_fence_rerank_empty_cross_project _____________________
+
+    def test_fence_rerank_empty_cross_project():
+        """No cross-project results → return same-project in score order."""
+>       from cortex_plugin.recall import fence_rerank
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:205: ModuleNotFoundError
+___________________________ test_format_block_exact ____________________________
+
+    def test_format_block_exact():
+        """Exact byte format: ## Memories\\n\\n<c1>\\n\\n---\\n\\n<c2> (no trailing separator)."""
+>       from cortex_plugin.recall import format_memories_block
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:225: ModuleNotFoundError
+_________________________ test_format_block_empty_list _________________________
+
+    def test_format_block_empty_list():
+        """Empty result list → empty string."""
+>       from cortex_plugin.recall import format_memories_block
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:234: ModuleNotFoundError
+____________________ test_format_block_skips_empty_content _____________________
+
+caplog = <_pytest.logging.LogCaptureFixture object at 0x1034f1640>
+
+    def test_format_block_skips_empty_content(caplog):
+        """Entries with empty or missing content are skipped (logs warning)."""
+        import logging
+>       from cortex_plugin.recall import format_memories_block
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:242: ModuleNotFoundError
+___________________ test_recall_and_format_skip_short_query ____________________
+
+    @pytest.mark.asyncio
+    async def test_recall_and_format_skip_short_query():
+        """Short queries (<3 chars) return '' without calling http_post."""
+>       from cortex_plugin.recall import recall_and_format
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:266: ModuleNotFoundError
+________________ test_recall_and_format_orchestrates_full_flow _________________
+
+    @pytest.mark.asyncio
+    async def test_recall_and_format_orchestrates_full_flow():
+        """Full pipeline: skip-check → POST /v1/recall → fence rerank → format."""
+>       from cortex_plugin.recall import recall_and_format
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:283: ModuleNotFoundError
+___________________ test_recall_and_format_legacy_rank_true ____________________
+
+    @pytest.mark.asyncio
+    async def test_recall_and_format_legacy_rank_true():
+        """When legacy_rank=True, http_post receives params={'legacy_rank': 'true'}."""
+>       from cortex_plugin.recall import recall_and_format
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:319: ModuleNotFoundError
+___________________ test_recall_and_format_legacy_rank_false ___________________
+
+    @pytest.mark.asyncio
+    async def test_recall_and_format_legacy_rank_false():
+        """When legacy_rank=False (default), http_post receives params=None."""
+>       from cortex_plugin.recall import recall_and_format
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:343: ModuleNotFoundError
+_____________________ test_recall_and_format_cortex_error ______________________
+
+    @pytest.mark.asyncio
+    async def test_recall_and_format_cortex_error():
+        """On http_post exception, returns '' and does NOT propagate."""
+>       from cortex_plugin.recall import recall_and_format
+E       ModuleNotFoundError: No module named 'cortex_plugin.recall'
+
+tests/unit/test_recall.py:367: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/unit/test_recall.py::test_should_skip_empty_query - ModuleNotFou...
+FAILED tests/unit/test_recall.py::test_should_skip_whitespace_only - ModuleNo...
+FAILED tests/unit/test_recall.py::test_should_skip_two_chars - ModuleNotFound...
+FAILED tests/unit/test_recall.py::test_should_not_skip_exactly_min_chars - Mo...
+FAILED tests/unit/test_recall.py::test_should_not_skip_long_query - ModuleNot...
+FAILED tests/unit/test_recall.py::test_compute_candidate_count_small_limit_uses_floor
+FAILED tests/unit/test_recall.py::test_compute_candidate_count_large_limit_uses_multiplier
+FAILED tests/unit/test_recall.py::test_compute_candidate_count_mid_limit - Mo...
+FAILED tests/unit/test_recall.py::test_fence_rerank_same_project_first - Modu...
+FAILED tests/unit/test_recall.py::test_fence_rerank_no_project - ModuleNotFou...
+FAILED tests/unit/test_recall.py::test_fence_dominates_score - ModuleNotFound...
+FAILED tests/unit/test_recall.py::test_fence_rerank_rrf_scores - ModuleNotFou...
+FAILED tests/unit/test_recall.py::test_fence_rerank_composite_scores - Module...
+FAILED tests/unit/test_recall.py::test_fence_rerank_empty_same_project - Modu...
+FAILED tests/unit/test_recall.py::test_fence_rerank_empty_cross_project - Mod...
+FAILED tests/unit/test_recall.py::test_format_block_exact - ModuleNotFoundErr...
+FAILED tests/unit/test_recall.py::test_format_block_empty_list - ModuleNotFou...
+FAILED tests/unit/test_recall.py::test_format_block_skips_empty_content - Mod...
+FAILED tests/unit/test_recall.py::test_recall_and_format_skip_short_query - M...
+FAILED tests/unit/test_recall.py::test_recall_and_format_orchestrates_full_flow
+FAILED tests/unit/test_recall.py::test_recall_and_format_legacy_rank_true - M...
+FAILED tests/unit/test_recall.py::test_recall_and_format_legacy_rank_false - ...
+FAILED tests/unit/test_recall.py::test_recall_and_format_cortex_error - Modul...
+============================== 23 failed in 0.34s ==============================
