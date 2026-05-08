@@ -152,7 +152,7 @@ If Cortex is unreachable, the extension logs a warning and returns — AZ contin
 
 Fires at the end of every AZ monologue. Calls `agent.call_utility_model` with vendored prompts to extract fragments and solutions independently from the conversation history (up to 80,000 chars). Then posts each to `POST /v1/memories`:
 - Fragments → `kind: "fragment"`, `area: "fragments"`, `importance: 0.5`
-- Solutions → `kind: "solution"`, `area: "solutions"`, `importance: 0.7`
+- Solutions → **two memories per solution**: problem (`kind: "solution-problem"`, `area: "fragments"`, `importance: 0.7`) + solution step (`kind: "solution-step"`, `area: "solutions"`, `importance: 0.7`)
 
 Each write includes an `Idempotency-Key` header (`sha256(session_id|area|content)`), so replaying the same session never creates duplicates.
 
@@ -266,15 +266,15 @@ curl -s -H "Authorization: Bearer $CORTEX_API_KEY" \
 
 ```bash
 # From Proxmox host
-ssh root@192.168.1.5 "pct exec 500 -- docker logs agent-zero --tail 50 2>&1" | grep -E "cortex_init|cortex_memorize|cortex_recall"
+ssh root@192.168.1.5 "pct exec 500 -- docker logs agent-zero --tail 50 2>&1" | grep -E "cortex\.(init|memorize|recall)"
 ```
 
 Expected log lines:
 
 ```
-cortex_init: session created <uuid> for project homelab
-cortex_memorize: extracted 3 fragments, 1 solutions; wrote 4 memories
-cortex_recall: replaced memories block with 4 results (fence: 3 same-project, 1 cross)
+cortex.init: session=<uuid> project=homelab
+cortex.memorize: written=4 failed=0 timed_out=False ms=1234
+cortex.recall: results=30 after_fence=4 project=homelab ms=456
 ```
 
 ---
@@ -337,13 +337,13 @@ ssh root@192.168.1.5 "pct exec 500 -- bash -c '
 | Plugin not visible in AZ UI | Missing `.toggle-1` file | `touch /opt/agent-zero/data/usr/plugins/agent-zero-cortex/.toggle-1` |
 | Extensions not firing | Files not copied to `data/python/extensions/` | Re-run the `cp` commands in the install section |
 | `ModuleNotFoundError: cortex_plugin` | Package not installed in AZ container | `docker exec agent-zero pip install -e /opt/agent-zero/data/usr/plugins/agent-zero-cortex` |
-| `cortex_init: failed` in logs | Cortex API unreachable or wrong key | Check `CORTEX_URL` and `CORTEX_API_KEY`; `curl http://192.168.1.12:8001/healthz` |
-| `cortex_memorize: no cortex_session_id` | `_60_cortex_init.py` didn't run | Verify the file is in `data/python/extensions/monologue_start/` |
-| `cortex_memorize: extraction timed out` | LLM call exceeded 5s | Check AZ utility model availability; consider a faster model |
-| `cortex_memorize: extraction failed` | LLM returned unparseable JSON | Check AZ logs for the raw LLM response; `dirtyjson` handles most malformed JSON but not all |
+| `cortex.init: failed` in logs | Cortex API unreachable or wrong key | Check `CORTEX_URL` and `CORTEX_API_KEY`; `curl http://192.168.1.12:8001/healthz` |
+| `cortex.memorize: no cortex_session_id` | `_60_cortex_init.py` didn't run | Verify the file is in `data/python/extensions/monologue_start/` |
+| `cortex.memorize: extraction timed out` | LLM call exceeded 5s | Check AZ utility model availability; consider a faster model |
+| `cortex.memorize: extraction failed` | LLM returned unparseable JSON | Check AZ logs for the raw LLM response; `dirtyjson` handles most malformed JSON but not all |
 | No memories appearing in recall | `CORTEX_RECALL_THRESHOLD` too high for current Cortex version | Run `bash scripts/calibrate-recall-threshold.sh` and update threshold |
 | Recall returns junk after Cortex upgrade | Score range changed (v1.1+ uses composite scoring) | Run calibration script and update `CORTEX_RECALL_THRESHOLD`, OR set `CORTEX_RECALL_LEGACY_RANK=true` as emergency rollback |
-| `cortex_init: project-less session` in logs | AZ session has no project set | Expected behavior — memories are stored without project association; recall still works |
-| `cortex_memorize: rebound to project ...` | Project slug changed mid-session | Normal for long sessions that switch AZ projects |
-| `cortex_memorize: fragment write failed: 401` | Wrong `CORTEX_API_KEY` | Update key in `/opt/agent-zero/.env` |
-| `cortex_memorize: posting timed out` | Cortex API slow or overloaded | Check Cortex server health; the 10s timeout is intentionally generous |
+| `cortex.init: project-less session` in logs | AZ session has no project set | Expected behavior — memories are stored without project association; recall still works |
+| `cortex.memorize: project changed mid-session` | Project slug changed mid-session | Normal for long sessions that switch AZ projects |
+| `cortex.memorize: failed` with 401 | Wrong `CORTEX_API_KEY` | Update key in `/opt/agent-zero/.env` |
+| `cortex.memorize: timed_out=True` in logs | Cortex API slow or overloaded | Check Cortex server health; the 10s timeout is intentionally generous |
