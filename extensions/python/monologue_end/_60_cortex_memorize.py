@@ -1,133 +1,84 @@
-"""Cortex monologue_end extension — writes fragments and solutions to Cortex."""
 from __future__ import annotations
-import hashlib
-import os
-import re
-import logging
 
+import functools
+import logging
+import time
+
+import cortex_plugin.config as config
+import cortex_plugin.extraction as extraction
+import cortex_plugin.http as http
+import cortex_plugin.prompts as prompts
+from cortex_plugin.slugs import project_resolve
+from helpers import projects as proj_helpers
 from helpers.extension import Extension
 
 logger = logging.getLogger(__name__)
 
 
-def _get_cortex_session_id(agent) -> str | None:
-    ctx = getattr(agent, "context", None)
-    if ctx is None:
-        return None
-    if hasattr(ctx, "get_data"):
-        return ctx.get_data("cortex_session_id")
-    return getattr(ctx, "_cortex_session_id", None)
-
-
-def _idempotency_key(session_id: str, area: str, content: str) -> str:
-    return hashlib.sha256(f"{session_id}|{area}|{content}".encode()).hexdigest()
-
-
 class CortexMemorize(Extension):
 
-    def execute(self, loop_data=None, **kwargs):
-        """Fire at monologue end: write fragments and solutions to Cortex."""
-        return self._run(loop_data)
-
-    async def _run(self, loop_data):
-        import httpx
-
+    async def execute(self, loop_data=None, **kwargs):
         try:
-            cortex_url = os.environ.get("CORTEX_URL", "http://192.168.1.12:8001")
-            cortex_api_key = os.environ.get("CORTEX_API_KEY", "")
-            cortex_enabled = os.environ.get("CORTEX_ENABLED", "true").lower() == "true"
-
-            if not cortex_enabled or not cortex_api_key:
+            cfg = config.load_config()
+            if not cfg.enabled or not cfg.api_key:
                 return
 
-            agent = self.agent
-            if agent is None:
+            ctx = getattr(self.agent, "context", None)
+            session_id = ctx.get_data("cortex_session_id") if ctx else None
+            if not session_id:
+                logger.warning("cortex.memorize: no cortex_session_id in context")
                 return
 
-            cortex_session_id = _get_cortex_session_id(agent)
-            if not cortex_session_id:
-                logger.warning("cortex_memorize: no cortex_session_id in context, skipping")
-                return
-
-            source_project = "_unknown"
+            stored_slug = ctx.get_data("cortex_project_slug") if ctx else None
             try:
-                ctx = getattr(agent, "context", None)
-                if ctx:
-                    project_name = getattr(ctx, "current_project", None)
-                    if project_name:
-                        source_project = re.sub(r"[^a-z0-9_-]", "_", project_name.lower())[:64]
+                fresh_name = proj_helpers.get_context_project_name(ctx)
+                fresh_slug, _ = project_resolve(fresh_name)
             except Exception:
-                pass
+                fresh_slug = stored_slug
 
-            fragments: list[str] = []
-            solutions: list[str] = []
+            project_slug = stored_slug
+            if fresh_slug != stored_slug:
+                logger.info(
+                    "cortex.memorize: project changed mid-session: %s → %s",
+                    stored_slug,
+                    fresh_slug,
+                )
+                project_slug = fresh_slug
 
-            if loop_data is not None:
-                extras = getattr(loop_data, "extras_persistent", {}) or {}
-                raw_fragments = getattr(loop_data, "fragments", None) or extras.get("raw_fragments", [])
-                raw_solutions = getattr(loop_data, "solutions", None) or extras.get("raw_solutions", [])
+            messages_str = self.agent.concat_messages(self.agent.history)
+            frag_prompt = prompts.load_fragments_prompt()
+            sol_prompt = prompts.load_solutions_prompt()
 
-                if isinstance(raw_fragments, list):
-                    fragments = [str(f) for f in raw_fragments if f]
-                if isinstance(raw_solutions, list):
-                    solutions = [str(s) for s in raw_solutions if s]
+            fragments, solutions = await extraction.extract_fragments_and_solutions(
+                messages_str,
+                self.agent.call_utility_model,
+                frag_prompt,
+                sol_prompt,
+                timeout_sec=config.EXTRACTION_TIMEOUT_SEC,
+            )
 
-            if not fragments and not solutions:
-                logger.info("cortex_memorize: no fragments/solutions to write")
-                return
+            http_post = functools.partial(
+                http.cortex_post, cfg.url, "/v1/memories", api_key=cfg.api_key
+            )
 
-            faiss_mtime_before = None
-            faiss_path = None
-            try:
-                faiss_assertion = os.environ.get("CORTEX_FAISS_ASSERTION_CHECK", "true").lower() == "true"
-                if faiss_assertion and source_project != "_unknown":
-                    faiss_path = f"/a0/usr/projects/{source_project}/.a0proj/memory/index.faiss"
-                    if os.path.exists(faiss_path):
-                        faiss_mtime_before = os.stat(faiss_path).st_mtime
-            except Exception:
-                pass
+            t0 = time.monotonic()
+            result = await extraction.write_memories_to_cortex(
+                session_id,
+                project_slug,
+                fragments,
+                solutions,
+                http_post,
+                posting_timeout_sec=config.POSTING_TIMEOUT_SEC,
+            )
+            ms = int((time.monotonic() - t0) * 1000)
 
-            async with httpx.AsyncClient(timeout=10.0) as client:
-                for fragment in fragments:
-                    try:
-                        idem_key = _idempotency_key(cortex_session_id, "fragments", fragment)
-                        await client.post(
-                            f"{cortex_url}/v1/memories",
-                            json={"content": fragment, "kind": "fragment", "area": "fragments",
-                                  "source_session_id": cortex_session_id,
-                                  "source_project": source_project, "importance": 0.5},
-                            headers={"Authorization": f"Bearer {cortex_api_key}",
-                                     "Idempotency-Key": idem_key},
-                        )
-                    except Exception as e:
-                        logger.warning(f"cortex_memorize: fragment write failed: {e}")
+            logger.info(
+                "cortex.memorize: written=%d failed=%d timed_out=%s ms=%d",
+                result["written"],
+                result["failed"],
+                result["timed_out"],
+                ms,
+            )
 
-                for solution in solutions:
-                    try:
-                        idem_key = _idempotency_key(cortex_session_id, "solutions", solution)
-                        await client.post(
-                            f"{cortex_url}/v1/memories",
-                            json={"content": solution, "kind": "solution", "area": "solutions",
-                                  "source_session_id": cortex_session_id,
-                                  "source_project": source_project, "importance": 0.7},
-                            headers={"Authorization": f"Bearer {cortex_api_key}",
-                                     "Idempotency-Key": idem_key},
-                        )
-                    except Exception as e:
-                        logger.warning(f"cortex_memorize: solution write failed: {e}")
-
-            if faiss_mtime_before is not None and faiss_path is not None:
-                try:
-                    faiss_mtime_after = os.stat(faiss_path).st_mtime
-                    if faiss_mtime_after != faiss_mtime_before:
-                        logger.error(
-                            f"cortex_memorize: FAISS index mtime changed! "
-                            f"before={faiss_mtime_before} after={faiss_mtime_after}"
-                        )
-                except Exception:
-                    pass
-
-            logger.info(f"cortex_memorize: wrote {len(fragments)} fragments, {len(solutions)} solutions")
-
-        except Exception as e:
-            logger.warning(f"cortex_memorize: failed (non-fatal): {e}")
+        except Exception as exc:
+            logger.warning("cortex.memorize: unhandled exception (non-fatal): %s", exc)

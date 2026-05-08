@@ -1,0 +1,377 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.10, pytest-9.0.3, pluggy-1.6.0 -- /Users/paolo/Documents/Projects/agent-zero-cortex/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/paolo/Documents/Projects/agent-zero-cortex
+configfile: pyproject.toml
+plugins: asyncio-1.3.0, anyio-4.13.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 12 items
+
+tests/wrapper/test_memorize_wrapper.py::test_disabled_config_returns_silently PASSED [  8%]
+tests/wrapper/test_memorize_wrapper.py::test_no_api_key_returns_silently PASSED [ 16%]
+tests/wrapper/test_memorize_wrapper.py::test_no_session_id_logs_warning_and_returns FAILED [ 25%]
+tests/wrapper/test_memorize_wrapper.py::test_project_lookup_uses_canonical_helper FAILED [ 33%]
+tests/wrapper/test_memorize_wrapper.py::test_stale_project_rebinds FAILED [ 41%]
+tests/wrapper/test_memorize_wrapper.py::test_calls_concat_messages FAILED [ 50%]
+tests/wrapper/test_memorize_wrapper.py::test_calls_load_prompts FAILED   [ 58%]
+tests/wrapper/test_memorize_wrapper.py::test_calls_extract_fragments_and_solutions FAILED [ 66%]
+tests/wrapper/test_memorize_wrapper.py::test_calls_write_memories_to_cortex FAILED [ 75%]
+tests/wrapper/test_memorize_wrapper.py::test_logs_info_structured_format FAILED [ 83%]
+tests/wrapper/test_memorize_wrapper.py::test_unhandled_exception_non_fatal FAILED [ 91%]
+tests/wrapper/test_memorize_wrapper.py::test_no_extras_persistent_mutation PASSED [100%]
+
+=================================== FAILURES ===================================
+_________________ test_no_session_id_logs_warning_and_returns __________________
+
+mock_cfg = <MagicMock name='load_config' id='4468588912'>
+caplog = <_pytest.logging.LogCaptureFixture object at 0x10a594230>
+
+    @patch("cortex_plugin.config.load_config")
+    def test_no_session_id_logs_warning_and_returns(mock_cfg, caplog):
+        mock_cfg.return_value = _make_cfg()
+        agent = _make_agent(session_id=None)
+        ext = _make_ext(agent)
+        with caplog.at_level(logging.WARNING):
+            _run(ext.execute())
+>       assert any("cortex_session_id" in r.message or "session" in r.message.lower()
+                    for r in caplog.records), "Should log a warning about missing session_id"
+E       AssertionError: Should log a warning about missing session_id
+E       assert False
+E        +  where False = any(<generator object test_no_session_id_logs_warning_and_returns.<locals>.<genexpr> at 0x10a555cb0>)
+
+tests/wrapper/test_memorize_wrapper.py:93: AssertionError
+__________________ test_project_lookup_uses_canonical_helper ___________________
+
+mock_cfg = <MagicMock name='load_config' id='4468620944'>
+mock_proj = <MagicMock name='get_context_project_name' id='4469017920'>
+mock_frag = <MagicMock name='load_fragments_prompt' id='4469021712'>
+mock_sol = <MagicMock name='load_solutions_prompt' id='4469026176'>
+mock_extract = <AsyncMock name='extract_fragments_and_solutions' id='4461016656'>
+mock_write = <AsyncMock name='write_memories_to_cortex' id='4468789600'>
+
+    @patch("cortex_plugin.extraction.write_memories_to_cortex", new_callable=AsyncMock)
+    @patch("cortex_plugin.extraction.extract_fragments_and_solutions", new_callable=AsyncMock)
+    @patch("cortex_plugin.prompts.load_solutions_prompt", return_value="sol")
+    @patch("cortex_plugin.prompts.load_fragments_prompt", return_value="frag")
+    @patch("helpers.projects.get_context_project_name", return_value="homelab")
+    @patch("cortex_plugin.config.load_config")
+    def test_project_lookup_uses_canonical_helper(
+        mock_cfg, mock_proj, mock_frag, mock_sol, mock_extract, mock_write
+    ):
+        mock_cfg.return_value = _make_cfg()
+        mock_extract.return_value = ([], [])
+        mock_write.return_value = {"written": 0, "failed": 0, "timed_out": False}
+        agent = _make_agent()
+        ext = _make_ext(agent)
+        _run(ext.execute())
+>       mock_proj.assert_called_once_with(agent.context)
+
+tests/wrapper/test_memorize_wrapper.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='get_context_project_name' id='4469017920'>
+args = (<MagicMock name='mock.context' id='4468800928'>,), kwargs = {}
+msg = "Expected 'get_context_project_name' to be called once. Called 0 times."
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'get_context_project_name' to be called once. Called 0 times.
+
+/usr/local/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py:960: AssertionError
+__________________________ test_stale_project_rebinds __________________________
+
+mock_cfg = <MagicMock name='load_config' id='4468898272'>
+mock_proj = <MagicMock name='get_context_project_name' id='4468892368'>
+mock_frag = <MagicMock name='load_fragments_prompt' id='4468896160'>
+mock_sol = <MagicMock name='load_solutions_prompt' id='4468937008'>
+mock_extract = <AsyncMock name='extract_fragments_and_solutions' id='4468935712'>
+mock_write = <AsyncMock name='write_memories_to_cortex' id='4468940128'>
+caplog = <_pytest.logging.LogCaptureFixture object at 0x10a5dfa40>
+
+    @patch("cortex_plugin.extraction.write_memories_to_cortex", new_callable=AsyncMock)
+    @patch("cortex_plugin.extraction.extract_fragments_and_solutions", new_callable=AsyncMock)
+    @patch("cortex_plugin.prompts.load_solutions_prompt", return_value="sol")
+    @patch("cortex_plugin.prompts.load_fragments_prompt", return_value="frag")
+    @patch("helpers.projects.get_context_project_name", return_value="luthien")
+    @patch("cortex_plugin.config.load_config")
+    def test_stale_project_rebinds(
+        mock_cfg, mock_proj, mock_frag, mock_sol, mock_extract, mock_write, caplog
+    ):
+        mock_cfg.return_value = _make_cfg()
+        mock_extract.return_value = (["frag1"], [])
+        mock_write.return_value = {"written": 1, "failed": 0, "timed_out": False}
+        # stored slug is "homelab"; helper returns "luthien" → stale
+        agent = _make_agent(stored_slug="homelab")
+        ext = _make_ext(agent)
+        with caplog.at_level(logging.INFO):
+            _run(ext.execute())
+    
+        info_msgs = [r.message for r in caplog.records if r.levelno == logging.INFO]
+>       assert any("project changed mid-session" in m or ("homelab" in m and "luthien" in m)
+                   for m in info_msgs), f"Expected stale-project info log, got: {info_msgs}"
+E       AssertionError: Expected stale-project info log, got: []
+E       assert False
+E        +  where False = any(<generator object test_stale_project_rebinds.<locals>.<genexpr> at 0x10a557ac0>)
+
+tests/wrapper/test_memorize_wrapper.py:142: AssertionError
+__________________________ test_calls_concat_messages __________________________
+
+mock_cfg = <MagicMock name='load_config' id='4469103920'>
+mock_proj = <MagicMock name='get_context_project_name' id='4469108864'>
+mock_frag = <MagicMock name='load_fragments_prompt' id='4469112704'>
+mock_sol = <MagicMock name='load_solutions_prompt' id='4468754048'>
+mock_extract = <AsyncMock name='extract_fragments_and_solutions' id='4468758368'>
+mock_write = <AsyncMock name='write_memories_to_cortex' id='4468762688'>
+
+    @patch("cortex_plugin.extraction.write_memories_to_cortex", new_callable=AsyncMock)
+    @patch("cortex_plugin.extraction.extract_fragments_and_solutions", new_callable=AsyncMock)
+    @patch("cortex_plugin.prompts.load_solutions_prompt", return_value="sol")
+    @patch("cortex_plugin.prompts.load_fragments_prompt", return_value="frag")
+    @patch("helpers.projects.get_context_project_name", return_value="homelab")
+    @patch("cortex_plugin.config.load_config")
+    def test_calls_concat_messages(
+        mock_cfg, mock_proj, mock_frag, mock_sol, mock_extract, mock_write
+    ):
+        mock_cfg.return_value = _make_cfg()
+        mock_extract.return_value = ([], [])
+        mock_write.return_value = {"written": 0, "failed": 0, "timed_out": False}
+        agent = _make_agent()
+        ext = _make_ext(agent)
+        _run(ext.execute())
+>       agent.concat_messages.assert_called_once_with(agent.history)
+
+tests/wrapper/test_memorize_wrapper.py:169: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='mock.concat_messages' id='4468842784'>
+args = (<MagicMock name='mock.history' id='4468847440'>,), kwargs = {}
+msg = "Expected 'concat_messages' to be called once. Called 0 times."
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'concat_messages' to be called once. Called 0 times.
+
+/usr/local/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py:960: AssertionError
+___________________________ test_calls_load_prompts ____________________________
+
+mock_cfg = <MagicMock name='load_config' id='4468947232'>
+mock_proj = <MagicMock name='get_context_project_name' id='4468945168'>
+mock_frag = <MagicMock name='load_fragments_prompt' id='4468940944'>
+mock_sol = <MagicMock name='load_solutions_prompt' id='4468935952'>
+mock_extract = <AsyncMock name='extract_fragments_and_solutions' id='4468932688'>
+mock_write = <AsyncMock name='write_memories_to_cortex' id='4468986640'>
+
+    @patch("cortex_plugin.extraction.write_memories_to_cortex", new_callable=AsyncMock)
+    @patch("cortex_plugin.extraction.extract_fragments_and_solutions", new_callable=AsyncMock)
+    @patch("cortex_plugin.prompts.load_solutions_prompt", return_value="sol")
+    @patch("cortex_plugin.prompts.load_fragments_prompt", return_value="frag")
+    @patch("helpers.projects.get_context_project_name", return_value="homelab")
+    @patch("cortex_plugin.config.load_config")
+    def test_calls_load_prompts(
+        mock_cfg, mock_proj, mock_frag, mock_sol, mock_extract, mock_write
+    ):
+        mock_cfg.return_value = _make_cfg()
+        mock_extract.return_value = ([], [])
+        mock_write.return_value = {"written": 0, "failed": 0, "timed_out": False}
+        ext = _make_ext()
+        _run(ext.execute())
+>       mock_frag.assert_called_once()
+
+tests/wrapper/test_memorize_wrapper.py:190: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <MagicMock name='load_fragments_prompt' id='4468940944'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'load_fragments_prompt' to have been called once. Called 0 times.
+
+/usr/local/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py:928: AssertionError
+__________________ test_calls_extract_fragments_and_solutions __________________
+
+mock_cfg = <MagicMock name='load_config' id='4469023680'>
+mock_proj = <MagicMock name='get_context_project_name' id='4469020992'>
+mock_frag = <MagicMock name='load_fragments_prompt' id='4469017104'>
+mock_sol = <MagicMock name='load_solutions_prompt' id='4468794400'>
+mock_extract = <AsyncMock name='extract_fragments_and_solutions' id='4468797568'>
+mock_write = <AsyncMock name='write_memories_to_cortex' id='4468789408'>
+
+    @patch("cortex_plugin.extraction.write_memories_to_cortex", new_callable=AsyncMock)
+    @patch("cortex_plugin.extraction.extract_fragments_and_solutions", new_callable=AsyncMock)
+    @patch("cortex_plugin.prompts.load_solutions_prompt", return_value="SOL_PROMPT")
+    @patch("cortex_plugin.prompts.load_fragments_prompt", return_value="FRAG_PROMPT")
+    @patch("helpers.projects.get_context_project_name", return_value="homelab")
+    @patch("cortex_plugin.config.load_config")
+    def test_calls_extract_fragments_and_solutions(
+        mock_cfg, mock_proj, mock_frag, mock_sol, mock_extract, mock_write
+    ):
+        mock_cfg.return_value = _make_cfg()
+        mock_extract.return_value = (["f1"], [])
+        mock_write.return_value = {"written": 1, "failed": 0, "timed_out": False}
+        agent = _make_agent()
+        ext = _make_ext(agent)
+        _run(ext.execute())
+    
+>       mock_extract.assert_called_once()
+
+tests/wrapper/test_memorize_wrapper.py:214: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <AsyncMock name='extract_fragments_and_solutions' id='4468797568'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'extract_fragments_and_solutions' to have been called once. Called 0 times.
+
+/usr/local/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py:928: AssertionError
+_____________________ test_calls_write_memories_to_cortex ______________________
+
+mock_cfg = <MagicMock name='load_config' id='4468594480'>
+mock_proj = <MagicMock name='get_context_project_name' id='4468592368'>
+mock_frag = <MagicMock name='load_fragments_prompt' id='4460784448'>
+mock_sol = <MagicMock name='load_solutions_prompt' id='4468373936'>
+mock_extract = <AsyncMock name='extract_fragments_and_solutions' id='4468369328'>
+mock_write = <AsyncMock name='write_memories_to_cortex' id='4468364912'>
+
+    @patch("cortex_plugin.extraction.write_memories_to_cortex", new_callable=AsyncMock)
+    @patch("cortex_plugin.extraction.extract_fragments_and_solutions", new_callable=AsyncMock)
+    @patch("cortex_plugin.prompts.load_solutions_prompt", return_value="sol")
+    @patch("cortex_plugin.prompts.load_fragments_prompt", return_value="frag")
+    @patch("helpers.projects.get_context_project_name", return_value="homelab")
+    @patch("cortex_plugin.config.load_config")
+    def test_calls_write_memories_to_cortex(
+        mock_cfg, mock_proj, mock_frag, mock_sol, mock_extract, mock_write
+    ):
+        mock_cfg.return_value = _make_cfg()
+        mock_extract.return_value = (["frag1"], [{"problem": "p", "solution": "s"}])
+        mock_write.return_value = {"written": 2, "failed": 0, "timed_out": False}
+        agent = _make_agent(session_id="sess-123", stored_slug="homelab")
+        ext = _make_ext(agent)
+        _run(ext.execute())
+    
+>       mock_write.assert_called_once()
+
+tests/wrapper/test_memorize_wrapper.py:243: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <AsyncMock name='write_memories_to_cortex' id='4468364912'>
+
+    def assert_called_once(self):
+        """assert that the mock was called only once.
+        """
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to have been called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+>           raise AssertionError(msg)
+E           AssertionError: Expected 'write_memories_to_cortex' to have been called once. Called 0 times.
+
+/usr/local/Cellar/python@3.12/3.12.10/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py:928: AssertionError
+_______________________ test_logs_info_structured_format _______________________
+
+mock_cfg = <MagicMock name='load_config' id='4469157536'>
+mock_proj = <MagicMock name='get_context_project_name' id='4469150192'>
+mock_frag = <MagicMock name='load_fragments_prompt' id='4469154032'>
+mock_sol = <MagicMock name='load_solutions_prompt' id='4469158160'>
+mock_extract = <AsyncMock name='extract_fragments_and_solutions' id='4468556384'>
+mock_write = <AsyncMock name='write_memories_to_cortex' id='4468560320'>
+caplog = <_pytest.logging.LogCaptureFixture object at 0x10a61f2f0>
+
+    @patch("cortex_plugin.extraction.write_memories_to_cortex", new_callable=AsyncMock)
+    @patch("cortex_plugin.extraction.extract_fragments_and_solutions", new_callable=AsyncMock)
+    @patch("cortex_plugin.prompts.load_solutions_prompt", return_value="sol")
+    @patch("cortex_plugin.prompts.load_fragments_prompt", return_value="frag")
+    @patch("helpers.projects.get_context_project_name", return_value="homelab")
+    @patch("cortex_plugin.config.load_config")
+    def test_logs_info_structured_format(
+        mock_cfg, mock_proj, mock_frag, mock_sol, mock_extract, mock_write, caplog
+    ):
+        mock_cfg.return_value = _make_cfg()
+        mock_extract.return_value = (["f1", "f2"], [])
+        mock_write.return_value = {"written": 2, "failed": 1, "timed_out": False}
+        ext = _make_ext()
+        with caplog.at_level(logging.INFO):
+            _run(ext.execute())
+    
+        info_msgs = [r.message for r in caplog.records if r.levelno == logging.INFO]
+        structured = [m for m in info_msgs if "written=" in m and "failed=" in m and "ms=" in m]
+>       assert structured, f"Expected structured INFO log, got: {info_msgs}"
+E       AssertionError: Expected structured INFO log, got: []
+E       assert []
+
+tests/wrapper/test_memorize_wrapper.py:274: AssertionError
+______________________ test_unhandled_exception_non_fatal ______________________
+
+mock_cfg = <MagicMock name='load_config' id='4469055968'>
+mock_proj = <MagicMock name='get_context_project_name' id='4469056880'>
+mock_frag = <MagicMock name='load_fragments_prompt' id='4468363520'>
+mock_sol = <MagicMock name='load_solutions_prompt' id='4468368512'>
+mock_extract = <AsyncMock name='extract_fragments_and_solutions' id='4468373840'>
+mock_write = <AsyncMock name='write_memories_to_cortex' id='4468591696'>
+caplog = <_pytest.logging.LogCaptureFixture object at 0x10a605f10>
+
+    @patch("cortex_plugin.extraction.write_memories_to_cortex", new_callable=AsyncMock)
+    @patch("cortex_plugin.extraction.extract_fragments_and_solutions", new_callable=AsyncMock)
+    @patch("cortex_plugin.prompts.load_solutions_prompt", return_value="sol")
+    @patch("cortex_plugin.prompts.load_fragments_prompt", side_effect=RuntimeError("boom"))
+    @patch("helpers.projects.get_context_project_name", return_value="homelab")
+    @patch("cortex_plugin.config.load_config")
+    def test_unhandled_exception_non_fatal(
+        mock_cfg, mock_proj, mock_frag, mock_sol, mock_extract, mock_write, caplog
+    ):
+        mock_cfg.return_value = _make_cfg()
+        ext = _make_ext()
+        with caplog.at_level(logging.WARNING):
+            _run(ext.execute())
+        warns = [r for r in caplog.records if r.levelno == logging.WARNING]
+>       assert warns, "Should log a warning on unhandled exception"
+E       AssertionError: Should log a warning on unhandled exception
+E       assert []
+
+tests/wrapper/test_memorize_wrapper.py:295: AssertionError
+=============================== warnings summary ===============================
+tests/wrapper/test_memorize_wrapper.py::test_disabled_config_returns_silently
+  /Users/paolo/Documents/Projects/agent-zero-cortex/tests/wrapper/test_memorize_wrapper.py:44: DeprecationWarning: There is no current event loop
+    return asyncio.get_event_loop().run_until_complete(coro)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/wrapper/test_memorize_wrapper.py::test_no_session_id_logs_warning_and_returns
+FAILED tests/wrapper/test_memorize_wrapper.py::test_project_lookup_uses_canonical_helper
+FAILED tests/wrapper/test_memorize_wrapper.py::test_stale_project_rebinds - A...
+FAILED tests/wrapper/test_memorize_wrapper.py::test_calls_concat_messages - A...
+FAILED tests/wrapper/test_memorize_wrapper.py::test_calls_load_prompts - Asse...
+FAILED tests/wrapper/test_memorize_wrapper.py::test_calls_extract_fragments_and_solutions
+FAILED tests/wrapper/test_memorize_wrapper.py::test_calls_write_memories_to_cortex
+FAILED tests/wrapper/test_memorize_wrapper.py::test_logs_info_structured_format
+FAILED tests/wrapper/test_memorize_wrapper.py::test_unhandled_exception_non_fatal
+==================== 9 failed, 3 passed, 1 warning in 0.79s ====================

@@ -1,0 +1,10 @@
+............                                                             [100%]
+=============================== warnings summary ===============================
+tests/wrapper/test_memorize_wrapper.py::test_disabled_config_returns_silently
+  /Users/paolo/Documents/Projects/agent-zero-cortex/tests/wrapper/test_memorize_wrapper.py:44: DeprecationWarning: There is no current event loop
+    return asyncio.get_event_loop().run_until_complete(coro)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+12 passed, 1 warning in 0.15s
+
+wallclock: 763ms
