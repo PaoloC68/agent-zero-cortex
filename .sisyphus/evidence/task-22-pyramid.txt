@@ -1,0 +1,6 @@
+pytest tests/unit/ tests/wrapper/ -v   # unit + wrapper (default, no live Cortex needed)
+pytest tests/unit/                     # pure-function tests only
+pytest tests/wrapper/                  # Extension class glue tests only
+- `tests/unit/` — pure-function tests for `src/cortex_plugin/` modules; no AZ imports, no live Cortex
+- `tests/wrapper/` — Extension class glue tests; `helpers.extension.Extension` stub vendored in `tests/wrapper/conftest.py`
+- `tests/integration/` — real Cortex API tests; marked `@pytest.mark.integration`; skipped by default (`addopts = "-m 'not integration'"` in `pyproject.toml`)
