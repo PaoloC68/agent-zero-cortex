@@ -1,0 +1,4 @@
+## Rollback Procedure
+git checkout pre-cortex-primary-v1
+The `pre-cortex-primary-v1` tag marks the last commit before Cortex became the primary backend. After rollback, FAISS handles all memory operations and Cortex is unreachable from AZ.
+> **doc-only — DO NOT RE-RUN**
