@@ -102,10 +102,10 @@ class TestPromptDir:
 
 class TestHardcodedConstants:
     def test_extraction_timeout_sec(self):
-        assert EXTRACTION_TIMEOUT_SEC == 5
+        assert EXTRACTION_TIMEOUT_SEC == 30
 
     def test_posting_timeout_sec(self):
-        assert POSTING_TIMEOUT_SEC == 10
+        assert POSTING_TIMEOUT_SEC == 60
 
     def test_http_timeout_sec(self):
         assert HTTP_TIMEOUT_SEC == 10
