@@ -1,0 +1,62 @@
+{
+  "run_uuid": "1f015496-879e-424d-8074-598caa6c72eb",
+  "date": "20260508-175626",
+  "scoring_algorithm_hint": "RRF-like (max<0.10, k=60 hardcoded)",
+  "recommended": {
+    "threshold": 0.01,
+    "legacy_rank": false,
+    "CORTEX_RECALL_THRESHOLD": "0.01",
+    "CORTEX_RECALL_LEGACY_RANK": "false"
+  },
+  "stats": {
+    "standard": {
+      "relevant": {
+        "count": 309,
+        "min": 0.009091,
+        "p5": 0.009709,
+        "p25": 0.012048,
+        "p50": 0.013889,
+        "p75": 0.015625,
+        "p95": 0.042623,
+        "max": 0.04918
+      },
+      "irrelevant": {
+        "count": 44,
+        "min": 0.009091,
+        "p5": 0.009259,
+        "p25": 0.01,
+        "p50": 0.011236,
+        "p75": 0.013571,
+        "p95": 0.016091,
+        "max": 0.016393
+      }
+    },
+    "legacy_rank": {
+      "relevant": {
+        "count": 309,
+        "min": 0.009091,
+        "p5": 0.009653,
+        "p25": 0.012048,
+        "p50": 0.013889,
+        "p75": 0.015625,
+        "p95": 0.042623,
+        "max": 0.04918
+      },
+      "irrelevant": {
+        "count": 43,
+        "min": 0.009174,
+        "p5": 0.009268,
+        "p25": 0.010102,
+        "p50": 0.011236,
+        "p75": 0.01381,
+        "p95": 0.016103,
+        "max": 0.016393
+      }
+    }
+  },
+  "calibration": {
+    "memories_posted": 50,
+    "queries_run": 50,
+    "max_observed_score": 0.04918
+  }
+}

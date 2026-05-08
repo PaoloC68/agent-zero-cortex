@@ -1,0 +1,319 @@
+2026-05-08 19:56:26,978 INFO === Cortex threshold calibration ===
+2026-05-08 19:56:26,978 INFO Run UUID: 1f015496-879e-424d-8074-598caa6c72eb
+2026-05-08 19:56:26,978 INFO Cortex URL: http://192.168.1.12:8001
+2026-05-08 19:56:26,978 INFO Queries: 50
+2026-05-08 19:56:27,124 INFO Step 1: Posting 50 calibration memories...
+2026-05-08 19:56:28,619 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:28,619 INFO   [1/50] id=493d59d1-43a4-4a54-9bd4-aadcb7969750
+2026-05-08 19:56:30,102 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:30,102 INFO   [2/50] id=ce226c3c-97e1-49b7-8f6f-a0e08ea140df
+2026-05-08 19:56:30,283 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:30,283 INFO   [3/50] id=6bd89eef-0f65-4fb7-838b-129ae6451d6c
+2026-05-08 19:56:30,521 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:30,522 INFO   [4/50] id=04aa76b6-a37c-4a3c-acef-dba28e9890e1
+2026-05-08 19:56:30,713 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:30,713 INFO   [5/50] id=60c86e62-cbe3-4b78-8cfc-0b69f21de4ac
+2026-05-08 19:56:30,960 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:30,961 INFO   [6/50] id=73070b93-1b25-4639-a5ed-ef773276b9c6
+2026-05-08 19:56:31,135 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:31,135 INFO   [7/50] id=e81817bd-5664-4aad-b853-d88b7f7532ab
+2026-05-08 19:56:31,309 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:31,309 INFO   [8/50] id=44f16ed5-5029-41b9-ac99-91e3350507bb
+2026-05-08 19:56:31,485 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:31,486 INFO   [9/50] id=7a2d3d29-51ed-4fde-9e43-4b5fdb404652
+2026-05-08 19:56:31,689 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:31,690 INFO   [10/50] id=59f41281-d192-49cb-bbd5-f98b52e64bb4
+2026-05-08 19:56:31,877 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:31,877 INFO   [11/50] id=ad36c083-040f-41a0-bc06-882fa451798b
+2026-05-08 19:56:32,058 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:32,058 INFO   [12/50] id=0ff24b7d-1bcf-47ad-8dca-0a56c43a8853
+2026-05-08 19:56:32,243 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:32,244 INFO   [13/50] id=91508c96-74fc-46a1-b390-26b64bde40c8
+2026-05-08 19:56:32,426 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:32,426 INFO   [14/50] id=65a97bb3-8b68-4796-bc57-8cefafdeea17
+2026-05-08 19:56:32,588 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:32,588 INFO   [15/50] id=2186690e-3edf-4ab8-b68d-3987b09bb90b
+2026-05-08 19:56:32,768 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:32,769 INFO   [16/50] id=a1098a62-cdf3-46cf-bc13-082d063768fa
+2026-05-08 19:56:32,977 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:32,977 INFO   [17/50] id=facca392-30c4-4329-8359-4a833cc5bcbe
+2026-05-08 19:56:33,193 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:33,193 INFO   [18/50] id=acc973de-1c14-49e7-a366-0dbf70567747
+2026-05-08 19:56:33,401 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:33,402 INFO   [19/50] id=dce38660-6eb3-4584-994a-a973ead74247
+2026-05-08 19:56:33,569 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:33,569 INFO   [20/50] id=7171ced2-c671-4c6a-b065-d5b7aae53d4f
+2026-05-08 19:56:33,755 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:33,755 INFO   [21/50] id=8a1b1dea-1662-43be-8071-9f1386d5e5f4
+2026-05-08 19:56:33,935 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:33,935 INFO   [22/50] id=c778c044-527c-4250-b3c1-6b3d7d40bd6a
+2026-05-08 19:56:34,110 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:34,111 INFO   [23/50] id=c17a7da6-0c6e-4331-b010-59f4ca91922a
+2026-05-08 19:56:34,307 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:34,307 INFO   [24/50] id=2be83fc4-9aa1-46a3-9fb0-47ff2e1ac9ce
+2026-05-08 19:56:34,486 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:34,486 INFO   [25/50] id=c29ea3f0-5597-4cc1-8b33-70585b49b914
+2026-05-08 19:56:34,645 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:34,646 INFO   [26/50] id=699cdc55-1ae7-4440-ac03-8f60a36ac710
+2026-05-08 19:56:34,837 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:34,838 INFO   [27/50] id=6e2e98c7-c5f4-4a25-adca-cbbcad459434
+2026-05-08 19:56:35,110 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:35,110 INFO   [28/50] id=e832a907-8b87-48c5-9ec6-97916069b8ae
+2026-05-08 19:56:35,413 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:35,414 INFO   [29/50] id=120e723f-06fd-408e-a93f-63906c23bcd4
+2026-05-08 19:56:35,605 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:35,605 INFO   [30/50] id=3b9ff89b-0429-49b8-a2ff-45bf0d71a1f7
+2026-05-08 19:56:35,783 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:35,783 INFO   [31/50] id=114c6584-2503-4b14-952b-3c234c1ff0ef
+2026-05-08 19:56:35,949 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:35,950 INFO   [32/50] id=a5d0e50b-bee3-4011-a63e-0fb549f7fdb6
+2026-05-08 19:56:36,138 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:36,139 INFO   [33/50] id=928c2e6b-701f-45e3-b33c-5509aa3dc6f9
+2026-05-08 19:56:36,328 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:36,328 INFO   [34/50] id=07d27c7f-5889-4385-8b70-dc7d04aaea9c
+2026-05-08 19:56:36,512 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:36,512 INFO   [35/50] id=d9cc6aec-726c-45d3-9005-f912dfa5eb18
+2026-05-08 19:56:36,704 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:36,704 INFO   [36/50] id=a2562b86-7a08-4c83-9c0e-558a287ed11b
+2026-05-08 19:56:36,884 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:36,885 INFO   [37/50] id=9f7b2720-a45e-4183-ac9e-fe16a39dafb7
+2026-05-08 19:56:37,045 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:37,045 INFO   [38/50] id=2a9521a5-cef7-46c9-b902-8f11b9ccfc14
+2026-05-08 19:56:37,222 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:37,223 INFO   [39/50] id=da0602ae-e01d-4534-a9b5-7f01c03b7ede
+2026-05-08 19:56:37,408 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:37,408 INFO   [40/50] id=dc6e4169-52e3-4605-b75b-8337d3bb339f
+2026-05-08 19:56:37,684 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:37,684 INFO   [41/50] id=0859beeb-039a-45f1-a413-a0bf8daa20d6
+2026-05-08 19:56:37,862 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:37,862 INFO   [42/50] id=21dadc1b-8f6d-4d47-b214-fd958032feb3
+2026-05-08 19:56:38,079 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:38,079 INFO   [43/50] id=2cea70ec-b50c-486b-bcd3-2244de3dddc4
+2026-05-08 19:56:38,460 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:38,460 INFO   [44/50] id=0e18aa27-a363-4c85-a995-ca27513183dd
+2026-05-08 19:56:38,638 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:38,638 INFO   [45/50] id=ae10886d-d7c6-48a6-90fe-1952a872fe20
+2026-05-08 19:56:38,822 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:38,822 INFO   [46/50] id=8ef94a36-7027-48a0-875c-55816961c571
+2026-05-08 19:56:39,029 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:39,030 INFO   [47/50] id=a8b1e224-322e-4345-b3f3-4e96ed4f8671
+2026-05-08 19:56:39,209 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:39,209 INFO   [48/50] id=a139c893-c68e-427e-9d42-b8755ffdebc5
+2026-05-08 19:56:39,391 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:39,391 INFO   [49/50] id=77d5b36e-7283-463d-9474-7bc45d4575f5
+2026-05-08 19:56:39,575 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:56:39,576 INFO   [50/50] id=9d0f4058-2f2c-4d70-8b02-121fb34f4d31
+2026-05-08 19:56:39,576 INFO Posted 50/50 memories. Waiting 5s for embedding generation...
+2026-05-08 19:56:44,577 INFO Step 2: Running 50 golden queries (standard + legacy_rank)...
+2026-05-08 19:56:44,882 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:44,884 INFO   [std] rel-001 label=relevant calib_hits=9
+2026-05-08 19:56:45,293 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:45,610 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:45,611 INFO   [std] rel-002 label=relevant calib_hits=11
+2026-05-08 19:56:46,030 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:46,344 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:46,345 INFO   [std] rel-003 label=relevant calib_hits=11
+2026-05-08 19:56:46,654 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:46,916 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:46,917 INFO   [std] rel-004 label=relevant calib_hits=11
+2026-05-08 19:56:47,207 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:47,580 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:47,581 INFO   [std] rel-005 label=relevant calib_hits=12
+2026-05-08 19:56:47,864 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:48,134 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:48,137 INFO   [std] rel-006 label=relevant calib_hits=10
+2026-05-08 19:56:48,413 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:48,681 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:48,682 INFO   [std] rel-007 label=relevant calib_hits=10
+2026-05-08 19:56:48,991 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:49,358 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:49,359 INFO   [std] rel-008 label=relevant calib_hits=9
+2026-05-08 19:56:49,635 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:49,928 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:49,930 INFO   [std] rel-009 label=relevant calib_hits=11
+2026-05-08 19:56:50,251 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:50,503 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:50,505 INFO   [std] rel-010 label=relevant calib_hits=12
+2026-05-08 19:56:50,779 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:51,078 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:51,079 INFO   [std] rel-011 label=relevant calib_hits=16
+2026-05-08 19:56:51,382 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:51,710 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:51,711 INFO   [std] rel-012 label=relevant calib_hits=18
+2026-05-08 19:56:51,991 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:52,291 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:52,292 INFO   [std] rel-013 label=relevant calib_hits=15
+2026-05-08 19:56:52,603 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:52,881 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:52,882 INFO   [std] rel-014 label=relevant calib_hits=21
+2026-05-08 19:56:53,176 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:53,567 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:53,568 INFO   [std] rel-015 label=relevant calib_hits=16
+2026-05-08 19:56:53,854 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:54,146 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:54,146 INFO   [std] rel-016 label=relevant calib_hits=13
+2026-05-08 19:56:54,445 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:54,733 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:54,733 INFO   [std] rel-017 label=relevant calib_hits=18
+2026-05-08 19:56:55,029 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:55,308 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:55,309 INFO   [std] rel-018 label=relevant calib_hits=16
+2026-05-08 19:56:55,592 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:55,981 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:55,982 INFO   [std] rel-019 label=relevant calib_hits=8
+2026-05-08 19:56:56,276 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:56,575 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:56,576 INFO   [std] rel-020 label=relevant calib_hits=13
+2026-05-08 19:56:56,980 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:57,275 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:57,275 INFO   [std] rel-021 label=relevant calib_hits=14
+2026-05-08 19:56:57,580 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:57,874 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:57,875 INFO   [std] rel-022 label=relevant calib_hits=9
+2026-05-08 19:56:58,172 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:58,465 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:58,466 INFO   [std] rel-023 label=relevant calib_hits=12
+2026-05-08 19:56:58,862 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:59,244 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:59,246 INFO   [std] rel-024 label=relevant calib_hits=1
+2026-05-08 19:56:59,568 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:56:59,853 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:56:59,854 INFO   [std] rel-025 label=relevant calib_hits=13
+2026-05-08 19:57:00,157 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:00,458 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:00,458 INFO   [std] irr-001 label=irrelevant calib_hits=0
+2026-05-08 19:57:00,743 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:01,053 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:01,054 INFO   [std] irr-002 label=irrelevant calib_hits=1
+2026-05-08 19:57:01,354 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:01,666 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:01,667 INFO   [std] irr-003 label=irrelevant calib_hits=4
+2026-05-08 19:57:01,981 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:02,258 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:02,259 INFO   [std] irr-004 label=irrelevant calib_hits=5
+2026-05-08 19:57:02,543 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:02,805 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:02,806 INFO   [std] irr-005 label=irrelevant calib_hits=3
+2026-05-08 19:57:03,110 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:03,393 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:03,394 INFO   [std] irr-006 label=irrelevant calib_hits=0
+2026-05-08 19:57:03,671 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:03,971 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:03,972 INFO   [std] irr-007 label=irrelevant calib_hits=2
+2026-05-08 19:57:04,251 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:04,543 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:04,543 INFO   [std] irr-008 label=irrelevant calib_hits=2
+2026-05-08 19:57:04,838 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:05,126 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:05,127 INFO   [std] irr-009 label=irrelevant calib_hits=1
+2026-05-08 19:57:05,411 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:05,719 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:05,719 INFO   [std] irr-010 label=irrelevant calib_hits=2
+2026-05-08 19:57:05,996 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:06,285 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:06,287 INFO   [std] irr-011 label=irrelevant calib_hits=0
+2026-05-08 19:57:06,567 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:06,861 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:06,862 INFO   [std] irr-012 label=irrelevant calib_hits=0
+2026-05-08 19:57:07,148 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:07,433 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:07,434 INFO   [std] irr-013 label=irrelevant calib_hits=0
+2026-05-08 19:57:07,829 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:08,105 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:08,108 INFO   [std] irr-014 label=irrelevant calib_hits=0
+2026-05-08 19:57:08,396 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:08,687 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:08,688 INFO   [std] irr-015 label=irrelevant calib_hits=2
+2026-05-08 19:57:08,968 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:09,239 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:09,241 INFO   [std] irr-016 label=irrelevant calib_hits=0
+2026-05-08 19:57:09,534 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:09,842 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:09,842 INFO   [std] irr-017 label=irrelevant calib_hits=9
+2026-05-08 19:57:10,121 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:10,413 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:10,415 INFO   [std] irr-018 label=irrelevant calib_hits=1
+2026-05-08 19:57:10,691 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:10,965 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:10,965 INFO   [std] irr-019 label=irrelevant calib_hits=2
+2026-05-08 19:57:11,353 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:11,610 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:11,611 INFO   [std] irr-020 label=irrelevant calib_hits=0
+2026-05-08 19:57:11,887 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:12,169 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:12,169 INFO   [std] irr-021 label=irrelevant calib_hits=0
+2026-05-08 19:57:12,467 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:12,778 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:12,779 INFO   [std] irr-022 label=irrelevant calib_hits=0
+2026-05-08 19:57:13,068 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:13,358 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:13,359 INFO   [std] irr-023 label=irrelevant calib_hits=3
+2026-05-08 19:57:13,649 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:13,915 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:13,915 INFO   [std] irr-024 label=irrelevant calib_hits=7
+2026-05-08 19:57:14,172 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:14,511 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall "HTTP/1.1 200 OK"
+2026-05-08 19:57:14,511 INFO   [std] irr-025 label=irrelevant calib_hits=0
+2026-05-08 19:57:14,816 INFO HTTP Request: POST http://192.168.1.12:8001/v1/recall?legacy_rank=true "HTTP/1.1 200 OK"
+2026-05-08 19:57:14,817 INFO Step 3: Computing score distribution stats...
+2026-05-08 19:57:14,817 INFO   [std] relevant  : p5=0.00971  p50=0.01389  p95=0.04262  n=309
+2026-05-08 19:57:14,817 INFO   [std] irrelevant: p5=0.00926  p50=0.01124  p95=0.01609  n=44
+2026-05-08 19:57:14,817 INFO Step 4: Detecting scoring algorithm...
+2026-05-08 19:57:14,817 INFO   hint: RRF-like (max<0.10, k=60 hardcoded) (max_score=0.04918)
+2026-05-08 19:57:14,817 INFO Step 5: Computing recommended threshold = max(irr_p25, rel_p5)...
+2026-05-08 19:57:14,817 INFO   threshold_std=0.01000  threshold_lr=0.01010  use_legacy_rank=False
+2026-05-08 19:57:14,817 INFO Step 6: Writing output JSON...
+2026-05-08 19:57:14,818 INFO Output written to: /Users/paolo/Documents/Projects/agent-zero-cortex/.sisyphus/evidence/calibration/threshold-recommendation-20260508-175626.json
+2026-05-08 19:57:14,818 INFO Step 7: Cleaning up 50 calibration memories...
+2026-05-08 19:57:14,826 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,832 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,837 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,841 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,846 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,852 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,857 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,864 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,868 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,873 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,878 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,882 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,886 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,890 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,895 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,899 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,903 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,907 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,914 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,918 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,922 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,926 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,930 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,936 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,941 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,945 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,952 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,956 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,960 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,964 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,968 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,972 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,976 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,980 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,984 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,988 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,992 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:14,996 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:15,001 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:15,005 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:15,011 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:15,017 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:15,023 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:15,027 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:15,032 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:15,036 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:15,041 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:15,045 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:15,049 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:15,053 INFO HTTP Request: POST http://192.168.1.12:8001/v1/memories "HTTP/1.1 201 Created"
+2026-05-08 19:57:15,053 INFO Cleanup complete: all 50 memories forgotten
+RECOMMENDED: CORTEX_RECALL_THRESHOLD=0.01 CORTEX_RECALL_LEGACY_RANK=false
