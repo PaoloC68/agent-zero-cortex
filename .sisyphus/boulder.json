@@ -1,0 +1,130 @@
+{
+  "active_plan": "/Users/paolo/Documents/Projects/agent-zero-cortex/.sisyphus/plans/cortex-primary-refactor.md",
+  "started_at": "2026-05-08T16:55:13.142Z",
+  "session_ids": [
+    "ses_1f77c3f4effe3l98qj2aYHORI4"
+  ],
+  "session_origins": {
+    "ses_1f77c3f4effe3l98qj2aYHORI4": "direct"
+  },
+  "plan_name": "cortex-primary-refactor",
+  "agent": "atlas",
+  "task_sessions": {
+    "todo:1": {
+      "task_key": "todo:1",
+      "task_label": "1",
+      "task_title": "**Pre-refactor commit tag + scaffold directories**",
+      "session_id": "ses_1f77ad24fffeFuE8b8tuTlpMMi",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-05-08T17:00:29.450Z"
+    },
+    "todo:2": {
+      "task_key": "todo:2",
+      "task_label": "2",
+      "task_title": "**🔴 BLOCKING SPIKE — Verify `_memory` plugin can be silenced**",
+      "session_id": "ses_1f776983fffetr5FZCifLuMzLI",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-high",
+      "updated_at": "2026-05-08T17:16:35.890Z"
+    },
+    "todo:4": {
+      "task_key": "todo:4",
+      "task_label": "4",
+      "task_title": "**Vendor extraction prompts (verbatim from upstream AZ commit `2613fac0`)**",
+      "session_id": "ses_1f7680d61ffewcFUn8ObI4a94n",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-05-08T17:17:41.256Z"
+    },
+    "todo:6": {
+      "task_key": "todo:6",
+      "task_label": "6",
+      "task_title": "**`src/cortex_plugin/slugs.py` — sanitize_slug + project_resolve (TDD)**",
+      "session_id": "ses_1f7663464ffe2ZDt3sIRtjbIHZ",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-05-08T17:20:37.583Z"
+    },
+    "todo:8": {
+      "task_key": "todo:8",
+      "task_label": "8",
+      "task_title": "**`src/cortex_plugin/config.py` — env reads + hardcoded constants (TDD)**",
+      "session_id": "ses_1f7646326ffeEWiXoq3yM4BGIP",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-05-08T17:22:40.649Z"
+    },
+    "todo:11": {
+      "task_key": "todo:11",
+      "task_label": "11",
+      "task_title": "**`src/cortex_plugin/extraction.py` — parallel LLM extraction + DirtyJson parse + retry-once + serial POSTs (TDD)**",
+      "session_id": "ses_1f75f22b6ffez7PDAYhj7Yiy4l",
+      "agent": "Sisyphus-Junior",
+      "category": "deep",
+      "updated_at": "2026-05-08T17:35:22.562Z"
+    },
+    "todo:13": {
+      "task_key": "todo:13",
+      "task_label": "13",
+      "task_title": "**`tests/wrapper/conftest.py` — vendored `helpers.extension.Extension` stub**",
+      "session_id": "ses_1f756df0fffeQjc5J8tZjzRFtp",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-05-08T17:37:23.025Z"
+    },
+    "todo:14": {
+      "task_key": "todo:14",
+      "task_label": "14",
+      "task_title": "**Rewrite `extensions/python/monologue_start/_60_cortex_init.py` as thin wrapper + wrapper test (TDD)**",
+      "session_id": "ses_1f754f0a0ffedtifoDT3ZZzQox",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-high",
+      "updated_at": "2026-05-08T17:43:59.558Z"
+    },
+    "todo:17": {
+      "task_key": "todo:17",
+      "task_label": "17",
+      "task_title": "**Integration test — session lifecycle (init + topic-lock + project-less)**",
+      "session_id": "ses_1f74ca9eaffe9Hsy8fczXJRKcB",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-high",
+      "updated_at": "2026-05-08T17:57:55.467Z"
+    },
+    "todo:18": {
+      "task_key": "todo:18",
+      "task_label": "18",
+      "task_title": "**Integration test — memorize roundtrip (extraction → POST → readback)**",
+      "session_id": "ses_1f7420c7fffe208I3GAlqxEFNu",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-high",
+      "updated_at": "2026-05-08T18:05:39.271Z"
+    },
+    "todo:20": {
+      "task_key": "todo:20",
+      "task_label": "20",
+      "task_title": "**Update `README.md` for Cortex-primary architecture**",
+      "session_id": "ses_1f732d3d9ffeNlS6y1zjIbbLPp",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-high",
+      "updated_at": "2026-05-08T18:23:20.958Z"
+    },
+    "todo:21": {
+      "task_key": "todo:21",
+      "task_label": "21",
+      "task_title": "**Rename `SKILL.md` → `MIGRATION.md` + add rollback procedure**",
+      "session_id": "ses_1f72ac4a5ffe0SQhpsfTGCmUQu",
+      "agent": "Sisyphus-Junior",
+      "category": "writing",
+      "updated_at": "2026-05-08T18:26:32.659Z"
+    },
+    "final-wave:f1": {
+      "task_key": "final-wave:f1",
+      "task_label": "F1",
+      "task_title": "**Plan Compliance Audit** — `oracle`",
+      "session_id": "ses_1f726956cffeu7kk7y27YRTYv4",
+      "agent": "oracle",
+      "updated_at": "2026-05-08T18:32:31.425Z"
+    }
+  }
+}

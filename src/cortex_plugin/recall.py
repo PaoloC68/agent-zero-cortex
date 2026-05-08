@@ -87,8 +87,8 @@ async def recall_and_format(
             params=params,
             timeout_sec=HTTP_TIMEOUT_SEC,
         )
-    except Exception:
-        logger.warning("recall: Cortex /v1/recall failed for session %s", session_id)
+    except Exception as exc:
+        logger.warning("recall: Cortex /v1/recall failed for session %s: %s", session_id, exc)
         return ""
 
     ranked = fence_rerank(results, current_project=current_project, recall_limit=recall_limit)

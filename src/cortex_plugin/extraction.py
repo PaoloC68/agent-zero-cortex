@@ -7,12 +7,10 @@ from typing import Any, Awaitable, Callable
 
 import dirtyjson
 
-from cortex_plugin.config import FRAGMENT_IMPORTANCE, SOLUTION_IMPORTANCE
+from cortex_plugin.config import FRAGMENT_IMPORTANCE, SOLUTION_IMPORTANCE, MAX_HISTORY_CHARS, RETRY_ATTEMPTS
 from cortex_plugin.keys import idempotency_key
 
 logger = logging.getLogger(__name__)
-
-MAX_HISTORY_CHARS = 80000
 _REQUIRED_SOLUTION_KEYS = {"problem", "solution"}
 
 
@@ -70,7 +68,7 @@ async def _call_with_retry(
     parser: Callable,
     label: str,
 ) -> list:
-    for attempt in range(2):
+    for attempt in range(RETRY_ATTEMPTS):
         try:
             raw = await utility_call(history, prompt)
             return parser(raw)

@@ -50,7 +50,7 @@ class CortexInit(Extension):
                     cfg.api_key,
                 )
 
-            logger.info(f"cortex.init: session={session_id} project={slug}")
+            logger.info("cortex.init: session=%s project=%s", session_id, slug)
 
         except Exception as e:
-            logger.warning(f"cortex.init: failed (non-fatal): {e}")
+            logger.warning("cortex.init: failed (non-fatal): %s", e)
