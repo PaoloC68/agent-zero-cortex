@@ -1,0 +1,218 @@
+{
+  "session_id": "spike-task-3-1778259783",
+  "timestamp_utc": "2026-05-08T17:03:03.487896+00:00",
+  "cortex_url": "http://192.168.1.12:8001",
+  "calls_per_size": 6,
+  "content_sizes": [
+    200,
+    500,
+    1000,
+    2000
+  ],
+  "measurements": [
+    {
+      "size": 200,
+      "call_idx": 0,
+      "elapsed_s": 1.8461,
+      "memory_id": "0a1b64c2-77d4-4a42-8bec-576c7586491f"
+    },
+    {
+      "size": 200,
+      "call_idx": 1,
+      "elapsed_s": 0.1764,
+      "memory_id": "855e3f23-b442-4e5c-b44f-3d73bff5735f"
+    },
+    {
+      "size": 200,
+      "call_idx": 2,
+      "elapsed_s": 1.6213,
+      "memory_id": "3f6fab81-b29f-415f-9df3-a73ca65a86b2"
+    },
+    {
+      "size": 200,
+      "call_idx": 3,
+      "elapsed_s": 0.1904,
+      "memory_id": "6347b9d3-ace8-421e-8beb-8e76ddbdefff"
+    },
+    {
+      "size": 200,
+      "call_idx": 4,
+      "elapsed_s": 0.1762,
+      "memory_id": "62f5b9eb-f1cb-4dde-8b74-bf9feb3deb27"
+    },
+    {
+      "size": 200,
+      "call_idx": 5,
+      "elapsed_s": 0.1934,
+      "memory_id": "b3600439-e39e-42b8-9c57-538909cfe427"
+    },
+    {
+      "size": 500,
+      "call_idx": 0,
+      "elapsed_s": 0.1936,
+      "memory_id": "8c202852-d2c1-4f8f-b3e8-399013d51a1b"
+    },
+    {
+      "size": 500,
+      "call_idx": 1,
+      "elapsed_s": 0.193,
+      "memory_id": "b4c5bfb4-bf83-4b2e-84b4-a5d4198957ee"
+    },
+    {
+      "size": 500,
+      "call_idx": 2,
+      "elapsed_s": 0.2017,
+      "memory_id": "ae5bae0d-c799-4428-aa00-c849a9994183"
+    },
+    {
+      "size": 500,
+      "call_idx": 3,
+      "elapsed_s": 0.1936,
+      "memory_id": "b0e36304-05bc-4d78-9ebe-b9af85c8c6c2"
+    },
+    {
+      "size": 500,
+      "call_idx": 4,
+      "elapsed_s": 0.168,
+      "memory_id": "95edba1f-3065-4994-bf20-96af8454ce14"
+    },
+    {
+      "size": 500,
+      "call_idx": 5,
+      "elapsed_s": 0.1856,
+      "memory_id": "e30225fc-4a18-4f24-b939-ab8d51d4786b"
+    },
+    {
+      "size": 1000,
+      "call_idx": 0,
+      "elapsed_s": 0.241,
+      "memory_id": "4000b89d-c1e0-4cdc-b779-fc3690793f57"
+    },
+    {
+      "size": 1000,
+      "call_idx": 1,
+      "elapsed_s": 0.278,
+      "memory_id": "e9e5bba4-f54e-422c-8773-e37990df9e4a"
+    },
+    {
+      "size": 1000,
+      "call_idx": 2,
+      "elapsed_s": 0.1955,
+      "memory_id": "935d8180-be49-4214-886d-8dd92f6d17af"
+    },
+    {
+      "size": 1000,
+      "call_idx": 3,
+      "elapsed_s": 0.1875,
+      "memory_id": "25505d02-8313-496b-a38d-4b4936c6a7f5"
+    },
+    {
+      "size": 1000,
+      "call_idx": 4,
+      "elapsed_s": 0.1793,
+      "memory_id": "54513c90-9110-4e44-b1a4-49d1dafd760a"
+    },
+    {
+      "size": 1000,
+      "call_idx": 5,
+      "elapsed_s": 0.2081,
+      "memory_id": "e02a129d-90b8-445f-9b88-4f0ef55b0689"
+    },
+    {
+      "size": 2000,
+      "call_idx": 0,
+      "elapsed_s": 0.1879,
+      "memory_id": "dabaf75b-c194-4f25-bdeb-a57735522dc1"
+    },
+    {
+      "size": 2000,
+      "call_idx": 1,
+      "elapsed_s": 0.1852,
+      "memory_id": "2e0f2c8f-6cf9-4f15-a2ef-1b5a5899d309"
+    },
+    {
+      "size": 2000,
+      "call_idx": 2,
+      "elapsed_s": 0.1961,
+      "memory_id": "74dd690f-e7f3-4c81-a460-26cc1c108b1c"
+    },
+    {
+      "size": 2000,
+      "call_idx": 3,
+      "elapsed_s": 0.3078,
+      "memory_id": "80675cae-6227-45b4-81be-5f69969f5210"
+    },
+    {
+      "size": 2000,
+      "call_idx": 4,
+      "elapsed_s": 0.1898,
+      "memory_id": "e4c6cba4-8c44-4645-b115-d5e7d4438728"
+    },
+    {
+      "size": 2000,
+      "call_idx": 5,
+      "elapsed_s": 0.3282,
+      "memory_id": "40c02d17-b50c-4bf2-a4f2-3e5853e8efc8"
+    }
+  ],
+  "memory_ids": [
+    "0a1b64c2-77d4-4a42-8bec-576c7586491f",
+    "855e3f23-b442-4e5c-b44f-3d73bff5735f",
+    "3f6fab81-b29f-415f-9df3-a73ca65a86b2",
+    "6347b9d3-ace8-421e-8beb-8e76ddbdefff",
+    "62f5b9eb-f1cb-4dde-8b74-bf9feb3deb27",
+    "b3600439-e39e-42b8-9c57-538909cfe427",
+    "8c202852-d2c1-4f8f-b3e8-399013d51a1b",
+    "b4c5bfb4-bf83-4b2e-84b4-a5d4198957ee",
+    "ae5bae0d-c799-4428-aa00-c849a9994183",
+    "b0e36304-05bc-4d78-9ebe-b9af85c8c6c2",
+    "95edba1f-3065-4994-bf20-96af8454ce14",
+    "e30225fc-4a18-4f24-b939-ab8d51d4786b",
+    "4000b89d-c1e0-4cdc-b779-fc3690793f57",
+    "e9e5bba4-f54e-422c-8773-e37990df9e4a",
+    "935d8180-be49-4214-886d-8dd92f6d17af",
+    "25505d02-8313-496b-a38d-4b4936c6a7f5",
+    "54513c90-9110-4e44-b1a4-49d1dafd760a",
+    "e02a129d-90b8-445f-9b88-4f0ef55b0689",
+    "dabaf75b-c194-4f25-bdeb-a57735522dc1",
+    "2e0f2c8f-6cf9-4f15-a2ef-1b5a5899d309",
+    "74dd690f-e7f3-4c81-a460-26cc1c108b1c",
+    "80675cae-6227-45b4-81be-5f69969f5210",
+    "e4c6cba4-8c44-4645-b115-d5e7d4438728",
+    "40c02d17-b50c-4bf2-a4f2-3e5853e8efc8"
+  ],
+  "summary": {
+    "200": {
+      "p50": 0.1919,
+      "p95": 1.7899,
+      "p99": 1.8349,
+      "min": 0.1762,
+      "max": 1.8461,
+      "mean": 0.7006
+    },
+    "500": {
+      "p50": 0.1933,
+      "p95": 0.1996,
+      "p99": 0.2013,
+      "min": 0.168,
+      "max": 0.2017,
+      "mean": 0.1892
+    },
+    "1000": {
+      "p50": 0.2018,
+      "p95": 0.2688,
+      "p99": 0.2762,
+      "min": 0.1793,
+      "max": 0.278,
+      "mean": 0.2149
+    },
+    "2000": {
+      "p50": 0.193,
+      "p95": 0.3231,
+      "p99": 0.3271,
+      "min": 0.1852,
+      "max": 0.3282,
+      "mean": 0.2325
+    }
+  }
+}
