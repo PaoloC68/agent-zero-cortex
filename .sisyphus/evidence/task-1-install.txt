@@ -1,0 +1,41 @@
+Obtaining file:///Users/paolo/Documents/Projects/agent-zero-cortex
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Getting requirements to build editable: started
+  Getting requirements to build editable: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Requirement already satisfied: httpx>=0.28.0 in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from agent-zero-cortex==0.1.0) (0.28.1)
+Requirement already satisfied: pydantic>=2.9.0 in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from agent-zero-cortex==0.1.0) (2.11.9)
+Requirement already satisfied: pytest-asyncio>=0.24.0 in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from agent-zero-cortex==0.1.0) (1.3.0)
+Requirement already satisfied: pytest>=8.3.0 in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from agent-zero-cortex==0.1.0) (8.4.2)
+Requirement already satisfied: pyyaml>=6.0.0 in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from agent-zero-cortex==0.1.0) (6.0.2)
+Requirement already satisfied: anyio in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from httpx>=0.28.0->agent-zero-cortex==0.1.0) (4.9.0)
+Requirement already satisfied: certifi in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from httpx>=0.28.0->agent-zero-cortex==0.1.0) (2025.1.31)
+Requirement already satisfied: httpcore==1.* in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from httpx>=0.28.0->agent-zero-cortex==0.1.0) (1.0.7)
+Requirement already satisfied: idna in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from httpx>=0.28.0->agent-zero-cortex==0.1.0) (3.10)
+Requirement already satisfied: h11<0.15,>=0.13 in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from httpcore==1.*->httpx>=0.28.0->agent-zero-cortex==0.1.0) (0.14.0)
+Requirement already satisfied: annotated-types>=0.6.0 in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from pydantic>=2.9.0->agent-zero-cortex==0.1.0) (0.7.0)
+Requirement already satisfied: pydantic-core==2.33.2 in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from pydantic>=2.9.0->agent-zero-cortex==0.1.0) (2.33.2)
+Requirement already satisfied: typing-extensions>=4.12.2 in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from pydantic>=2.9.0->agent-zero-cortex==0.1.0) (4.14.0)
+Requirement already satisfied: typing-inspection>=0.4.0 in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from pydantic>=2.9.0->agent-zero-cortex==0.1.0) (0.4.2)
+Requirement already satisfied: iniconfig>=1 in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from pytest>=8.3.0->agent-zero-cortex==0.1.0) (2.1.0)
+Requirement already satisfied: packaging>=20 in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from pytest>=8.3.0->agent-zero-cortex==0.1.0) (24.2)
+Requirement already satisfied: pluggy<2,>=1.5 in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from pytest>=8.3.0->agent-zero-cortex==0.1.0) (1.6.0)
+Requirement already satisfied: pygments>=2.7.2 in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from pytest>=8.3.0->agent-zero-cortex==0.1.0) (2.19.1)
+Requirement already satisfied: sniffio>=1.1 in /Users/paolo/.pyenv/versions/3.12.2/lib/python3.12/site-packages (from anyio->httpx>=0.28.0->agent-zero-cortex==0.1.0) (1.3.1)
+Building wheels for collected packages: agent-zero-cortex
+  Building editable for agent-zero-cortex (pyproject.toml): started
+  Building editable for agent-zero-cortex (pyproject.toml): finished with status 'done'
+  Created wheel for agent-zero-cortex: filename=agent_zero_cortex-0.1.0-py3-none-any.whl size=1205 sha256=e168dcd26c61dc2c988d9670a5a002f9af2df70818374312e47a0ea86577f005
+  Stored in directory: /private/var/folders/xc/zy7cmkp97mb4sx6pw_p0kmhr0000gn/T/pip-ephem-wheel-cache-fjv33sq5/wheels/d5/04/74/2c01592efa0ecda720a76344407857d3163e7bb22a454642c2
+Successfully built agent-zero-cortex
+Installing collected packages: agent-zero-cortex
+Successfully installed agent-zero-cortex-0.1.0
+
+[notice] A new release of pip is available: 26.0.1 -> 26.1.1
+[notice] To update, run: pip install --upgrade pip

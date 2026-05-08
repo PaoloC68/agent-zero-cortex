@@ -1,0 +1,30 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.10, pytest-9.0.3, pluggy-1.6.0 -- /Users/paolo/Documents/Projects/agent-zero-cortex/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/paolo/Documents/Projects/agent-zero-cortex
+configfile: pyproject.toml
+plugins: asyncio-1.3.0, anyio-4.13.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 19 items
+
+tests/unit/test_extraction.py::test_parse_fragments_valid_json_array PASSED [  5%]
+tests/unit/test_extraction.py::test_parse_fragments_markdown_fence PASSED [ 10%]
+tests/unit/test_extraction.py::test_parse_fragments_single_string_wrapped_in_list PASSED [ 15%]
+tests/unit/test_extraction.py::test_parse_fragments_empty_array PASSED   [ 21%]
+tests/unit/test_extraction.py::test_parse_fragments_malformed_raises_extraction_parse_error PASSED [ 26%]
+tests/unit/test_extraction.py::test_parse_solutions_valid PASSED         [ 31%]
+tests/unit/test_extraction.py::test_parse_solutions_filters_missing_keys PASSED [ 36%]
+tests/unit/test_extraction.py::test_extract_fragments_and_solutions_parallel_gather PASSED [ 42%]
+tests/unit/test_extraction.py::test_extract_asymmetric_success PASSED    [ 47%]
+tests/unit/test_extraction.py::test_extract_retry_once_success PASSED    [ 52%]
+tests/unit/test_extraction.py::test_extract_two_consecutive_failures_returns_empty PASSED [ 57%]
+tests/unit/test_extraction.py::test_solution_creates_two_memories PASSED [ 63%]
+tests/unit/test_extraction.py::test_no_source_project_when_projectless PASSED [ 68%]
+tests/unit/test_extraction.py::test_write_failure_partial_counts PASSED  [ 73%]
+tests/unit/test_extraction.py::test_posting_timeout_partial PASSED       [ 78%]
+tests/unit/test_extraction.py::test_write_returns_timed_out_false_on_success PASSED [ 84%]
+tests/unit/test_extraction.py::test_write_with_project_slug_includes_source_project PASSED [ 89%]
+tests/unit/test_extraction.py::test_write_idempotency_key_header_sent PASSED [ 94%]
+tests/unit/test_extraction.py::test_write_fragment_has_correct_area_and_kind PASSED [100%]
+
+============================== 19 passed in 0.07s ==============================

@@ -1,0 +1,32 @@
+.sisyphus/evidence:
+total 32
+drwxr-xr-x  5 paolo  staff   160 May  8 18:59 .
+drwxr-xr-x  7 paolo  staff   224 May  8 18:57 ..
+-rw-r--r--  1 paolo  staff    80 May  8 18:59 task-1-import.txt
+-rw-r--r--  1 paolo  staff  4664 May  8 18:57 task-1-install.txt
+-rw-r--r--  1 paolo  staff    22 May  8 18:59 task-1-tag.txt
+
+src/cortex_plugin:
+total 0
+drwxr-xr-x  4 paolo  staff  128 May  8 18:59 .
+drwxr-xr-x  3 paolo  staff   96 May  8 18:57 ..
+-rw-r--r--  1 paolo  staff    0 May  8 18:57 __init__.py
+drwxr-xr-x  3 paolo  staff   96 May  8 18:59 __pycache__
+
+tests/integration:
+total 0
+drwxr-xr-x   3 paolo  staff   96 May  8 18:57 .
+drwxr-xr-x  11 paolo  staff  352 May  8 18:57 ..
+-rw-r--r--   1 paolo  staff    0 May  8 18:57 __init__.py
+
+tests/unit:
+total 0
+drwxr-xr-x   3 paolo  staff   96 May  8 18:57 .
+drwxr-xr-x  11 paolo  staff  352 May  8 18:57 ..
+-rw-r--r--   1 paolo  staff    0 May  8 18:57 __init__.py
+
+tests/wrapper:
+total 0
+drwxr-xr-x   3 paolo  staff   96 May  8 18:57 .
+drwxr-xr-x  11 paolo  staff  352 May  8 18:57 ..
+-rw-r--r--   1 paolo  staff    0 May  8 18:57 __init__.py

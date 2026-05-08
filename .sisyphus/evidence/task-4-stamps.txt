@@ -1,0 +1,5 @@
+==> prompts/memory.memories_sum.sys.md <==
+<!-- Sourced from frdel/agent-zero@2613fac0:plugins/_memory/prompts/memory.memories_sum.sys.md; do not edit -->
+
+==> prompts/memory.solutions_sum.sys.md <==
+<!-- Sourced from frdel/agent-zero@2613fac0:plugins/_memory/prompts/memory.solutions_sum.sys.md; do not edit -->

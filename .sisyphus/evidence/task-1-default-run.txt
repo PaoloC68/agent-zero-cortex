@@ -1,0 +1,298 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.10, pytest-9.0.3, pluggy-1.6.0 -- /Users/paolo/Documents/Projects/agent-zero-cortex/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/paolo/Documents/Projects/agent-zero-cortex
+configfile: pyproject.toml
+testpaths: tests
+plugins: asyncio-1.3.0, anyio-4.13.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 9 items
+
+tests/test_init.py::test_init_posts_session_with_sanitized_slug FAILED   [ 11%]
+tests/test_init.py::test_init_sanitizes_special_chars FAILED             [ 22%]
+tests/test_init.py::test_init_does_not_raise_on_503 FAILED               [ 33%]
+tests/test_memorize.py::test_memorize_writes_fragments_and_solutions FAILED [ 44%]
+tests/test_memorize.py::test_memorize_does_not_raise_on_cortex_error FAILED [ 55%]
+tests/test_recall_append.py::test_append_preserves_faiss_and_adds_cortex FAILED [ 66%]
+tests/test_recall_append.py::test_cortex_down_extras_untouched FAILED    [ 77%]
+tests/test_recall_append.py::test_strategy_off_disables_append FAILED    [ 88%]
+tests/test_skill_idempotency.py::test_skill_idempotency_fixture PASSED   [100%]
+
+=================================== FAILURES ===================================
+_________________ test_init_posts_session_with_sanitized_slug __________________
+
+    @pytest.mark.asyncio
+    async def test_init_posts_session_with_sanitized_slug():
+        agent = FakeAgent(project="homelab")
+        captured = {}
+    
+        async def mock_post(url, json=None, headers=None):
+            captured["url"] = url
+            captured["json"] = json
+            resp = MagicMock()
+            resp.raise_for_status = MagicMock()
+            resp.json = MagicMock(return_value={"id": "cortex-session-abc"})
+            return resp
+    
+        with patch("httpx.AsyncClient") as mock_client_cls:
+            mock_client = AsyncMock()
+            mock_client.post = AsyncMock(side_effect=mock_post)
+            mock_client.__aenter__ = AsyncMock(return_value=mock_client)
+            mock_client.__aexit__ = AsyncMock(return_value=False)
+            mock_client_cls.return_value = mock_client
+    
+>           from extensions.python.monologue_start._60_cortex_init import execute
+
+tests/test_init.py:52: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    """Cortex monologue_start extension — creates a Cortex session and caches the ID."""
+    from __future__ import annotations
+    import asyncio
+    import re
+    import os
+    import logging
+    
+>   from helpers.extension import Extension
+E   ModuleNotFoundError: No module named 'helpers'
+
+extensions/python/monologue_start/_60_cortex_init.py:8: ModuleNotFoundError
+______________________ test_init_sanitizes_special_chars _______________________
+
+    @pytest.mark.asyncio
+    async def test_init_sanitizes_special_chars():
+        agent = FakeAgent(project="Foo Bar/Baz!")
+    
+        async def mock_post(url, json=None, headers=None):
+            resp = MagicMock()
+            resp.raise_for_status = MagicMock()
+            resp.json = MagicMock(return_value={"id": "cortex-session-xyz"})
+            return resp
+    
+        with patch("httpx.AsyncClient") as mock_client_cls:
+            mock_client = AsyncMock()
+            mock_client.post = AsyncMock(side_effect=mock_post)
+            mock_client.__aenter__ = AsyncMock(return_value=mock_client)
+            mock_client.__aexit__ = AsyncMock(return_value=False)
+            mock_client_cls.return_value = mock_client
+    
+>           from extensions.python.monologue_start._60_cortex_init import execute
+
+tests/test_init.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    """Cortex monologue_start extension — creates a Cortex session and caches the ID."""
+    from __future__ import annotations
+    import asyncio
+    import re
+    import os
+    import logging
+    
+>   from helpers.extension import Extension
+E   ModuleNotFoundError: No module named 'helpers'
+
+extensions/python/monologue_start/_60_cortex_init.py:8: ModuleNotFoundError
+_______________________ test_init_does_not_raise_on_503 ________________________
+
+    @pytest.mark.asyncio
+    async def test_init_does_not_raise_on_503():
+        agent = FakeAgent(project="homelab")
+    
+        with patch("httpx.AsyncClient") as mock_client_cls:
+            mock_client = AsyncMock()
+            mock_client.post = AsyncMock(side_effect=Exception("503 Service Unavailable"))
+            mock_client.__aenter__ = AsyncMock(return_value=mock_client)
+            mock_client.__aexit__ = AsyncMock(return_value=False)
+            mock_client_cls.return_value = mock_client
+    
+>           from extensions.python.monologue_start._60_cortex_init import execute
+
+tests/test_init.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    """Cortex monologue_start extension — creates a Cortex session and caches the ID."""
+    from __future__ import annotations
+    import asyncio
+    import re
+    import os
+    import logging
+    
+>   from helpers.extension import Extension
+E   ModuleNotFoundError: No module named 'helpers'
+
+extensions/python/monologue_start/_60_cortex_init.py:8: ModuleNotFoundError
+_________________ test_memorize_writes_fragments_and_solutions _________________
+
+    @pytest.mark.asyncio
+    async def test_memorize_writes_fragments_and_solutions():
+        agent = FakeAgent()
+        loop_data = FakeLoopData(
+            fragments=["fragment 1", "fragment 2", "fragment 3"],
+            solutions=["solution 1", "solution 2"],
+        )
+        calls = []
+    
+        async def mock_post(url, json=None, headers=None):
+            calls.append({"url": url, "json": json, "headers": headers})
+            resp = MagicMock()
+            resp.raise_for_status = MagicMock()
+            resp.json = MagicMock(return_value={"id": "mem-123"})
+            return resp
+    
+        with patch("httpx.AsyncClient") as mock_client_cls:
+            mock_client = AsyncMock()
+            mock_client.post = AsyncMock(side_effect=mock_post)
+            mock_client.__aenter__ = AsyncMock(return_value=mock_client)
+            mock_client.__aexit__ = AsyncMock(return_value=False)
+            mock_client_cls.return_value = mock_client
+    
+>           from extensions.python.monologue_end._60_cortex_memorize import execute
+
+tests/test_memorize.py:59: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    """Cortex monologue_end extension — writes fragments and solutions to Cortex."""
+    from __future__ import annotations
+    import hashlib
+    import os
+    import re
+    import logging
+    
+>   from helpers.extension import Extension
+E   ModuleNotFoundError: No module named 'helpers'
+
+extensions/python/monologue_end/_60_cortex_memorize.py:8: ModuleNotFoundError
+_________________ test_memorize_does_not_raise_on_cortex_error _________________
+
+    @pytest.mark.asyncio
+    async def test_memorize_does_not_raise_on_cortex_error():
+        agent = FakeAgent()
+        loop_data = FakeLoopData(fragments=["test fragment"])
+    
+        with patch("httpx.AsyncClient") as mock_client_cls:
+            mock_client = AsyncMock()
+            mock_client.post = AsyncMock(side_effect=Exception("503"))
+            mock_client.__aenter__ = AsyncMock(return_value=mock_client)
+            mock_client.__aexit__ = AsyncMock(return_value=False)
+            mock_client_cls.return_value = mock_client
+    
+>           from extensions.python.monologue_end._60_cortex_memorize import execute
+
+tests/test_memorize.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    """Cortex monologue_end extension — writes fragments and solutions to Cortex."""
+    from __future__ import annotations
+    import hashlib
+    import os
+    import re
+    import logging
+    
+>   from helpers.extension import Extension
+E   ModuleNotFoundError: No module named 'helpers'
+
+extensions/python/monologue_end/_60_cortex_memorize.py:8: ModuleNotFoundError
+_________________ test_append_preserves_faiss_and_adds_cortex __________________
+
+    @pytest.mark.asyncio
+    async def test_append_preserves_faiss_and_adds_cortex():
+        agent = FakeAgent()
+        loop_data = FakeLoopData(faiss_memories="FAISS_PROMPT_BLOCK")
+    
+        async def mock_post(url, json=None, headers=None):
+            resp = MagicMock()
+            resp.raise_for_status = MagicMock()
+            resp.json = MagicMock(return_value=[
+                {"content": "Cortex memory item 1", "score": 0.9, "matched_via": ["vector"]},
+                {"content": "Cortex memory item 2", "score": 0.8, "matched_via": ["bm25"]},
+            ])
+            return resp
+    
+        with patch("httpx.AsyncClient") as mock_client_cls:
+            mock_client = AsyncMock()
+            mock_client.post = AsyncMock(side_effect=mock_post)
+            mock_client.__aenter__ = AsyncMock(return_value=mock_client)
+            mock_client.__aexit__ = AsyncMock(return_value=False)
+            mock_client_cls.return_value = mock_client
+    
+>           from extensions.python.message_loop_prompts_after._60_cortex_recall import execute
+
+tests/test_recall_append.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    """Cortex recall extension — appends Cortex memories to AZ prompt extras."""
+    from __future__ import annotations
+    import os
+    import logging
+    
+>   from helpers.extension import Extension
+E   ModuleNotFoundError: No module named 'helpers'
+
+extensions/python/message_loop_prompts_after/_60_cortex_recall.py:6: ModuleNotFoundError
+______________________ test_cortex_down_extras_untouched _______________________
+
+    @pytest.mark.asyncio
+    async def test_cortex_down_extras_untouched():
+        agent = FakeAgent()
+        loop_data = FakeLoopData(faiss_memories="FAISS_PROMPT_BLOCK")
+    
+        with patch("httpx.AsyncClient") as mock_client_cls:
+            mock_client = AsyncMock()
+            mock_client.post = AsyncMock(side_effect=Exception("503"))
+            mock_client.__aenter__ = AsyncMock(return_value=mock_client)
+            mock_client.__aexit__ = AsyncMock(return_value=False)
+            mock_client_cls.return_value = mock_client
+    
+>           from extensions.python.message_loop_prompts_after._60_cortex_recall import execute
+
+tests/test_recall_append.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    """Cortex recall extension — appends Cortex memories to AZ prompt extras."""
+    from __future__ import annotations
+    import os
+    import logging
+    
+>   from helpers.extension import Extension
+E   ModuleNotFoundError: No module named 'helpers'
+
+extensions/python/message_loop_prompts_after/_60_cortex_recall.py:6: ModuleNotFoundError
+______________________ test_strategy_off_disables_append _______________________
+
+    @pytest.mark.asyncio
+    async def test_strategy_off_disables_append():
+        os.environ["CORTEX_MERGE_STRATEGY"] = "off"
+        agent = FakeAgent()
+        loop_data = FakeLoopData(faiss_memories="FAISS_PROMPT_BLOCK")
+    
+        with patch("httpx.AsyncClient") as mock_client_cls:
+            mock_client = AsyncMock()
+            mock_client.post = AsyncMock(return_value=MagicMock())
+            mock_client.__aenter__ = AsyncMock(return_value=mock_client)
+            mock_client.__aexit__ = AsyncMock(return_value=False)
+            mock_client_cls.return_value = mock_client
+    
+>           from extensions.python.message_loop_prompts_after._60_cortex_recall import execute
+
+tests/test_recall_append.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    """Cortex recall extension — appends Cortex memories to AZ prompt extras."""
+    from __future__ import annotations
+    import os
+    import logging
+    
+>   from helpers.extension import Extension
+E   ModuleNotFoundError: No module named 'helpers'
+
+extensions/python/message_loop_prompts_after/_60_cortex_recall.py:6: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_init.py::test_init_posts_session_with_sanitized_slug - Modu...
+FAILED tests/test_init.py::test_init_sanitizes_special_chars - ModuleNotFound...
+FAILED tests/test_init.py::test_init_does_not_raise_on_503 - ModuleNotFoundEr...
+FAILED tests/test_memorize.py::test_memorize_writes_fragments_and_solutions
+FAILED tests/test_memorize.py::test_memorize_does_not_raise_on_cortex_error
+FAILED tests/test_recall_append.py::test_append_preserves_faiss_and_adds_cortex
+FAILED tests/test_recall_append.py::test_cortex_down_extras_untouched - Modul...
+FAILED tests/test_recall_append.py::test_strategy_off_disables_append - Modul...
+========================= 8 failed, 1 passed in 0.25s ==========================

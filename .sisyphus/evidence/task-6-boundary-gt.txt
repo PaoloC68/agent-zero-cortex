@@ -1,0 +1,1 @@
+✓ Boundary test passed: 65 chars → 64 chars

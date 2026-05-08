@@ -1,0 +1,11 @@
+tests/test_init.py::test_init_posts_session_with_sanitized_slug
+tests/test_init.py::test_init_sanitizes_special_chars
+tests/test_init.py::test_init_does_not_raise_on_503
+tests/test_memorize.py::test_memorize_writes_fragments_and_solutions
+tests/test_memorize.py::test_memorize_does_not_raise_on_cortex_error
+tests/test_recall_append.py::test_append_preserves_faiss_and_adds_cortex
+tests/test_recall_append.py::test_cortex_down_extras_untouched
+tests/test_recall_append.py::test_strategy_off_disables_append
+tests/test_skill_idempotency.py::test_skill_idempotency_fixture
+
+9 tests collected in 0.06s

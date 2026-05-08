@@ -1,0 +1,18 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.10, pytest-9.0.3, pluggy-1.6.0 -- /Users/paolo/Documents/Projects/agent-zero-cortex/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/paolo/Documents/Projects/agent-zero-cortex
+configfile: pyproject.toml
+plugins: asyncio-1.3.0, anyio-4.13.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 7 items
+
+tests/unit/test_prompts.py::TestLoadFragmentsPrompt::test_returns_string_starting_with_assistants_job PASSED [ 14%]
+tests/unit/test_prompts.py::TestLoadFragmentsPrompt::test_returns_cached_same_object_on_second_call PASSED [ 28%]
+tests/unit/test_prompts.py::TestLoadFragmentsPrompt::test_override_with_cortex_prompt_dir PASSED [ 42%]
+tests/unit/test_prompts.py::TestLoadFragmentsPrompt::test_fallback_to_vendored_when_override_missing PASSED [ 57%]
+tests/unit/test_prompts.py::TestLoadFragmentsPrompt::test_fallback_when_override_path_invalid PASSED [ 71%]
+tests/unit/test_prompts.py::TestLoadSolutionsPrompt::test_returns_string_mentioning_successful_technical_solutions PASSED [ 85%]
+tests/unit/test_prompts.py::TestLoadSolutionsPrompt::test_returns_cached_same_object_on_second_call PASSED [100%]
+
+============================== 7 passed in 0.05s ===============================
