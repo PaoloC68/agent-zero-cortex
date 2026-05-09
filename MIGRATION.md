@@ -20,7 +20,7 @@ docker exec agent-zero pip uninstall -y agent-zero-cortex
 
 # 4. Re-deploy the old extension files (from the pre-refactor README)
 PLUGIN=/opt/agent-zero/data/usr/plugins/agent-zero-cortex/extensions/python
-EXT=/opt/agent-zero/data/python/extensions
+EXT=/opt/agent-zero/data/extensions/python
 cp $PLUGIN/monologue_start/_60_cortex_init.py       $EXT/monologue_start/
 cp $PLUGIN/monologue_end/_60_cortex_memorize.py     $EXT/monologue_end/
 cp $PLUGIN/message_loop_prompts_after/_60_cortex_recall.py $EXT/message_loop_prompts_after/

@@ -105,9 +105,9 @@ Cortex's scoring algorithm changed at v1.1. The default threshold of `0.02` is c
 Extensions must be **copied** to AZ's runtime extension dirs — the plugin directory alone is not enough:
 
 ```
-/opt/agent-zero/data/python/extensions/monologue_start/_60_cortex_init.py
-/opt/agent-zero/data/python/extensions/monologue_end/_60_cortex_memorize.py
-/opt/agent-zero/data/python/extensions/message_loop_prompts_after/_60_cortex_recall.py
+/opt/agent-zero/data/extensions/python/monologue_start/_60_cortex_init.py
+/opt/agent-zero/data/extensions/python/monologue_end/_60_cortex_memorize.py
+/opt/agent-zero/data/extensions/python/message_loop_prompts_after/_60_cortex_recall.py
 ```
 
 Plugin toggle sentinel: `/opt/agent-zero/data/usr/plugins/agent-zero-cortex/.toggle-1` (must exist).

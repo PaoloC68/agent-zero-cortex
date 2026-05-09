@@ -47,7 +47,7 @@ touch /opt/agent-zero/data/usr/plugins/agent-zero-cortex/.toggle-1
 
 # 3. Copy extension files into AZ's extension directories
 PLUGIN=/opt/agent-zero/data/usr/plugins/agent-zero-cortex/extensions/python
-EXT=/opt/agent-zero/data/python/extensions
+EXT=/opt/agent-zero/data/extensions/python
 
 cp $PLUGIN/monologue_start/_60_cortex_init.py       $EXT/monologue_start/
 cp $PLUGIN/monologue_end/_60_cortex_memorize.py     $EXT/monologue_end/
@@ -87,7 +87,7 @@ ssh root@192.168.1.5 "pct exec 500 -- bash -c '
   touch /opt/agent-zero/data/usr/plugins/agent-zero-cortex/.toggle-1
 
   PLUGIN=/opt/agent-zero/data/usr/plugins/agent-zero-cortex/extensions/python
-  EXT=/opt/agent-zero/data/python/extensions
+  EXT=/opt/agent-zero/data/extensions/python
   cp \$PLUGIN/monologue_start/_60_cortex_init.py       \$EXT/monologue_start/
   cp \$PLUGIN/monologue_end/_60_cortex_memorize.py     \$EXT/monologue_end/
   cp \$PLUGIN/message_loop_prompts_after/_60_cortex_recall.py \$EXT/message_loop_prompts_after/
@@ -297,7 +297,7 @@ ssh root@192.168.1.5 "pct exec 500 -- bash -c '
   cp -r agent-zero-cortex/* /opt/agent-zero/data/usr/plugins/agent-zero-cortex/
 
   PLUGIN=/opt/agent-zero/data/usr/plugins/agent-zero-cortex/extensions/python
-  EXT=/opt/agent-zero/data/python/extensions
+  EXT=/opt/agent-zero/data/extensions/python
   cp \$PLUGIN/monologue_start/_60_cortex_init.py       \$EXT/monologue_start/
   cp \$PLUGIN/monologue_end/_60_cortex_memorize.py     \$EXT/monologue_end/
   cp \$PLUGIN/message_loop_prompts_after/_60_cortex_recall.py \$EXT/message_loop_prompts_after/
@@ -314,9 +314,9 @@ ssh root@192.168.1.5 "pct exec 500 -- bash -c '
 ```bash
 ssh root@192.168.1.5 "pct exec 500 -- bash -c '
   # Remove extension files
-  rm -f /opt/agent-zero/data/python/extensions/monologue_start/_60_cortex_init.py
-  rm -f /opt/agent-zero/data/python/extensions/monologue_end/_60_cortex_memorize.py
-  rm -f /opt/agent-zero/data/python/extensions/message_loop_prompts_after/_60_cortex_recall.py
+  rm -f /opt/agent-zero/data/extensions/python/monologue_start/_60_cortex_init.py
+  rm -f /opt/agent-zero/data/extensions/python/monologue_end/_60_cortex_memorize.py
+  rm -f /opt/agent-zero/data/extensions/python/message_loop_prompts_after/_60_cortex_recall.py
 
   # Remove plugin directory
   rm -rf /opt/agent-zero/data/usr/plugins/agent-zero-cortex
@@ -335,10 +335,10 @@ ssh root@192.168.1.5 "pct exec 500 -- bash -c '
 | Symptom | Likely cause | Fix |
 |---------|-------------|-----|
 | Plugin not visible in AZ UI | Missing `.toggle-1` file | `touch /opt/agent-zero/data/usr/plugins/agent-zero-cortex/.toggle-1` |
-| Extensions not firing | Files not copied to `data/python/extensions/` | Re-run the `cp` commands in the install section |
+| Extensions not firing | Files not copied to `data/extensions/python/` | Re-run the `cp` commands in the install section |
 | `ModuleNotFoundError: cortex_plugin` | Package not installed in AZ container | `docker exec agent-zero pip install -e /opt/agent-zero/data/usr/plugins/agent-zero-cortex` |
 | `cortex.init: failed` in logs | Cortex API unreachable or wrong key | Check `CORTEX_URL` and `CORTEX_API_KEY`; `curl http://192.168.1.12:8001/healthz` |
-| `cortex.memorize: no cortex_session_id` | `_60_cortex_init.py` didn't run | Verify the file is in `data/python/extensions/monologue_start/` |
+| `cortex.memorize: no cortex_session_id` | `_60_cortex_init.py` didn't run | Verify the file is in `data/extensions/python/monologue_start/` |
 | `cortex.memorize: extraction timed out` | LLM call exceeded 5s | Check AZ utility model availability; consider a faster model |
 | `cortex.memorize: extraction failed` | LLM returned unparseable JSON | Check AZ logs for the raw LLM response; `dirtyjson` handles most malformed JSON but not all |
 | No memories appearing in recall | `CORTEX_RECALL_THRESHOLD` too high for current Cortex version | Run `bash scripts/calibrate-recall-threshold.sh` and update threshold |
