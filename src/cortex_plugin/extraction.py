@@ -88,33 +88,30 @@ async def extract_fragments_and_solutions(
     fragments_prompt: str,
     solutions_prompt: str,
     *,
-    timeout_sec: int = 5,
+    timeout_sec: int = 30,
 ) -> tuple[list[str], list[dict]]:
+    """Extract fragments and solutions from conversation history.
+
+    timeout_sec is accepted for API compatibility but not enforced — asyncio
+    cancellation does not interrupt blocking HTTP calls made by AZ's
+    call_utility_model. The calls run to natural completion instead.
+    """
     if len(history) > MAX_HISTORY_CHARS:
         history = history[-MAX_HISTORY_CHARS:]
 
     fragments_coro = _call_with_retry(utility_call, history, fragments_prompt, parse_fragments, "fragments")
     solutions_coro = _call_with_retry(utility_call, history, solutions_prompt, parse_solutions, "solutions")
 
-    try:
-        results = await asyncio.wait_for(
-            asyncio.gather(fragments_coro, solutions_coro, return_exceptions=True),
-            timeout=timeout_sec,
-        )
-    except asyncio.TimeoutError:
-        logger.warning("extraction: timed out after %ds", timeout_sec)
-        return [], []
+    frag_result, sol_result = await asyncio.gather(fragments_coro, solutions_coro, return_exceptions=True)
 
-    fragments, solutions = results
+    if isinstance(frag_result, Exception):
+        logger.warning("extraction: fragments gather error: %s", frag_result)
+        frag_result = []
+    if isinstance(sol_result, Exception):
+        logger.warning("extraction: solutions gather error: %s", sol_result)
+        sol_result = []
 
-    if isinstance(fragments, Exception):
-        logger.warning("extraction: fragments gather error: %s", fragments)
-        fragments = []
-    if isinstance(solutions, Exception):
-        logger.warning("extraction: solutions gather error: %s", solutions)
-        solutions = []
-
-    return fragments, solutions
+    return frag_result, sol_result
 
 
 def _build_memory_body(
