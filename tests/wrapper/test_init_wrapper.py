@@ -236,10 +236,10 @@ def test_http_exception_no_escape(mock_cfg, mock_proj, mock_resolve, mock_post, 
 def test_logs_info_on_success(mock_cfg, mock_proj, mock_resolve, mock_post, caplog):
     mock_cfg.return_value = _make_cfg()
     mock_post.return_value = SESSION_RESP
-    with caplog.at_level(logging.INFO):
+    with caplog.at_level(logging.WARNING):
         _run(_make_ext().execute())
 
-    info_msgs = [r.message for r in caplog.records if r.levelno == logging.INFO]
+    info_msgs = [r.message for r in caplog.records if r.levelno == logging.WARNING]
     assert any("session=cortex-session-xyz" in m for m in info_msgs), (
         f"Expected INFO log with session=cortex-session-xyz, got: {info_msgs}"
     )

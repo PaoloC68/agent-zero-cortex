@@ -135,10 +135,10 @@ def test_stale_project_rebinds(
     # stored slug is "homelab"; helper returns "luthien" → stale
     agent = _make_agent(stored_slug="homelab")
     ext = _make_ext(agent)
-    with caplog.at_level(logging.INFO):
+    with caplog.at_level(logging.WARNING):
         _run(ext.execute())
 
-    info_msgs = [r.message for r in caplog.records if r.levelno == logging.INFO]
+    info_msgs = [r.message for r in caplog.records if r.levelno == logging.WARNING]
     assert any("project changed mid-session" in m or ("homelab" in m and "luthien" in m)
                for m in info_msgs), f"Expected stale-project info log, got: {info_msgs}"
     # write_memories called with new slug "luthien"
@@ -266,10 +266,10 @@ def test_logs_info_structured_format(
     mock_extract.return_value = (["f1", "f2"], [])
     mock_write.return_value = {"written": 2, "failed": 1, "timed_out": False}
     ext = _make_ext()
-    with caplog.at_level(logging.INFO):
+    with caplog.at_level(logging.WARNING):
         _run(ext.execute())
 
-    info_msgs = [r.message for r in caplog.records if r.levelno == logging.INFO]
+    info_msgs = [r.message for r in caplog.records if r.levelno == logging.WARNING]
     structured = [m for m in info_msgs if "written=" in m and "failed=" in m and "ms=" in m]
     assert structured, f"Expected structured INFO log, got: {info_msgs}"
 
