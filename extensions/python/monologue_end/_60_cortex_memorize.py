@@ -40,7 +40,7 @@ class CortexMemorize(Extension):
 
             project_slug = stored_slug
             if fresh_slug != stored_slug:
-                logger.info(
+                logger.warning(
                     "cortex.memorize: project changed mid-session: %s → %s",
                     stored_slug,
                     fresh_slug,
@@ -74,7 +74,7 @@ class CortexMemorize(Extension):
             )
             ms = int((time.monotonic() - t0) * 1000)
 
-            logger.info(
+            logger.warning(
                 "cortex.memorize: written=%d failed=%d timed_out=%s ms=%d",
                 result["written"],
                 result["failed"],

@@ -64,7 +64,7 @@ class CortexRecall(Extension):
             extras["memories"] = result
             ms = int((time.monotonic() - t0) * 1000)
             n = result.count("---") + 1 if result else 0
-            logger.info(
+            logger.warning(
                 "cortex.recall: results=%d after_fence=%d project=%s ms=%d",
                 n, n, current_project_slug or "none", ms,
             )
