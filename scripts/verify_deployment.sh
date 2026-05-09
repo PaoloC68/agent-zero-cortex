@@ -66,7 +66,7 @@ done
 # ---------------------------------------------------------------------------
 echo ""
 echo "=== Check C: cortex_plugin importable in AZ venv ==="
-result=$(_pct "docker exec agent-zero /opt/venv-a0/bin/python -c 'import cortex_plugin, dirtyjson; print(cortex_plugin.__file__)' 2>&1")
+result=$(ssh "$PROXMOX_HOST" "pct exec $LXC_ID -- bash -c \"docker exec agent-zero /opt/venv-a0/bin/python -c 'import cortex_plugin, dirtyjson; print(cortex_plugin.__file__)' 2>&1\" 2>&1")
 if echo "$result" | grep -q "cortex_plugin"; then
     _pass "cortex_plugin importable: $result"
 else
