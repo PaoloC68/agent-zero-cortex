@@ -4,10 +4,61 @@
 </head>
 
 <body>
-    <div x-data>
+    <div x-data="{healthChecking: false, healthResults: null}">
         <template x-if="config">
             <div>
                 <div class="section-title">Cortex Memory Backend</div>
+
+                <style>
+                .health-results { display: flex; flex-direction: column; gap: 4px; width: 100%; }
+                .health-check-row { display: flex; align-items: center; gap: 8px; font-size: 0.85em; }
+                .health-name { font-weight: 500; min-width: 140px; }
+                .health-detail { color: var(--text-muted, #888); }
+                </style>
+
+                <div class="field">
+                    <div class="field-label">
+                        <div class="field-title">Health Check</div>
+                        <div class="field-description">
+                            Test connectivity to the Cortex API and verify extensions are wired correctly.
+                        </div>
+                    </div>
+                    <div class="field-control">
+                        <button class="btn btn-field" :disabled="healthChecking"
+                            @click="async () => {
+                                healthChecking = true;
+                                healthResults = null;
+                                try {
+                                    const resp = await fetch('/api/plugins/agent-zero-cortex/health_check', {
+                                        method: 'POST',
+                                        headers: {'Content-Type': 'application/json'},
+                                        body: JSON.stringify({})
+                                    });
+                                    healthResults = await resp.json();
+                                } finally {
+                                    healthChecking = false;
+                                }
+                            }">
+                            <span x-show="!healthChecking">Run checks</span>
+                            <span x-show="healthChecking">Checking…</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div x-show="healthResults" class="field">
+                    <div class="field-label"></div>
+                    <div class="field-control">
+                        <div class="health-results">
+                            <template x-for="check in healthResults.checks" :key="check.name">
+                                <div class="health-check-row">
+                                    <span class="health-icon" x-text="check.ok ? '✅' : '❌'"></span>
+                                    <span class="health-name" x-text="check.name"></span>
+                                    <span class="health-detail" x-text="check.detail"></span>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="field">
                     <div class="field-label">
