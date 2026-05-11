@@ -7,6 +7,11 @@ from unittest.mock import AsyncMock, MagicMock, patch, call
 
 import pytest
 
+try:
+    import cortex_plugin.extraction  # noqa: F401 — must be imported before patch() targets it
+except ImportError:
+    pass
+
 
 # ---------------------------------------------------------------------------
 # Helpers
