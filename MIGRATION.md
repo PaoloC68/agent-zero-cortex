@@ -46,12 +46,14 @@ Cortex's scoring algorithm changed significantly at v1.1. The default `CORTEX_RE
 
 ### Version matrix
 
-| Cortex version | Scoring algorithm | Score range | Recommended `CORTEX_RECALL_THRESHOLD` | `CORTEX_RECALL_LEGACY_RANK` |
-|----------------|-------------------|-------------|---------------------------------------|------------------------------|
-| MVP (current) | RRF (k=60) | ~0.01–0.05 | `0.02` | `false` |
-| v1.1 cognitive | Composite (vector + BM25 + recency) | ~0.10–0.95 | `0.30`–`0.50` | `false` (default) |
-| v2.0 substrate | Same as v1.1 (PG18 + TimescaleDB + MCP, no scoring change) | ~0.10–0.95 | `0.30`–`0.50` | `false` |
-| v2.1 scale | Same as v1.1 (DiskANN tuning is index-internal) | ~0.10–0.95 | `0.30`–`0.50` | `false` |
+| Cortex version | Scoring algorithm | Score field | Score range | Composite score | Recommended `CORTEX_RECALL_THRESHOLD` | `CORTEX_RECALL_LEGACY_RANK` |
+|----------------|-------------------|-------------|-------------|-----------------|---------------------------------------|------------------------------|
+| MVP (current) | RRF (k=60) | `score` (RRF) | ~0.01–0.05 | N/A | `0.01` | `false` |
+| v1.1 cognitive | Composite (vector + BM25 + recency) | `score` (RRF gate) | ~0.01–0.05 | `composite_score` (0.0–1.0) | `0.01` | `false` (default) |
+| v2.0 substrate | Same as v1.1 (PG18 + TimescaleDB + MCP, no scoring change) | `score` (RRF gate) | ~0.01–0.05 | `composite_score` (0.0–1.0) | `0.01` | `false` |
+| v2.1 scale | Same as v1.1 (DiskANN tuning is index-internal) | `score` (RRF gate) | ~0.01–0.05 | `composite_score` (0.0–1.0) | `0.01` | `false` |
+
+> **Important (v1.1+)**: The `score` field is the RRF gate value (range ~0.01–0.05) used for server-side filtering. The `composite_score` field (range 0.0–1.0) is computed after filtering and used for client-side reranking in `fence_rerank()`. `CORTEX_RECALL_THRESHOLD` is applied against the RRF `score`, not `composite_score`. The correct threshold value is `0.01` for all Cortex versions. Superseded memories are auto-excluded by the server in v1.1+.
 
 ### Calibration procedure
 
@@ -61,19 +63,19 @@ Run this after every Cortex version upgrade:
 bash scripts/calibrate-recall-threshold.sh
 ```
 
-The script queries Cortex with a set of known-good and known-bad queries, prints the score distribution as JSON, and suggests a threshold. The output looks like:
+The script queries Cortex with a set of known-good and known-bad queries and prints the RRF score distribution. The output looks like:
 
 ```json
 {
-  "p10": 0.03,
-  "p50": 0.18,
-  "p90": 0.72,
-  "suggested_threshold": 0.35,
-  "notes": "Score range shifted — likely v1.1+ composite scoring"
+  "p10": 0.01,
+  "p50": 0.02,
+  "p90": 0.04,
+  "suggested_threshold": 0.02,
+  "notes": "Threshold is applied against RRF score (range ~0.01–0.05), not composite_score"
 }
 ```
 
-Take the `suggested_threshold` value and update `CORTEX_RECALL_THRESHOLD` in `/opt/agent-zero/.env`. No restart needed.
+Take the `suggested_threshold` value and update `CORTEX_RECALL_THRESHOLD` in `/opt/agent-zero/.env`. No restart needed. The threshold should stay near `0.02` regardless of Cortex version — the RRF score range does not change when composite scoring is added.
 
 ### Emergency rollback for recall quality
 

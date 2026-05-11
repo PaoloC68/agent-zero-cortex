@@ -39,7 +39,7 @@ class TestLoadConfigDefaults:
 
     def test_default_recall_threshold(self):
         cfg = load_config({})
-        assert cfg.recall_threshold == 0.02
+        assert cfg.recall_threshold == 0.01
 
     def test_default_recall_legacy_rank_false(self):
         cfg = load_config({})

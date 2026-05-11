@@ -184,6 +184,81 @@ def test_fence_rerank_composite_scores():
     assert ranked[2]["content"] == "comp-cross-lo"
 
 
+def test_fence_rerank_with_composite_score_field():
+    """When composite_score field is present, use it for sorting instead of score."""
+    from cortex_plugin.recall import fence_rerank
+
+    # Results with both score (RRF) and composite_score (v1.1 cognitive)
+    results = [
+        {
+            "id": "id-1",
+            "content": "same-low-rrf-high-composite",
+            "score": 0.01,  # Low RRF score
+            "composite_score": 0.85,  # High composite score
+            "source_project": "homelab",
+            "matched_via": "vector",
+        },
+        {
+            "id": "id-2",
+            "content": "same-high-rrf-low-composite",
+            "score": 0.04,  # High RRF score
+            "composite_score": 0.30,  # Low composite score
+            "source_project": "homelab",
+            "matched_via": "vector",
+        },
+        {
+            "id": "id-3",
+            "content": "cross-high-composite",
+            "score": 0.02,
+            "composite_score": 0.90,
+            "source_project": "other",
+            "matched_via": "vector",
+        },
+    ]
+    ranked = fence_rerank(results, current_project="homelab", recall_limit=3)
+
+    # Same-project results should be sorted by composite_score (not score)
+    assert ranked[0]["content"] == "same-low-rrf-high-composite"  # composite 0.85 > 0.30
+    assert ranked[1]["content"] == "same-high-rrf-low-composite"
+    assert ranked[2]["content"] == "cross-high-composite"
+
+
+def test_fence_rerank_fallback_to_score_without_composite():
+    """When composite_score is missing, fall back to score field."""
+    from cortex_plugin.recall import fence_rerank
+
+    # Results without composite_score (MVP or legacy)
+    results = [
+        {
+            "id": "id-1",
+            "content": "same-high-score",
+            "score": 0.04,
+            "source_project": "homelab",
+            "matched_via": "vector",
+        },
+        {
+            "id": "id-2",
+            "content": "same-low-score",
+            "score": 0.01,
+            "source_project": "homelab",
+            "matched_via": "vector",
+        },
+        {
+            "id": "id-3",
+            "content": "cross-high-score",
+            "score": 0.05,
+            "source_project": "other",
+            "matched_via": "vector",
+        },
+    ]
+    ranked = fence_rerank(results, current_project="homelab", recall_limit=3)
+
+    # Same-project sorted by score (no composite_score available)
+    assert ranked[0]["content"] == "same-high-score"  # 0.04 > 0.01
+    assert ranked[1]["content"] == "same-low-score"
+    assert ranked[2]["content"] == "cross-high-score"
+
+
 def test_fence_rerank_empty_same_project():
     """No same-project results → return top recall_limit cross-project in score order."""
     from cortex_plugin.recall import fence_rerank

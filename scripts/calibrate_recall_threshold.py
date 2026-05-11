@@ -270,8 +270,11 @@ def main() -> None:
             label = entry["label"]
 
             results = recall_query(client, args.url, args.api_key, query, limit=50, legacy_rank=False)
+            # Check if composite_score is present (v1.1+); use it if available, else fall back to score
+            use_composite = bool(results and "composite_score" in results[0])
+            score_key = "composite_score" if use_composite else "score"
             calib_scores = [
-                float(r["score"])
+                float(r[score_key])
                 for r in results
                 if calib_prefix in r.get("content", "")
             ]
@@ -283,7 +286,7 @@ def main() -> None:
 
             results_lr = recall_query(client, args.url, args.api_key, query, limit=50, legacy_rank=True)
             calib_scores_lr = [
-                float(r["score"])
+                float(r[score_key])
                 for r in results_lr
                 if calib_prefix in r.get("content", "")
             ]
@@ -310,8 +313,14 @@ def main() -> None:
         logger.info("Step 4: Detecting scoring algorithm...")
         all_scores = relevant_scores + irrelevant_scores
         max_score = max(all_scores) if all_scores else 0.0
-        if max_score < 0.10:
-            scoring_hint = "RRF-like (max<0.10, k=60 hardcoded)"
+        # `score` is always the RRF gate value (0.01-0.05 range) in both MVP and v1.1.
+        # Detect v1.1 by checking for the presence of `composite_score` in any result.
+        all_results_sample = recall_query(client, args.url, args.api_key, golden_queries[0]["query"], limit=1)
+        has_composite = bool(all_results_sample and "composite_score" in all_results_sample[0])
+        if has_composite:
+            scoring_hint = "v1.1-composite (composite_score field present; score=RRF gate, composite_score=ranker)"
+        elif max_score < 0.10:
+            scoring_hint = "MVP-RRF (max<0.10, no composite_score field)"
         elif max_score > 0.20:
             scoring_hint = "composite-like (max>0.20, weighted combination)"
         else:
@@ -321,7 +330,11 @@ def main() -> None:
         logger.info("Step 5: Computing recommended threshold = max(irr_p25, rel_p5)...")
         irr_p25 = irr_stats["p25"] if irr_stats["count"] > 0 else 0.0
         rel_p5 = rel_stats["p5"] if rel_stats["count"] > 0 else 0.0
-        threshold_std = round(max(0.005, min(0.10, max(irr_p25, rel_p5))), 5)
+        # For composite scores (0.0-1.0), use wider bounds; for RRF (0.01-0.05), use tighter bounds
+        if has_composite:
+            threshold_std = round(max(0.05, min(0.95, max(irr_p25, rel_p5))), 3)
+        else:
+            threshold_std = round(max(0.005, min(0.10, max(irr_p25, rel_p5))), 5)
 
         irr_p25_lr = irr_stats_lr["p25"] if irr_stats_lr["count"] > 0 else 0.0
         rel_p5_lr = rel_stats_lr["p5"] if rel_stats_lr["count"] > 0 else 0.0

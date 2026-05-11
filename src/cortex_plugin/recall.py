@@ -26,17 +26,21 @@ def fence_rerank(
     current_project: str | None,
     recall_limit: int,
 ) -> list[dict[str, Any]]:
+    # Use composite_score (v1.1+ cognitive scoring) when available; fall back to RRF score for legacy.
+    def key(r: dict[str, Any]) -> float:
+        return r.get("composite_score") or r.get("score", 0.0)
+
     if current_project is None:
-        return sorted(results, key=lambda r: r.get("score", 0.0), reverse=True)[:recall_limit]
+        return sorted(results, key=key, reverse=True)[:recall_limit]
 
     same = sorted(
         [r for r in results if r.get("source_project") == current_project],
-        key=lambda r: r.get("score", 0.0),
+        key=key,
         reverse=True,
     )
     cross = sorted(
         [r for r in results if r.get("source_project") != current_project],
-        key=lambda r: r.get("score", 0.0),
+        key=key,
         reverse=True,
     )
 

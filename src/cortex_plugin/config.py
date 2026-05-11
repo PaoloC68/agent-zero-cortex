@@ -13,6 +13,7 @@ SOLUTION_IMPORTANCE = 0.7
 RETRY_ATTEMPTS = 2
 RECALL_QUERY_MIN_CHARS = 3
 MAX_HISTORY_CHARS = 80000
+COMPOSITE_SCORE_THRESHOLD = 0.10
 
 
 class CortexConfig(NamedTuple):
@@ -30,7 +31,7 @@ def load_config(cfg: dict[str, Any]) -> CortexConfig:
     api_key = str(cfg.get("cortex_api_key", ""))
     enabled = bool(cfg.get("cortex_enabled", True))
     recall_limit = int(cfg.get("cortex_recall_limit", 5))  # type: ignore[arg-type]
-    recall_threshold = float(cfg.get("cortex_recall_threshold", 0.02))  # type: ignore[arg-type]
+    recall_threshold = float(cfg.get("cortex_recall_threshold", 0.01))  # type: ignore[arg-type]
     recall_legacy_rank = bool(cfg.get("cortex_recall_legacy_rank", False))
     prompt_dir_raw = cfg.get("cortex_prompt_dir")
     prompt_dir = str(prompt_dir_raw) if prompt_dir_raw else None
