@@ -5,9 +5,15 @@ import sys
 import time
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "helpers"))
-from dependencies import ensure_dependencies  # noqa: E402
-ensure_dependencies()
+_CORTEX_HELPERS = next(
+    (p / "helpers" for p in Path(__file__).resolve().parents
+     if (p / "helpers" / "dependencies.py").exists()),
+    None,
+)
+if _CORTEX_HELPERS:
+    sys.path.insert(0, str(_CORTEX_HELPERS))
+    from dependencies import ensure_dependencies
+    ensure_dependencies()
 
 from helpers.extension import Extension
 from helpers import projects as proj_helpers
