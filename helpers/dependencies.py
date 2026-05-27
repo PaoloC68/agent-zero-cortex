@@ -17,12 +17,6 @@ def _is_installed() -> bool:
 
 
 def ensure_dependencies() -> None:
-    """Install the cortex_plugin package into the running venv if not already present.
-
-    Mirrors the pattern used by the telegram plugin (_telegram_integration/helpers/dependencies.py).
-    Called at import time from each extension file so the package self-installs on first
-    use after a container recreate, without touching any Agent Zero files.
-    """
     global _CHECKED
 
     if _CHECKED and _is_installed():
@@ -36,6 +30,14 @@ def ensure_dependencies() -> None:
             return
 
         _install()
+
+        # uv editable installs register via a .pth file which is only processed at
+        # interpreter startup — not mid-process. Add src/ to sys.path directly so
+        # the package is importable in the current process without a restart.
+        src_dir = str(_PLUGIN_DIR / "src")
+        if src_dir not in sys.path:
+            sys.path.insert(0, src_dir)
+
         importlib.invalidate_caches()
 
         if not _is_installed():
