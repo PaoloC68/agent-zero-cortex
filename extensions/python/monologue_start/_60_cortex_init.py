@@ -4,15 +4,10 @@ import logging
 import sys
 from pathlib import Path
 
-_CORTEX_HELPERS = next(
-    (p / "helpers" for p in Path(__file__).resolve().parents
-     if (p / "helpers" / "dependencies.py").exists()),
-    None,
-)
-if _CORTEX_HELPERS:
-    sys.path.insert(0, str(_CORTEX_HELPERS))
-    from dependencies import ensure_dependencies
-    ensure_dependencies()
+_CORTEX_PLUGIN_DIR = Path("/a0/usr/plugins/agent-zero-cortex")
+sys.path.insert(0, str(_CORTEX_PLUGIN_DIR / "helpers"))
+from dependencies import ensure_dependencies  # noqa: E402
+ensure_dependencies()
 
 from cortex_plugin import config as cortex_config, http, slugs
 from helpers.extension import Extension
