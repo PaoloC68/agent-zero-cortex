@@ -1,6 +1,14 @@
 from __future__ import annotations
 
 import logging
+import sys
+from pathlib import Path
+
+# Self-install cortex_plugin into the venv if missing (e.g. after container recreate).
+# helpers/dependencies.py lives outside src/ so it's importable without the package.
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "helpers"))
+from dependencies import ensure_dependencies  # noqa: E402
+ensure_dependencies()
 
 from cortex_plugin import config as cortex_config, http, slugs
 from helpers.extension import Extension

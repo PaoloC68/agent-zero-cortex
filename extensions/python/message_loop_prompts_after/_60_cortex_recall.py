@@ -1,7 +1,13 @@
 from __future__ import annotations
 
 import logging
+import sys
 import time
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "helpers"))
+from dependencies import ensure_dependencies  # noqa: E402
+ensure_dependencies()
 
 from helpers.extension import Extension
 from helpers import projects as proj_helpers

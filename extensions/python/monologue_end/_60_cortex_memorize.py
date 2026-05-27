@@ -2,7 +2,13 @@ from __future__ import annotations
 
 import functools
 import logging
+import sys
 import time
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "helpers"))
+from dependencies import ensure_dependencies  # noqa: E402
+ensure_dependencies()
 
 import cortex_plugin.config as cortex_config
 import cortex_plugin.extraction as extraction
