@@ -15,15 +15,8 @@ docker compose -f /opt/agent-zero/docker-compose.yml stop
 # 2. Check out the pre-refactor tag
 git checkout pre-cortex-primary-v1
 
-# 3. Uninstall the cortex plugin package from the AZ container
-docker exec agent-zero pip uninstall -y agent-zero-cortex
-
-# 4. Re-deploy the old extension files (from the pre-refactor README)
-PLUGIN=/opt/agent-zero/data/usr/plugins/agent-zero-cortex/extensions/python
-EXT=/opt/agent-zero/data/extensions/python
-cp $PLUGIN/monologue_start/_60_cortex_init.py       $EXT/monologue_start/
-cp $PLUGIN/monologue_end/_60_cortex_memorize.py     $EXT/monologue_end/
-cp $PLUGIN/message_loop_prompts_after/_60_cortex_recall.py $EXT/message_loop_prompts_after/
+# 3. Remove the plugin directory (no package uninstall needed — deps auto-installed, not registered)
+rm -rf /opt/agent-zero/data/usr/plugins/agent-zero-cortex
 
 # 5. Start Agent Zero
 docker compose -f /opt/agent-zero/docker-compose.yml up -d

@@ -37,10 +37,10 @@ The `_60_` prefix is load-order critical: built-in `_memory` plugin uses `_50_*`
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
-pip install -e ".[dev]"
+pip install -r requirements.txt -e ".[dev]"
 ```
 
-Runtime deps: `httpx>=0.28`, `pydantic>=2.9`. Dev adds `pytest`, `pytest-asyncio`, `pyyaml`.
+Runtime deps (`httpx>=0.28`, `pydantic>=2.9`, `dirtyjson`) are in `requirements.txt`. Dev extras (`pytest`, `pytest-asyncio`, `pyyaml`) are in `pyproject.toml [project.optional-dependencies].dev`. The live container installs runtime deps automatically via `helpers/dependencies.py` on first extension load — no manual step needed there.
 
 ---
 

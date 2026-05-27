@@ -38,25 +38,17 @@ Two-tier timeout: 5 seconds for the extraction phase, 10 seconds for the posting
 
 ### Manual (recommended for homelab)
 
+AZ discovers extensions directly from the plugin directory — no copying required. Dependencies are installed automatically on first use by `helpers/dependencies.py`.
+
 ```bash
-# 1. Copy plugin into AZ's user plugins directory (inside the data volume)
-cp -r agent-zero-cortex /opt/agent-zero/data/usr/plugins/
+# 1. Clone the plugin into AZ's user plugins directory (inside the data volume)
+git clone https://github.com/PaoloC68/agent-zero-cortex.git \
+  /opt/agent-zero/data/usr/plugins/agent-zero-cortex
 
 # 2. Enable the plugin (AZ uses a sentinel file for toggle state)
 touch /opt/agent-zero/data/usr/plugins/agent-zero-cortex/.toggle-1
 
-# 3. Copy extension files into AZ's extension directories
-PLUGIN=/opt/agent-zero/data/usr/plugins/agent-zero-cortex/extensions/python
-EXT=/opt/agent-zero/data/extensions/python
-
-cp $PLUGIN/monologue_start/_60_cortex_init.py       $EXT/monologue_start/
-cp $PLUGIN/monologue_end/_60_cortex_memorize.py     $EXT/monologue_end/
-cp $PLUGIN/message_loop_prompts_after/_60_cortex_recall.py $EXT/message_loop_prompts_after/
-
-# 4. Install the plugin package inside the AZ container (makes cortex_plugin and dirtyjson importable)
-docker exec agent-zero pip install -e /opt/agent-zero/data/usr/plugins/agent-zero-cortex
-
-# 5. Add env vars to the AZ compose .env file
+# 3. Add env vars to the AZ compose .env file
 cat >> /opt/agent-zero/.env << EOF
 CORTEX_URL=http://192.168.1.12:8001
 CORTEX_API_KEY=your_cortex_api_key
@@ -65,34 +57,19 @@ CORTEX_RECALL_LIMIT=5
 CORTEX_RECALL_THRESHOLD=0.02
 EOF
 
-# 6. Restart AZ to pick up the new env vars
+# 4. Restart AZ to pick up the new env vars
 docker compose -f /opt/agent-zero/docker-compose.yml up -d --force-recreate
 ```
+
+Dependencies (`httpx`, `pydantic`, `dirtyjson`) are installed automatically the first time an extension fires. No manual `pip install` step required.
 
 ### Via Proxmox (from Mac, targeting LXC 500)
 
 ```bash
-# Package the plugin
-cd /Users/paolo/Documents/Projects
-tar czf /tmp/agent-zero-cortex.tar.gz agent-zero-cortex/
-
-# Copy to Proxmox host and push into LXC 500
-scp /tmp/agent-zero-cortex.tar.gz root@192.168.1.5:/tmp/
-ssh root@192.168.1.5 "pct push 500 /tmp/agent-zero-cortex.tar.gz /tmp/agent-zero-cortex.tar.gz"
-
-# Extract and install inside LXC 500
 ssh root@192.168.1.5 "pct exec 500 -- bash -c '
-  cd /tmp && tar xzf agent-zero-cortex.tar.gz
-  cp -r agent-zero-cortex /opt/agent-zero/data/usr/plugins/
+  git clone https://github.com/PaoloC68/agent-zero-cortex.git \
+    /opt/agent-zero/data/usr/plugins/agent-zero-cortex
   touch /opt/agent-zero/data/usr/plugins/agent-zero-cortex/.toggle-1
-
-  PLUGIN=/opt/agent-zero/data/usr/plugins/agent-zero-cortex/extensions/python
-  EXT=/opt/agent-zero/data/extensions/python
-  cp \$PLUGIN/monologue_start/_60_cortex_init.py       \$EXT/monologue_start/
-  cp \$PLUGIN/monologue_end/_60_cortex_memorize.py     \$EXT/monologue_end/
-  cp \$PLUGIN/message_loop_prompts_after/_60_cortex_recall.py \$EXT/message_loop_prompts_after/
-
-  docker exec agent-zero pip install -e /opt/agent-zero/data/usr/plugins/agent-zero-cortex
 
   grep -v "^CORTEX_" /opt/agent-zero/.env > /tmp/az_env_clean
   mv /tmp/az_env_clean /opt/agent-zero/.env
@@ -284,27 +261,10 @@ cortex.recall: results=30 after_fence=4 project=homelab ms=456
 When a new version of `agent-zero-cortex` is available:
 
 ```bash
-# From Mac
-cd /Users/paolo/Documents/Projects
-git -C agent-zero-cortex pull
-
-tar czf /tmp/agent-zero-cortex.tar.gz agent-zero-cortex/
-scp /tmp/agent-zero-cortex.tar.gz root@192.168.1.5:/tmp/
-ssh root@192.168.1.5 "pct push 500 /tmp/agent-zero-cortex.tar.gz /tmp/agent-zero-cortex.tar.gz"
-
 ssh root@192.168.1.5 "pct exec 500 -- bash -c '
-  cd /tmp && tar xzf agent-zero-cortex.tar.gz
-  cp -r agent-zero-cortex/* /opt/agent-zero/data/usr/plugins/agent-zero-cortex/
-
-  PLUGIN=/opt/agent-zero/data/usr/plugins/agent-zero-cortex/extensions/python
-  EXT=/opt/agent-zero/data/extensions/python
-  cp \$PLUGIN/monologue_start/_60_cortex_init.py       \$EXT/monologue_start/
-  cp \$PLUGIN/monologue_end/_60_cortex_memorize.py     \$EXT/monologue_end/
-  cp \$PLUGIN/message_loop_prompts_after/_60_cortex_recall.py \$EXT/message_loop_prompts_after/
-
-  docker exec agent-zero pip install -e /opt/agent-zero/data/usr/plugins/agent-zero-cortex
+  git -C /opt/agent-zero/data/usr/plugins/agent-zero-cortex pull --ff-only
 '"
-# No restart needed — AZ loads extensions dynamically
+# No restart needed — AZ loads extensions dynamically from the plugin directory
 ```
 
 ---
@@ -313,11 +273,6 @@ ssh root@192.168.1.5 "pct exec 500 -- bash -c '
 
 ```bash
 ssh root@192.168.1.5 "pct exec 500 -- bash -c '
-  # Remove extension files
-  rm -f /opt/agent-zero/data/extensions/python/monologue_start/_60_cortex_init.py
-  rm -f /opt/agent-zero/data/extensions/python/monologue_end/_60_cortex_memorize.py
-  rm -f /opt/agent-zero/data/extensions/python/message_loop_prompts_after/_60_cortex_recall.py
-
   # Remove plugin directory
   rm -rf /opt/agent-zero/data/usr/plugins/agent-zero-cortex
 
@@ -335,8 +290,8 @@ ssh root@192.168.1.5 "pct exec 500 -- bash -c '
 | Symptom | Likely cause | Fix |
 |---------|-------------|-----|
 | Plugin not visible in AZ UI | Missing `.toggle-1` file | `touch /opt/agent-zero/data/usr/plugins/agent-zero-cortex/.toggle-1` |
-| Extensions not firing | Files not copied to `data/extensions/python/` | Re-run the `cp` commands in the install section |
-| `ModuleNotFoundError: cortex_plugin` | Package not installed in AZ container | `docker exec agent-zero pip install -e /opt/agent-zero/data/usr/plugins/agent-zero-cortex` |
+| Extensions not firing | Plugin not enabled or `.toggle-1` missing | `touch /opt/agent-zero/data/usr/plugins/agent-zero-cortex/.toggle-1` |
+| `ModuleNotFoundError: cortex_plugin` | `uv` not on PATH or `requirements.txt` missing | Verify `uv` is available in the container; check plugin dir is intact |
 | `cortex.init: failed` in logs | Cortex API unreachable or wrong key | Check `CORTEX_URL` and `CORTEX_API_KEY`; `curl http://192.168.1.12:8001/healthz` |
 | `cortex.memorize: no cortex_session_id` | `_60_cortex_init.py` didn't run | Verify the file is in `data/extensions/python/monologue_start/` |
 | `cortex.memorize: extraction timed out` | LLM call exceeded 5s | Check AZ utility model availability; consider a faster model |
