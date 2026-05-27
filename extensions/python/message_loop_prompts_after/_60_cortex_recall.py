@@ -5,8 +5,10 @@ import sys
 import time
 from pathlib import Path
 
-_CORTEX_PLUGIN_DIR = Path("/a0/usr/plugins/agent-zero-cortex")
-sys.path.insert(0, str(_CORTEX_PLUGIN_DIR / "helpers"))
+_PLUGIN_DIR = Path(__file__).resolve().parents[3]
+_HELPERS_DIR = str(_PLUGIN_DIR / "helpers")
+if _HELPERS_DIR not in sys.path:
+    sys.path.insert(0, _HELPERS_DIR)
 from dependencies import ensure_dependencies  # noqa: E402
 ensure_dependencies()
 

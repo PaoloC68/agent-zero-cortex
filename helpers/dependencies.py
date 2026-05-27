@@ -10,6 +10,7 @@ from pathlib import Path
 _LOCK = threading.Lock()
 _CHECKED = False
 _PLUGIN_DIR = Path(__file__).resolve().parent.parent  # helpers/ -> plugin root
+_REQUIREMENTS_FILE = _PLUGIN_DIR / "requirements.txt"
 
 
 def _is_installed() -> bool:
@@ -31,9 +32,9 @@ def ensure_dependencies() -> None:
 
         _install()
 
-        # uv editable installs register via a .pth file which is only processed at
-        # interpreter startup — not mid-process. Add src/ to sys.path directly so
-        # the package is importable in the current process without a restart.
+        # uv installs deps from requirements.txt but cortex_plugin itself is not a
+        # pip-installable package — it lives in src/ inside the plugin directory.
+        # Add src/ to sys.path so it is importable in the current process.
         src_dir = str(_PLUGIN_DIR / "src")
         if src_dir not in sys.path:
             sys.path.insert(0, src_dir)
@@ -42,7 +43,7 @@ def ensure_dependencies() -> None:
 
         if not _is_installed():
             raise RuntimeError(
-                "cortex_plugin is still unavailable after installation attempt"
+                "cortex_plugin is still unavailable after installing requirements"
             )
 
         _CHECKED = True
@@ -52,20 +53,18 @@ def _install() -> None:
     uv = shutil.which("uv")
     if not uv:
         raise RuntimeError(
-            "agent-zero-cortex requires 'uv' to self-install; 'uv' not found on PATH"
+            "agent-zero-cortex requires 'uv' to install dependencies; 'uv' not found on PATH"
         )
-
-    pyproject = _PLUGIN_DIR / "pyproject.toml"
-    if not pyproject.is_file():
+    if not _REQUIREMENTS_FILE.is_file():
         raise RuntimeError(
-            f"agent-zero-cortex pyproject.toml not found at {pyproject}"
+            f"agent-zero-cortex requirements.txt not found at {_REQUIREMENTS_FILE}"
         )
 
     result = subprocess.run(
-        [uv, "pip", "install", "--python", sys.executable, "-e", str(_PLUGIN_DIR)],
+        [uv, "pip", "install", "--python", sys.executable, "-r", str(_REQUIREMENTS_FILE)],
         cwd=str(_PLUGIN_DIR),
         capture_output=True,
     )
     if result.returncode != 0:
         stderr = result.stderr.decode(errors="replace") if result.stderr else ""
-        raise RuntimeError(f"agent-zero-cortex self-install failed: {stderr}")
+        raise RuntimeError(f"agent-zero-cortex dependency install failed: {stderr}")
