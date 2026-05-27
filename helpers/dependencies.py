@@ -59,12 +59,11 @@ def _install() -> None:
             f"agent-zero-cortex pyproject.toml not found at {pyproject}"
         )
 
-    try:
-        subprocess.check_call(
-            [uv, "pip", "install", "--python", sys.executable, "-e", str(_PLUGIN_DIR)],
-            cwd=str(_PLUGIN_DIR),
-            capture_output=True,
-        )
-    except subprocess.CalledProcessError as e:
-        stderr = e.stderr.decode(errors="replace") if e.stderr else ""
-        raise RuntimeError(f"agent-zero-cortex self-install failed: {stderr}") from e
+    result = subprocess.run(
+        [uv, "pip", "install", "--python", sys.executable, "-e", str(_PLUGIN_DIR)],
+        cwd=str(_PLUGIN_DIR),
+        capture_output=True,
+    )
+    if result.returncode != 0:
+        stderr = result.stderr.decode(errors="replace") if result.stderr else ""
+        raise RuntimeError(f"agent-zero-cortex self-install failed: {stderr}")
